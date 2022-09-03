@@ -1,7 +1,7 @@
+import java.text.ParseException;
 import java.util.Scanner;
 import java.util.Date;
-import java.util.Arrays;
-
+import java.text.SimpleDateFormat;
 
 
 class Department {
@@ -17,7 +17,7 @@ class Group {
     String name;
     String speciality;
     Department department;
-    Student[] students;
+    Student[] students = new Student[10000];
 
     public Group(String group_name, String group_speciality, Department group_department) {
         name = group_name;
@@ -26,12 +26,12 @@ class Group {
     }
 
     public void Enroll(Student Pervakur){
-        Student[] new_students = new Student[students.length+1];
         for(int i =0; i < students.length; i++){
-            new_students[i] = students[i];
+            if(students[i] == null) {
+                students[i] = Pervakur;
+            }
         }
-        new_students[students.length] = Pervakur;
-        students = new_students;
+
 
 
 
@@ -40,17 +40,10 @@ class Group {
 
 
     public void drop(Student bad_student){
-        Student[] new_students = new Student[students.length - 1];
 
         for(int i=0;i < students.length; i++){
-            int pointer = 0;
             if(students[i] == bad_student){
-                continue;
-
-            }
-            else{
-                new_students[pointer] = students[i];
-                pointer++;
+                students[i] = null;
 
             }
         }
@@ -63,7 +56,7 @@ class Student {
     String full_name;
     Date birth_date;
     Group current_group;
-    Subject[] subjects;
+    Subject[] subjects = new Subject[100];
 
 
 
@@ -85,8 +78,8 @@ class Student {
         System.out.println("Дата рождения:    " + birth_date.toString());
         System.out.println("Группа:       " + current_group.name);
         System.out.print("Изученные дисцмплины");
-        for(int i =0; i < subjects.length; i++ ){
-            System.out.print("  " + subjects[i]);
+        for (Subject subject : subjects) {
+            System.out.print("  " + subject);
         }
         System.out.println();
 
@@ -95,8 +88,8 @@ class Student {
     public void showavg(){
         int sum=0;
         float avg;
-        for (int i =0; i < subjects.length;i++ ){
-            sum += subjects[i].mark;
+        for (Subject subject : subjects) {
+            sum += subject.mark;
         }
         avg = sum / subjects.length;
         System.out.print("Средний балл студента:   ");
@@ -108,11 +101,9 @@ class Student {
 
 
     public void AddDescipline(Subject new_subject ){
-        Subject[] new_subjects = new Subject[subjects.length + 1];
         for (int i=0;i < subjects.length;i++){
-            new_subjects[i] = subjects[i];
-            new_subjects[new_subjects.length] = new_subject;
-            subjects = new_subjects;
+            if (subjects[i] == null){
+                subjects[i] = new_subject;}
         }
 
     }
@@ -137,6 +128,165 @@ class Subject{
 }
 
 public class Student_Worker {
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        int max_N = 100;
+
+        Department[] departments = new Department[max_N];
+        Group[] groups = new Group[max_N];
+        Student[] students = new Student[10000];
+
+        int group_counter = 0;
+        int department_counter = 0;
+        int student_counter = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String command;
+            System.out.print("> ");
+            command = scanner.nextLine();
+            System.out.println(command);
+            switch (command) {
+                case "create.department" -> {
+                    System.out.println();
+                    System.out.println("Введите название: ");
+                    System.out.print("> ");
+                    String name = scanner.nextLine();
+                    departments[department_counter] = new Department(name);
+                    department_counter++;
+
+
+                }
+                case "create.group" -> {
+                    System.out.println();
+                    System.out.println("Введите название: ");
+                    System.out.print("> ");
+                    String name = scanner.nextLine();
+
+                    System.out.println();
+                    System.out.println("Введите специальность: ");
+                    System.out.print("> ");
+                    String spec = scanner.nextLine();
+
+                    System.out.println();
+                    System.out.println("Введите департамент: ");
+                    System.out.print("> ");
+                    String dep = scanner.nextLine();
+                    boolean flag = false;
+                    int idx = 0;
+                    for (int i = 0; i < departments.length; i++) {
+                        if (departments[i].current_name.equals(dep)) {
+                            flag = true;
+                            idx = i;
+                            break;
+                        }
+
+                    }
+                    if (!(flag)) {
+                        System.out.println("Неверное значение");
+                        continue;
+
+                    }
+                    groups[group_counter] = new Group(name, spec, departments[idx]);
+                    group_counter++;
+
+                }
+                case "create.student" -> {
+                    System.out.println();
+                    System.out.println("Введите ФИО: ");
+                    System.out.print("> ");
+                    String name = scanner.nextLine();
+
+                    System.out.println();
+                    System.out.println("Введите Дату рождения: ");
+                    System.out.print("> ");
+                    String date = scanner.nextLine();
+                    try {
+                        Date parced_date = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+                        students[student_counter] = new Student(name, parced_date);
+                        student_counter++;
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+                case "enroll" -> {
+                    for (int student_idx = 0; student_idx < students.length; student_idx++) {
+                        try {
+                            System.out.println(student_idx + students[student_idx].full_name);
+                        }
+                        catch (NullPointerException e){continue;}
+
+                        System.out.println();
+                    }
+                    System.out.println("Выберите студента: ");
+                    System.out.print("> ");
+                    int choose = scanner.nextInt();
+                    System.out.println();
+                    System.out.println("Введите группу: ");
+                    System.out.print("> ");
+                    String group = scanner.nextLine();
+                    boolean flag = false;
+                    int idx = 0;
+                    for (int i = 0; i < groups.length; i++) {
+                        if (groups[i].name.equals(group)) {
+                            flag = true;
+                            idx = i;
+                            break;
+                        }
+
+                    }
+                    if (!(flag)) {
+                        System.out.println("Неверное значение");
+                        continue;
+
+                    }
+                    groups[idx].Enroll(students[choose]);
+                    students[choose].current_group.drop(students[choose]);
+                    students[choose].MoveToGroup(groups[idx]);
+                }
+                case "details" -> {
+                    for (int student_idx = 0; student_idx < students.length; student_idx++) {
+                        System.out.println(student_idx + students[student_idx].full_name);
+                        System.out.println();
+                    }
+                    System.out.println("Выберите студента: ");
+                    System.out.print("> ");
+                    int choose = scanner.nextInt();
+                    students[choose].ShowDetails();
+
+                }
+                case "avg" -> {
+                    for (int student_idx = 0; student_idx < students.length; student_idx++) {
+                        System.out.println(student_idx + students[student_idx].full_name);
+                        System.out.println();
+                    }
+                    System.out.println("Выберите студента: ");
+                    System.out.print("> ");
+                    int choose = scanner.nextInt();
+                    students[choose].showavg();
+                }
+                case "addDescipline" -> {
+                    for (int student_idx = 0; student_idx < students.length; student_idx++) {
+                        System.out.println(student_idx + students[student_idx].full_name);
+                        System.out.println();
+                    }
+                    System.out.println("Выберите студента: ");
+                    System.out.print("> ");
+                    int choose = scanner.nextInt();
+                    System.out.println("Название дисциплины ");
+                    System.out.print("> ");
+                    String name = scanner.nextLine();
+                    System.out.println("Введите количество прослушанных часов: ");
+                    System.out.print("> ");
+                    int h = scanner.nextInt();
+                    System.out.println("Введите оценку ");
+                    System.out.print("> ");
+                    int mark = scanner.nextInt();
+                    students[choose].AddDescipline(new Subject(name, h, mark));
+
+                }
+            }
+        }
     }
 }
