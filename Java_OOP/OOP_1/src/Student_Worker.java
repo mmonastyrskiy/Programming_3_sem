@@ -79,19 +79,29 @@ class Student {
         System.out.println("Группа:       " + current_group.name);
         System.out.print("Изученные дисцмплины");
         for (Subject subject : subjects) {
-            System.out.print("  " + subject);
-        }
+            try {
+                System.out.print("  " + subject.name);
+            } catch (NullPointerException e){
+                "".isEmpty();
+
+            }        }
         System.out.println();
 
 
     }
     public void showavg(){
         int sum=0;
+        int ammount = 0;
         float avg;
         for (Subject subject : subjects) {
-            sum += subject.mark;
+            if (subject == null){
+                continue;
+            }
+            ammount+=1;
+            sum+=subject.mark;
         }
-        avg = sum / subjects.length;
+
+        avg = sum / ammount;
         System.out.print("Средний балл студента:   ");
         System.out.print(avg);
         System.out.println();
@@ -103,7 +113,8 @@ class Student {
     public void AddDescipline(Subject new_subject ){
         for (int i=0;i < subjects.length;i++){
             if (subjects[i] == null){
-                subjects[i] = new_subject;}
+                subjects[i] = new_subject;
+            break;}
         }
 
     }
@@ -188,6 +199,7 @@ public class Student_Worker {
 
                     }
                     groups[group_counter] = new Group(name, spec, departments[idx]);
+                    System.out.println(group_counter+" "+groups[group_counter].name);
                     group_counter++;
 
                 }
@@ -213,7 +225,7 @@ public class Student_Worker {
                 case "enroll" -> {
                     for (int student_idx = 0; student_idx < students.length; student_idx++) {
                         try {
-                            System.out.println(student_idx + students[student_idx].full_name);
+                            System.out.println(student_idx + " " + students[student_idx].full_name);
                         }
                         catch (NullPointerException e){continue;}
 
@@ -225,31 +237,35 @@ public class Student_Worker {
                     System.out.println();
                     System.out.println("Введите группу: ");
                     System.out.print("> ");
-                    String group = scanner.nextLine();
-                    boolean flag = false;
-                    int idx = 0;
-                    for (int i = 0; i < groups.length; i++) {
-                        if (groups[i].name.equals(group)) {
-                            flag = true;
-                            idx = i;
-                            break;
+
+                    try {
+
+
+                        for (int i = 0; i < groups.length; i++) {
+                            System.out.println(i + " " + groups[i].name);
+
                         }
+                    } catch (NullPointerException e){"".isEmpty();}
+                        int gr_choose = scanner.nextInt();
+                        groups[gr_choose].Enroll(students[choose]);
+                        try {
 
-                    }
-                    if (!(flag)) {
-                        System.out.println("Неверное значение");
-                        continue;
 
-                    }
-                    groups[idx].Enroll(students[choose]);
-                    students[choose].current_group.drop(students[choose]);
-                    students[choose].MoveToGroup(groups[idx]);
+                            students[choose].current_group.drop(students[choose]);
+                        } catch (NullPointerException e){"".isEmpty();}
+                        students[choose].MoveToGroup(groups[gr_choose]);
+
                 }
                 case "details" -> {
+                    try {
+
+
                     for (int student_idx = 0; student_idx < students.length; student_idx++) {
-                        System.out.println(student_idx + students[student_idx].full_name);
+                        System.out.println(student_idx + " " + students[student_idx].full_name);
                         System.out.println();
                     }
+                    }
+                    catch (NullPointerException e){"".isEmpty();}
                     System.out.println("Выберите студента: ");
                     System.out.print("> ");
                     int choose = scanner.nextInt();
@@ -257,10 +273,12 @@ public class Student_Worker {
 
                 }
                 case "avg" -> {
+                    try{
                     for (int student_idx = 0; student_idx < students.length; student_idx++) {
-                        System.out.println(student_idx + students[student_idx].full_name);
+                        System.out.println(student_idx + " " + students[student_idx].full_name);
                         System.out.println();
                     }
+                    } catch (NullPointerException e){"".isEmpty();}
                     System.out.println("Выберите студента: ");
                     System.out.print("> ");
                     int choose = scanner.nextInt();
@@ -268,22 +286,25 @@ public class Student_Worker {
                 }
                 case "addDescipline" -> {
                     for (int student_idx = 0; student_idx < students.length; student_idx++) {
-                        System.out.println(student_idx + students[student_idx].full_name);
-                        System.out.println();
+                        try {
+                            System.out.println(student_idx + " " + students[student_idx].full_name);
+                            System.out.println();
+                        } catch (NullPointerException e){"".isEmpty();}
                     }
                     System.out.println("Выберите студента: ");
                     System.out.print("> ");
                     int choose = scanner.nextInt();
                     System.out.println("Название дисциплины ");
                     System.out.print("> ");
-                    String name = scanner.nextLine();
+                    String Dname = scanner.next();
+                    System.out.println(Dname);
                     System.out.println("Введите количество прослушанных часов: ");
                     System.out.print("> ");
                     int h = scanner.nextInt();
                     System.out.println("Введите оценку ");
                     System.out.print("> ");
                     int mark = scanner.nextInt();
-                    students[choose].AddDescipline(new Subject(name, h, mark));
+                    students[choose].AddDescipline(new Subject(Dname, h, mark));
 
                 }
             }
