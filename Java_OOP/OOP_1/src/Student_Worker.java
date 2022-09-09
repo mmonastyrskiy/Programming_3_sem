@@ -228,7 +228,6 @@ public class Student_Worker {
                             System.out.println(student_idx + " " + students[student_idx].full_name);
                         }
                         catch (NullPointerException e){continue;}
-
                         System.out.println();
                     }
                     System.out.println("Выберите студента: ");
@@ -307,6 +306,10 @@ public class Student_Worker {
                     students[choose].AddDescipline(new Subject(Dname, h, mark));
 
                 }
+                case "exit" -> {
+                    return;
+                }
+
             }
         }
     }
