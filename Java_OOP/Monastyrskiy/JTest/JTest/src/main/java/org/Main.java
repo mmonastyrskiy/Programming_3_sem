@@ -6,11 +6,11 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.ParseException;
 import java.util.Random;
 import java.net.URL;
 import java.net.URLConnection;
 import org.json.*;
+import org.json.JSONObject;
 
 
 class PL{
@@ -18,8 +18,10 @@ class PL{
     String name;
     String ext;
     String command;
+    Task task;
     public PL(String name,Task T){
         this.name = name;
+        this.task = T;
         if (!(T == null)) {
             get_settings(T);
         }
@@ -27,7 +29,7 @@ class PL{
     }
     void get_settings(Task T){
         String filename = T.id;
-        Path SettingsFile = Paths.get(TaskFolderPath.toString(),T.id,".json");
+        Path SettingsFile = Paths.get(TaskFolderPath.toString(),filename,".json");
         try {
             FileReader reader = new FileReader(SettingsFile.toString());
             JSONObject object = new JSONObject(reader.toString());
@@ -50,16 +52,20 @@ class PL{
 
 class Task{
     String id;
+    Path tests = Paths.get("Tests",this.id.toString());
+
 
 
 
 }
 
-
 class connection extends Socket{
     String id;
+    String codefile = "";
     URL code_url;
     Socket client;
+    PL attempt_PL;
+
 
    public void stop(){
         try {
@@ -74,18 +80,57 @@ class connection extends Socket{
            URLConnection conn = this.code_url.openConnection();
            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
            String code =  conn.getInputStream().toString();
-           PrintWriter printer = new PrintWriter(Paths.get(d.toString(),this.id,).toString());
+           PrintWriter printer = new PrintWriter(Paths.get(d.toString(),this.id,p.ext).toString());
+           printer.println(code);
+           printer.close();
+           this.codefile = Paths.get(d.toString(),this.id,p.ext).toString();
+           this.attempt_PL = p;
+
+
+
+
+
 
        } catch (IOException e){
            "".isEmpty();
        }
 
    }
+
+   public void Run(){
+       try {
+           Path TestsFolder = this.attempt_PL.task.tests;
+           FileReader reader = new FileReader(TestsFolder.toString());
+           JSONObject Obj = new JSONObject(reader.toString());
+           JSONArray inp_array= (JSONArray) Obj;
+           String[] Input;
+           String[] Expected_out;
+       } catch (FileNotFoundException e){
+           "".isEmpty();
+       }
+
+
+
+
+       try {
+           Process process = Runtime.getRuntime().exec(this.attempt_PL.command + this.codefile);
+           BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           BufferedWriter out = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+
+
+
+       } catch (IOException e) {
+           "".isEmpty();
+       }
+
+
+
+   }
     public connection(Socket c){
         this.client = c;
         byte[] name = new byte[10];
         new Random().nextBytes(name);
-        this.id = new String(name, Charset.forName("UTF-8"));
+                this.id = new String(name, Charset.forName("UTF-8"));
 
 
 
@@ -108,7 +153,6 @@ public class Main {
 
     String[] langs = {"c++","python","java"};
     Task[] tasks = new Task[1000];
-    PL cpp = new PL("cpp");
         int client_index =0;
         connection[] ActiveClients = new connection[100];
 
@@ -144,23 +188,22 @@ public class Main {
                     URL url = new URL(url_str);
                     ActiveClients[client_index--].code_url = url;
                     out.write("Выберите язык из списка указав индекс");
-                    for (String s: langs){
+                    for (String s: langs) {
                         out.write(s);
-                        String idx = in.readLine();
-                        int lang_idx = Integer.parseInt(idx);
+                    }
+                    String idx = in.readLine();
+                    int lang_idx = Integer.parseInt(idx);
 
                         out.write("Выберите таск из списка указав индекс");
                         for (int i =0; i < tasks.length; i++){
                             out.write("[" + i + "]" + tasks[i].id);
-                            String lidx = in.readLine();
-                            int lidxi = Integer.parseInt(lidx);
-
-
 
                         }
+                    String lidx = in.readLine();
+                    int lidxi = Integer.parseInt(lidx);
+                    PL lang = new PL(langs[lang_idx],tasks[lidxi]);
 
-                    }
-                    ActiveClients[client_index--].downloadCode(DownloadFolderPath,);
+                    ActiveClients[client_index--].downloadCode(DownloadFolderPath,lang);
 
 
 
