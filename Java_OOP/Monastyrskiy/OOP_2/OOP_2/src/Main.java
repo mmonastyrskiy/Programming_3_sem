@@ -147,9 +147,21 @@ public class Main {
                     System.out.println("Введите имя владельца: ");
                     System.out.print("> ");
                     String owner = scanner.nextLine();
-                    Bicycle bike = t.buy(w, owner);
-                    bikes[ptr] = bike;
-                    ptr += 1;
+                    try {
+
+                        Bicycle bike = t.buy(w, owner);
+
+                        bikes[ptr] = bike;
+                        ptr += 1;
+                    } catch (IllegalArgumentException e){
+                        System.out.println("Неверное кол-во колес[1-3]");
+
+                        System.out.print("Введите число колес: ");
+                        System.out.print("> ");
+                        w = scanner.nextInt();
+                        t.buy(w,owner);
+
+                    }
                 }
                 case "ride" -> {
                    int i;
