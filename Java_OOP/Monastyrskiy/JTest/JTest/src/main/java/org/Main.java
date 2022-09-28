@@ -1,16 +1,17 @@
 package org;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Random;
 import java.net.URL;
 import java.net.URLConnection;
-import org.json.*;
-import org.json.JSONObject;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Random;
 
 
 class PL{
@@ -40,8 +41,6 @@ class PL{
         }
         catch (FileNotFoundException e){"".isEmpty();
         }
-        catch (IOException e){"".isEmpty();
-        }
 
 
     }
@@ -52,7 +51,7 @@ class PL{
 
 class Task{
     String id;
-    Path tests = Paths.get("Tests",this.id.toString());
+    Path tests = Paths.get("Tests", this.id);
 
 
 
@@ -65,26 +64,31 @@ class connection extends Socket{
     URL code_url;
     Socket client;
     PL attempt_PL;
+    boolean haspassedall = false;
 
 
-   public void stop(){
+   private void stop(){
         try {
             this.close();
         } catch (java.io.IOException e){
             "".isEmpty();
         }
     }
+    private void createtoken(){
+
+    }
 
    public void downloadCode(Path d,PL p){
        try {
            URLConnection conn = this.code_url.openConnection();
            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-           String code =  conn.getInputStream().toString();
-           PrintWriter printer = new PrintWriter(Paths.get(d.toString(),this.id,p.ext).toString());
-           printer.println(code);
+           String code =  conn.getInputStream().toString(); // получаем содержимое страницы
+           PrintWriter printer = new PrintWriter(Paths.get(d.toString(),this.id,p.ext).toString()); // открываем файл на запись
+           printer.println(code); // записывем код
            printer.close();
            this.codefile = Paths.get(d.toString(),this.id,p.ext).toString();
            this.attempt_PL = p;
+           this.Run(); // запускаем тестирование
 
 
 
@@ -102,9 +106,34 @@ class connection extends Socket{
            Path TestsFolder = this.attempt_PL.task.tests;
            FileReader reader = new FileReader(TestsFolder.toString());
            JSONObject Obj = new JSONObject(reader.toString());
-           JSONArray inp_array= (JSONArray) Obj;
-           String[] Input;
-           String[] Expected_out;
+           JSONObject tests = Obj.getJSONObject("Tests");
+           JSONArray input = tests.getJSONArray("input");
+           boolean marker[] = new boolean[input.length()];
+           Arrays.fill(marker,false);
+           JSONArray output = tests.getJSONArray("Output");
+           for(int i=0;i < input.length();i++){
+               try {
+                   Process process = Runtime.getRuntime().exec(this.attempt_PL.command + this.codefile);
+                   BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                   BufferedWriter out = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                   out.write(input.get(i).toString());
+                   String actual_output = in.readLine();
+                   if(actual_output.equals(output)){marker[i] = true;}
+
+
+
+
+               } catch (IOException e) {
+                   "".isEmpty();
+               }
+
+           }
+           if(!(Arrays.asList(marker).contains(false)));{
+               this.haspassedall = true;
+               this.createtoken();
+               this.stop();
+
+           }
        } catch (FileNotFoundException e){
            "".isEmpty();
        }
@@ -112,16 +141,6 @@ class connection extends Socket{
 
 
 
-       try {
-           Process process = Runtime.getRuntime().exec(this.attempt_PL.command + this.codefile);
-           BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-           BufferedWriter out = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-
-
-
-       } catch (IOException e) {
-           "".isEmpty();
-       }
 
 
 
@@ -130,7 +149,7 @@ class connection extends Socket{
         this.client = c;
         byte[] name = new byte[10];
         new Random().nextBytes(name);
-                this.id = new String(name, Charset.forName("UTF-8"));
+                this.id = new String(name, StandardCharsets.UTF_8);
 
 
 
@@ -147,14 +166,18 @@ public class Main {
 
 
     public static Path DownloadFolderPath = Paths.get(".","TMP","Codes");
+    void ReadTasks(){
 
+    }
+    void inti(){
 
+    }
     public static void main(String[] args){
 
-    String[] langs = {"c++","python","java"};
-    Task[] tasks = new Task[1000];
+    String[] langs = {"c++","python","java"}; //Поддерживаемые языки
+    Task[] tasks = new Task[1000]; // массив с тасками
         int client_index =0;
-        connection[] ActiveClients = new connection[100];
+        connection[] ActiveClients = new connection[100]; // массив с клиентами
 
         try {
             try {
@@ -185,8 +208,7 @@ public class Main {
                     System.out.println(url_str);
                     // не долго думая отвечает клиенту
                     out.write("Привет, это Сервер! Подтверждаю, вы написали : " + url_str + "\n");
-                    URL url = new URL(url_str);
-                    ActiveClients[client_index--].code_url = url;
+                    ActiveClients[client_index--].code_url = new URL(url_str);
                     out.write("Выберите язык из списка указав индекс");
                     for (String s: langs) {
                         out.write(s);
