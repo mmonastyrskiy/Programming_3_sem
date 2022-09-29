@@ -3,7 +3,6 @@
 #include <time.h>
 
 
-
 /*    Монастырский С21-703 23.09.22 */
 
 struct st1 {
@@ -62,6 +61,46 @@ void sort(int *a, int n) {
   }
 }
 
+
+
+void struct2file (struct st1 *p, int size){
+
+  FILE outfile*;
+  char* filename;
+  int iterator;
+  printf("Enter dunpfile name: ");
+  scanf("%s",filename);
+  outfile = fopen(filename ,"r");
+  if(outfile == NULL){
+    printf("error opening file\n");
+    exit(1);
+  }
+for(iterator=0;iterator < size; iterator++){
+  fprintf(outfile, "%i %s\n",&p[iterator].i,p[iterator].c);
+}
+fclose(outfile)
+}
+
+
+struct st1* file2struct()
+{
+  FILE infile*;
+  int i;
+  int size;
+  char* filename;
+  struct st1* p;
+  printf("Enter dunpfile name: ");
+  scanf("%s",filename);
+  infile = fopen(filename, "r");
+  if(infile == NULL){
+    printf("error opening file\n");
+    exit(2);
+  fseek(infile,0,SEEK_END);
+
+
+  }
+
+}
 
 
 void sort_struct(struct st1 *a, int n) {
