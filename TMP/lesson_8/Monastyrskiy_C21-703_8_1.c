@@ -91,21 +91,25 @@ return head;
 
 node* sort_list(node* head){
 	node* t;
-	int temp;
+	node* temp;
+	node* prev;
 	t =head;
 	while(t-> next != NULL){
 		if (t->data < t->next->data){
-			temp = t->data;
-			t->data = t->next->data;
-			t->next->data = temp;
+			printf("%p::%p\n",t,t-> next);
+			temp->next = t->next;
+			t->next = t->next->next;
+			t->next->next = temp -> next;
 		}
 		t = t->next;
 	}
-	if(head->data < head->next->data){
-		temp = head -> data;
-		head->data = head->next->data;
-		head->next->data = temp;
+	/*if(head->data < head->next->data){
+		temp = head -> next;
+		head->next = head->next->next;
+		head->next->next = temp;
 	}
+	*/
+	free(temp);
 	return head;
 }
 
