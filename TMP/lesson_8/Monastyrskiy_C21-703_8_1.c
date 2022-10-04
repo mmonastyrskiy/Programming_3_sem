@@ -87,30 +87,55 @@ free(t-> next);
 return head;
 }
 
+int size_list(node *head){
+  node *tmp = NULL;
+  int size = 0;
+  if(head == NULL) return 0;
+  tmp = head;
+  while(tmp!= NULL){
+    size++;
+    tmp = tmp->next;
+  }
+  return size;
+}
 
+void swap(node *a1, node *a2, node *past){
+  if(past == NULL){
+    a1->next = a2->next;
+    a2->next = a1;
+  }else{
+    past->next = a2;
+    a1->next = a2->next;
+    a2->next = a1;
+  }
+}
 
-node* sort_list(node* head){
-	node* t;
-	node* temp;
-	node* prev;
-	t =head;
-	while(t-> next != NULL){
-		if (t->data < t->next->data){
-			printf("%p::%p\n",t,t-> next);
-			temp->next = t->next;
-			t->next = t->next->next;
-			t->next->next = temp -> next;
-		}
-		t = t->next;
-	}
-	/*if(head->data < head->next->data){
-		temp = head -> next;
-		head->next = head->next->next;
-		head->next->next = temp;
-	}
-	*/
-	free(temp);
-	return head;
+node* sort_list(node *head){
+  int size = size_list(head);
+  int i;
+  node *a, *b;
+  node *past;
+  for(i = 0;i<size;i++){
+    past = NULL;
+    a = head;
+    b = a->next;
+    while(b != NULL){
+      if(a->data > b->data){
+        swap(a, b, past);
+        if(past == NULL){
+          head = b;
+        }
+        past = b;
+        if(a != NULL)
+          b = a->next;
+      }else{
+        past = a;
+        a = b;
+        b = b->next;
+      }
+    }
+  }
+  return head;
 }
 
 
@@ -124,7 +149,7 @@ int main(int argc, char const *argv[])
 	
 
 
-	print_list(ptr);
+	/*print_list(ptr);*/
 
 	/*ptr = rm_head(ptr);
 	print_list(ptr);

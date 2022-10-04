@@ -92,25 +92,6 @@ return head;
 
 
 
-node* sort_list(node* head){
-	node* t;
-	int temp;
-	t =head;
-	while(t-> next != NULL){
-		if (t->data < t->next->data){
-			temp = t->data;
-			t->data = t->next->data;
-			t->next->data = temp;
-		}
-		t = t->next;
-	}
-	if(head->data < head->next->data){
-		temp = head -> data;
-		head->data = head->next->data;
-		head->next->data = temp;
-	}
-	return head;
-}
 
 
 void reverce_print_list(node* head){
@@ -155,6 +136,72 @@ node* insert_value(node* head,int insert_after,int new_node_data){
 }
 
 
+int size_list(node *head){
+  node *tmp = NULL;
+  int size = 0;
+  if(head == NULL) return 0;
+  tmp = head;
+  while(tmp!= NULL){
+    size++;
+    tmp = tmp->next;
+  }
+  return size;
+}
+
+
+void swap(node* a, node* b){
+	node* next;
+	node* prev;
+	if(!(a->prev == NULL)){
+		prev = a->prev;
+
+	}
+	else{prev=NULL;}
+	if(!(b->next == NULL)){
+		next = b->next;
+
+	}
+	else{next=NULL;}
+
+	if(!(prev == NULL)){
+	prev -> next =b;
+	}
+	if(!(next == NULL)){
+	next -> prev = a;
+}
+	b->next = a;
+	a->prev =b;
+	a->next =next;
+	b->prev = prev;
+}
+
+
+
+
+node* sort_list(node* head){
+	node* t;
+  	int i;
+  	int size = size_list(head);
+  	t = head;
+  	for(i=0;i<size;i++){
+	while(t->next != NULL){
+		/*printf("%d :: %d\n", t->data,t->next->data);*/
+		if(t->data < t-> next->data){
+			if(t -> prev == NULL){
+				head = t->next;
+			}
+			printf("t=%d ::: t-> next=%d\n",t->data,t->next->data);
+			swap(t, t->next);
+			printf("t=%d ::: t-> next=%d\n",t->data,t->next->data);
+		}
+	}
+	t = t->next;
+	printf("\n\n");
+	}
+	return head;
+}
+
+
 node* rm_value(node* head,int rm){
 	node* t;
 	t = head;
@@ -183,10 +230,12 @@ int main(int argc, char const *argv[])
 	ptr = add_new_head(ptr, 1);
 	
 
+	print_list(ptr);
+
 	ptr = sort_list(ptr);
 	print_list(ptr);
-	ptr = rm_value(ptr,11);
+	/*ptr = rm_value(ptr,11);
 	ptr = insert_value(ptr,80,111);
-	print_list(ptr);
+	print_list(ptr);*/
 	return 0;
 } 
