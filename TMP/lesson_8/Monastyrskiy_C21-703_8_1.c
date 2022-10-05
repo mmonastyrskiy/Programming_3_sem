@@ -21,6 +21,7 @@ void print_list(node* head){
 
 
 
+
 node* add_new_head(node* head, int new_head_data){
 	node* new;
 		new = malloc(sizeof(node));
@@ -85,6 +86,21 @@ t = t-> next;
 t-> next = NULL;
 free(t-> next);
 return head;
+}
+
+node* rm_value(node* head,int rm){
+	node* t;
+	t = head;
+	while(t ->next-> data != rm){
+		t = t->next;
+	}
+	if(t -> next->next == NULL){
+		rm_tail(head);
+		return head;
+	}
+	t->next = t->next->next;
+	free(t->next);
+	return head;
 }
 
 int size_list(node *head){
