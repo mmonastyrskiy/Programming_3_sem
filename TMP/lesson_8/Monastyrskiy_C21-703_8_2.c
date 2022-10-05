@@ -152,6 +152,7 @@ int size_list(node *head){
 void swap(node* a, node* b){
 	node* next;
 	node* prev;
+
 	if(!(a->prev == NULL)){
 		prev = a->prev;
 
@@ -176,30 +177,28 @@ void swap(node* a, node* b){
 }
 
 
-
+/*a b null*/
 
 node* sort_list(node* head){
 	node* t;
   	int i;
   	int size = size_list(head);
-  	t = head;
   	for(i=0;i<size;i++){
+  		  	t = head;
 	while(t->next != NULL){
-		/*printf("%d :: %d\n", t->data,t->next->data);*/
 		if(t->data < t-> next->data){
 			if(t -> prev == NULL){
 				head = t->next;
 			}
-			printf("t=%d ::: t-> next=%d\n",t->data,t->next->data);
 			swap(t, t->next);
-			printf("t=%d ::: t-> next=%d\n",t->data,t->next->data);
 		}
+		else{t = t-> next;}
 	}
-	t = t->next;
-	printf("\n\n");
-	}
-	return head;
 }
+
+	printf("\n\n");
+	return head;
+	}
 
 
 node* rm_value(node* head,int rm){
