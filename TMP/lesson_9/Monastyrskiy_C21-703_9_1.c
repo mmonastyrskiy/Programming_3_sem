@@ -26,7 +26,7 @@ void add_new_rd(st1* ptr){
 }
 }
 
-size_t dump_to_file(st1* ptr,char* path){
+size_t dump_to_file(st1* ptr,const char* path){
 	int fdw;
 	int i;
 	size_t fw;
@@ -42,7 +42,7 @@ size_t dump_to_file(st1* ptr,char* path){
 close(fdw);
 return fw;
 }
-size_t read_from_file(st1* ptr,char* path){
+size_t read_from_file(st1* ptr,const char* path){
 	int fdr;
 	int i;
 	size_t fr;
