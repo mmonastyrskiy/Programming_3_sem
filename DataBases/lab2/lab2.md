@@ -30,17 +30,46 @@ SELECT job_id as Должность, trunc(max(salary),0) as "Максималь
 trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
 ```
 
-## Вариант 7
+## Вариант 2
 
-## Задание 1
+### Задание 1
 ```SQL
-SELECT ((30*20)/10)+(20*10) AS X;
+SELECT (First_name || ' '|| Last_name) ФИО, salary ОКЛАД, trunc(salary*0.87,0) as "Оклад минус подоходный" FROM employees;
+
 ```
-## Задание 2 
+### Задание 2
 ```SQL
-SELECT * FROM employees WHERE department_id != 50;
+SET DateStyle TO German;
+SELECT First_name as Имя, Last_name as Фамилия, job_id as Должность, hire_date as "Время приема на работу"
+FROM employees WHERE (hire_date BETWEEN '01.01.1995' AND '31.12.1999') OR (job_id IN ('AD_PRES','AD_VP','AD_ASST')) LIMIT 5; -- Спросить про даты найма ибо подходящих там нет
+
 ```
-## Задание 3
+### Задание 3
+```SQL
+SET DateStyle TO German;
+SELECT First_name Имя,Last_name Фамилия,salary Оклад,date(hire_date) as "Дата приема на работу",
+(EXTRACT(year FROM age(now(),hire_date))*12 + EXTRACT(month FROM age(now(),hire_date))) as "Проработал месяцев"
+FROM employees;
+```
+### Задание 4
+```SQL
+SELECT job_id as Должность, trunc(max(salary),0) as "Максимальная зарплата", trunc(min(salary),0) "Минимальная зарплата",
+trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
+```
+
+## Вариант 3
+
+### Задание 1
+```SQL
+SELECT now() as X;
+```
+
+### Задание 2
+```SQL
+SELECT * FROM locations WHERE postal_code IS NOT NULL AND postal_code <> ''; -- Спросить про нулли
+```
+
+### Задание 3
 ```SQL
 SELECT First_name AS Имя, Last_name AS Фамилия, 
   CASE 
@@ -50,7 +79,122 @@ SELECT First_name AS Имя, Last_name AS Фамилия,
 END AS Должность
 FROM employees;
 ```
-## Задание 4
+
+### Задание 4
+```SQL
+SELECT job_id as Должность, trunc(max(salary),0) as "Максимальная зарплата", trunc(min(salary),0) "Минимальная зарплата",
+trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
+```
+
+
+## Вариант 4
+
+### Задание 1
+```SQL
+SELECT (First_name || ' '|| Last_name) ФИО, salary ОКЛАД, trunc(salary*0.87,0) as "Оклад минус подоходный" FROM employees;
+
+```
+
+### Задание 2
+```SQL
+SET DateStyle TO German;
+SELECT First_name as Имя, Last_name as Фамилия, job_id as Должность, hire_date as "Время приема на работу"
+FROM employees WHERE (hire_date  NOT BETWEEN '01.01.1995' AND '31.12.1999') OR (job_id IN ('AD_PRES','AD_VP','AD_ASST')) LIMIT 5 --
+```
+
+### Задание 3
+```SQL
+SELECT first_name as Имя, last_name as Фамилия,
+(lower(RIGHT(First_name,2))|| lower(substr(Last_name,1,3)))as Идентификатор FROM employees;
+```
+
+### Задание 4
+```SQL
+SELECT job_id as Должность, trunc(max(salary),0) as "Максимальная зарплата", trunc(min(salary),0) "Минимальная зарплата",
+trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
+```
+
+
+
+
+## Вариант 5
+
+### Задание 1
+```SQL
+```
+
+### Задание 2
+```SQL
+SELECT * FROM employees WHERE department_id = 50;
+```
+
+### Задание 3
+```SQL
+SELECT First_name AS Имя, Last_name AS Фамилия, 
+  CASE 
+    WHEN Job_id = 'SA_REP' THEN 'Торговый представитель'
+    WHEN Job_id = 'SA_MAN' THEN 'Менеджер по продажам'
+    ELSE 'Другое'
+END AS Должность
+FROM employees
+```
+
+### Задание 4
+```SQL
+SELECT job_id as Должность, trunc(max(salary),0) as "Максимальная зарплата", trunc(min(salary),0) "Минимальная зарплата",
+trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
+```
+
+
+
+
+
+## Вариант 6
+
+### Задание 1
+```SQL
+SELECT (First_name || ' '|| Last_name) ФИО, salary ОКЛАД, trunc(salary*1.302,1) as "Оклад с учетом начислений за оплату труда" FROM employees;  
+```
+
+### Задание 2
+```SQL
+
+```
+
+### Задание 3
+```SQL
+
+```
+
+### Задание 4
+```SQL
+
+```
+
+
+
+
+## Вариант 7
+
+### Задание 1
+```SQL
+SELECT ((30*20)/10)+(20*10) AS X;
+```
+### Задание 2 
+```SQL
+SELECT * FROM employees WHERE department_id != 50;
+```
+### Задание 3
+```SQL
+SELECT First_name AS Имя, Last_name AS Фамилия, 
+  CASE 
+    WHEN Job_id = 'SA_REP' THEN 'Торговый представитель'
+    WHEN Job_id = 'SA_MAN' THEN 'Менеджер по продажам'
+    ELSE 'Другое'
+END AS Должность
+FROM employees;
+```
+### Задание 4
 ```SQL
 SELECT trunc(MAX(salary),0) AS "Максимальная зарплата", trunc(MIN(salary),0) AS "Минимальная зарплата",
 trunc(AVG(salary), 2) AS "Средняя зарплата" FROM employees;
