@@ -111,6 +111,7 @@ trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY j
 
 ### Задание 1
 ```SQL
+SELECT(employee_id % 10) as i, (employee_id % 10)*55-(employee_id % 10)as X FROM employees LIMIT 5 OFFSET 1; -- ХЗ
 ```
 
 ### Задание 2
@@ -148,17 +149,17 @@ SELECT (First_name || ' '|| Last_name) ФИО, salary ОКЛАД, trunc(salary*1
 
 ### Задание 2
 ```SQL
-
+SELECT First_name as Имя, Last_name as Фамилия, salary as Оклад, commission_pct as "Ставка комиссии" FROM employees WHERE salary >= 10000 AND commission_pct IS NOT NULL ORDER BY commission_pct DESC;
 ```
 
 ### Задание 3
 ```SQL
-
+SELECT First_name as Имя, Last_name as Фамилия, COALESCE(commission_pct,0) as "Ставка комиссии" FROM employees;
 ```
 
 ### Задание 4
 ```SQL
-
+SELECT trunc(max(salary),0) as "Максимальная зарплата", trunc(min(salary),0) as "Минимальная зарплата", trunc(avg(salary),2) as "Средняя зарплата" FROM employees;
 ```
 
 
