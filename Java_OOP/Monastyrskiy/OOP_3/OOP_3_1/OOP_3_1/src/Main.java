@@ -27,7 +27,6 @@ public class Main {
              "after they are created.";
      public static String sortWords(String inpStr){
          String[] s = inpStr.split(" ");
-         Arrays.sort(s);
          Comparator<String> abc = new abcSort();
          Comparator<String> stringLengthComparator = new StringLengthSort();
          Arrays.sort(s,abc.thenComparing(stringLengthComparator));
