@@ -139,7 +139,6 @@ trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY j
 
 
 
-
 ## Вариант 6
 
 ### Задание 1
@@ -501,3 +500,4 @@ INSERT INTO job_history VALUES
 (200, '01.07.2002', '31.12.2006', 'AC_ACCOUNT', 90);
 
 ```
+$\frac{2}{5}$
