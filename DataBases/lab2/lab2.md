@@ -111,7 +111,7 @@ trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY j
 
 ### Задание 1
 ```SQL
-SELECT(employee_id % 10) as i, (employee_id % 10)*55-(employee_id % 10)as X FROM employees LIMIT 5 OFFSET 1; -- ХЗ
+select (column_value*55-column_value) as "X" from TABLE (sys.odcinumberlist(1,2,3,4,5));loyee_id % 10)as X FROM employees LIMIT 5 OFFSET 1; -- ХЗ
 ```
 
 ### Задание 2
@@ -500,4 +500,3 @@ INSERT INTO job_history VALUES
 (200, '01.07.2002', '31.12.2006', 'AC_ACCOUNT', 90);
 
 ```
-$\frac{2}{5}$
