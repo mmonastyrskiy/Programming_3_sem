@@ -111,7 +111,7 @@ trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY j
 
 ### Задание 1
 ```SQL
-select (column_value*55-column_value) as "X" from TABLE (sys.odcinumberlist(1,2,3,4,5));loyee_id % 10)as X FROM employees LIMIT 5 OFFSET 1; -- ХЗ
+ SELECT (i55-i) as "X" from (select 1 as i union SELECT 1 as i union SELECT 2 as i union SELECT 3 as i union SELECT 4 as i union SELECT 5 as i) as S ORDER BY (i55-i) asc;
 ```
 
 ### Задание 2
