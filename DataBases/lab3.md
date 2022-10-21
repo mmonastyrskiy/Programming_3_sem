@@ -66,22 +66,36 @@ WHERE
 ```
 ### Задание 3
 ```SQL
-SELECT first_name Имя, last_name Фамилия, salary Оклад,
-(SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id ) as "Мин. Оклад"
-FROM employees e WHERE salary <= 1.2 * (SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id )
+  SELECT last_name Фамилия_Р,first_name Имя_р,
+  (SELECT last_name Фамилия_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date),
+  (SELECT date(hire_date) Дата_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date) FROM employees e 
+  WHERE
+  (SELECT hire_date Фамилия_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date)  is not NULL
+
 ```
 ### Задание 4
 ```SQL
-SELECT first_name Имя, last_name Фамилия, salary Оклад
-FROM employees e WHERE salary > (SELECT avg(salary) FROM employees WHERE department_id =
-  (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Sales'))
+SELECT last_name AS "Фамилия_Р", first_name AS "Имя", trunc(salary,2) AS "Оклад" FROM employees WHERE salary >
+(SELECT AVG(salary) FROM employees) ORDER BY salary ASC;
 ```
 ### Задание 5
 ```SQL
-SELECT first_name Имя, last_name Фамилия FROM employees e  WHERE
- (SELECT count(*) FROM employees WHERE e.employee_id = manager_id) > 0
+SELECT last_name AS Фамилия_Р, job_id Ид_Долж FROM employees WHERE department_id = (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Executive')
 ```
 
+/*SELECT first_name, last_name, department_name FROM departments INNER JOIN employees USING(department_id)
+WHERE department_name = 'IT';
+SELECT first_name AS "Имя", last_name AS "Фамилия", country_name AS "Страна" FROM employees INNER JOIN departments USING(department_id)
+INNER JOIN locations USING(location_id)
+INNER JOIN countries USING(country_id);
+SELECT e1.last_name AS "Фамилия_Р", to_char(e1.hire_date, 'DD.MM.YYYY') AS "Дата_Р",
+e2.last_name AS "Фамилия_М", to_char(e2.hire_date, 'DD.MM.YYYY') AS "Дата_М"
+FROM employees e1 INNER JOIN employees e2 ON e1.manager_id = e2.employee_id
+WHERE e1.hire_date < e2.hire_date;
+SELECT last_name AS "Фамилия_Р", first_name AS "Имя", replace(to_char(trunc(salary,2), 'FM9999999D00'),'.',',') AS "Оклад" FROM employees WHERE salary >
+(SELECT AVG(salary) FROM employees) ORDER BY salary;
+SELECT last_name AS "Фамилия_Р", job_id AS "Ид_долж" FROM employees INNER JOIN jobs USING(job_id) WHERE
+department_id = (SELECT department_id FROM departments WHERE department_name = 'Executive');*/
 ## БД
 ```SQL
 SET DateStyle TO German;
