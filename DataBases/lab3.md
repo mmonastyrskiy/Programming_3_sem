@@ -83,19 +83,37 @@ SELECT last_name AS "Фамилия_Р", first_name AS "Имя", trunc(salary,2)
 SELECT last_name AS Фамилия_Р, job_id Ид_Долж FROM employees WHERE department_id = (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Executive')
 ```
 
-/*SELECT first_name, last_name, department_name FROM departments INNER JOIN employees USING(department_id)
+## Вариант 3
+
+### Задание 1
+```SQL
+SELECT first_name, last_name, department_name FROM departments INNER JOIN employees USING(department_id)
 WHERE department_name = 'IT';
+```
+
+### Задание 2 
+```SQL
 SELECT first_name AS "Имя", last_name AS "Фамилия", country_name AS "Страна" FROM employees INNER JOIN departments USING(department_id)
 INNER JOIN locations USING(location_id)
 INNER JOIN countries USING(country_id);
+```
+### Задание 3
+```SQL
 SELECT e1.last_name AS "Фамилия_Р", to_char(e1.hire_date, 'DD.MM.YYYY') AS "Дата_Р",
 e2.last_name AS "Фамилия_М", to_char(e2.hire_date, 'DD.MM.YYYY') AS "Дата_М"
 FROM employees e1 INNER JOIN employees e2 ON e1.manager_id = e2.employee_id
 WHERE e1.hire_date < e2.hire_date;
+```
+### Задание 4
+```SQL
 SELECT last_name AS "Фамилия_Р", first_name AS "Имя", replace(to_char(trunc(salary,2), 'FM9999999D00'),'.',',') AS "Оклад" FROM employees WHERE salary >
 (SELECT AVG(salary) FROM employees) ORDER BY salary;
+```
+### Задание 5
+```SQL
 SELECT last_name AS "Фамилия_Р", job_id AS "Ид_долж" FROM employees INNER JOIN jobs USING(job_id) WHERE
-department_id = (SELECT department_id FROM departments WHERE department_name = 'Executive');*/
+department_id = (SELECT department_id FROM departments WHERE department_name = 'Executive');
+```
 ## БД
 ```SQL
 SET DateStyle TO German;
