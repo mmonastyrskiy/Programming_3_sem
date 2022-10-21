@@ -83,7 +83,7 @@ SELECT last_name AS "Фамилия_Р", first_name AS "Имя", trunc(salary,2)
 SELECT last_name AS Фамилия_Р, job_id Ид_Долж FROM employees WHERE department_id = (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Executive')
 ```
 
-## Вариант 3
+## Вариант 7
 
 ### Задание 1
 ```SQL
