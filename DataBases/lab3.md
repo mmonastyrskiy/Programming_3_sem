@@ -38,6 +38,48 @@ SELECT first_name Имя, last_name Фамилия FROM employees e  WHERE
  (SELECT count(*) FROM employees WHERE e.employee_id = manager_id) > 0
 ```
 
+## Вариант 2
+
+### Задание 1 
+```SQL
+SELECT Distinct(job_id),(SELECT location_id FROM LOCATIONS WHERE location_id =
+ (SELECT location_id FROM DEPARTMENTS WHERE department_id =e.department_id)) as location_id FROM employees e WHERE
+(SELECT location_id FROM LOCATIONS WHERE location_id = (SELECT location_id FROM DEPARTMENTS WHERE department_id =e.department_id)) is not NULL
+```
+### Задание 2
+```SQL
+SELECT first_name Имя, last_name Фамилия,
+(SELECT region_name FROM regions WHERE region_id = 
+  (SELECT region_id FROM REGIONS WHERE region_id =
+  (SELECT region_id FROM COUNTRIES WHERE country_id = 
+    (SELECT country_id FROM LOCATIONS WHERE location_id = 
+      ( SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id)))))
+FROM employees e 
+WHERE
+(SELECT region_name FROM regions WHERE region_id = 
+  (SELECT region_id FROM REGIONS WHERE region_id =
+  (SELECT region_id FROM COUNTRIES WHERE country_id = 
+    (SELECT country_id FROM LOCATIONS WHERE location_id = 
+      ( SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id))))) IS NOT NULL
+```
+### Задание 3
+```SQL
+SELECT first_name Имя, last_name Фамилия, salary Оклад,
+(SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id ) as "Мин. Оклад"
+FROM employees e WHERE salary <= 1.2 * (SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id )
+```
+### Задание 4
+```SQL
+SELECT first_name Имя, last_name Фамилия, salary Оклад
+FROM employees e WHERE salary > (SELECT avg(salary) FROM employees WHERE department_id =
+  (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Sales'))
+```
+### Задание 5
+```SQL
+SELECT first_name Имя, last_name Фамилия FROM employees e  WHERE
+ (SELECT count(*) FROM employees WHERE e.employee_id = manager_id) > 0
+```
+
 ## БД
 ```SQL
 SET DateStyle TO German;
