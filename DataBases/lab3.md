@@ -42,8 +42,10 @@ SELECT first_name Имя, last_name Фамилия FROM employees e  WHERE
 
 ### Задание 1 
 ```SQL
+SET DateStyle TO German;
+
 SELECT Distinct(job_id),(SELECT location_id FROM LOCATIONS WHERE location_id =
- (SELECT location_id FROM DEPARTMENTS WHERE department_id =e.department_id)) as location_id FROM employees e WHERE
+ (SELECT location_id FROM DEPARTMENTS WHERE department_id =e.department_id)) as location_id FROM employees e WHERE e.hire_date > date('01.01.1999') and 
 (SELECT location_id FROM LOCATIONS WHERE location_id = (SELECT location_id FROM DEPARTMENTS WHERE department_id =e.department_id)) is not NULL
 ```
 ### Задание 2
