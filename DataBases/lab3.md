@@ -82,6 +82,8 @@ SELECT last_name AS "Фамилия_Р", first_name AS "Имя", trunc(salary,2)
 ```SQL
 SELECT last_name AS Фамилия_Р, job_id Ид_Долж FROM employees WHERE department_id = (SELECT department_id FROM DEPARTMENTS WHERE department_name = 'Executive')
 ```
+
+
 ## Вариант 3
 
 ### Задание 1 
@@ -92,7 +94,7 @@ IN ('Asia ','Americas ')
 ```
 ### Задание 2
 ```SQL
-SELECT * FROM employees WHERE EXTRACT(YEAR FROM hire_date) = 1999 ORDER BY hire_date ASC -- Сотрудников с таким годом нет в БД, запрос пустой
+SELECT first_name,last_name,date(hire_date),(SELECT job_title FROM Jobs WHERE job_id = e.job_id),(SELECT street_address FROM LOCATIONS WHERE location_id =(SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id)) FROM employees e WHERE EXTRACT(YEAR FROM hire_date) = 1999 ORDER BY hire_date ASC -- Сотрудников с таким годом нет в БД, запрос пустой
 ```
 ### Задание 3
 ```SQL
@@ -112,8 +114,35 @@ SELECT first_name Имя, last_name Фамилия, job_id, salary Оклад FR
 ```
 
 
+## Вариант 4
 
-
+### Задание 1 
+```SQL
+SELECT first_name,last_name,(SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id) 
+FROM employees e WHERE (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id) IN ('IT','Sales')
+```
+### Задание 2
+```SQL
+SELECT first_name, last_name,trunc(salary,0) as salary, (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id),
+(SELECT job_title FROM Jobs WHERE job_id = e.job_id) FROM employees e 
+WHERE salary > 10000 ORDER BY salary
+```
+### Задание 3
+```SQL
+SELECT first_name Имя, last_name Фамилия, salary Оклад,
+(SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id ) as "Мин. Оклад"
+FROM employees e WHERE salary <= 1.2 * (SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id )
+```
+### Задание 4
+```SQL
+SELECT last_name AS "Фамилия_Р", first_name AS "Имя", replace(to_char(trunc(salary,2), 'FM9999999D00'),'.',',') AS "Оклад" FROM employees WHERE salary >
+(SELECT AVG(salary) FROM employees) ORDER BY salary;
+```
+### Задание 5
+```SQL
+SELECT first_name Имя, last_name Фамилия, job_id Должность, salary Оклад FROM employees e WHERE salary =
+(SELECT max_salary FROM Jobs WHERE Jobs.job_id = e.job_id)
+```
 
 ## Вариант 7
 
