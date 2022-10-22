@@ -144,6 +144,45 @@ SELECT first_name Имя, last_name Фамилия, job_id Должность, s
 (SELECT max_salary FROM Jobs WHERE Jobs.job_id = e.job_id)
 ```
 
+
+
+## Вариант 5
+
+### Задание 1 
+```SQL
+SELECT first_name, last_name,(SELECT job_title FROM Jobs WHERE job_id = e.job_id) FROM employees e WHERE (SELECT job_title FROM Jobs WHERE job_id = e.job_id) = 'Programmer'
+```
+### Задание 2
+```SQL
+SELECT first_name, last_name, (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id),
+(SELECT country_name FROM COUNTRIES c WHERE country_id = 
+ (SELECT country_id FROM LOCATIONS WHERE location_id = 
+  (SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id))) FROM employees e
+   WHERE
+  (SELECT country_name FROM COUNTRIES c WHERE country_id = 
+ (SELECT country_id FROM LOCATIONS WHERE location_id = 
+  (SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id))) IS NOT NULL and (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id) IN ('Shipping','Finance')
+```
+### Задание 3
+```SQL
+SELECT first_name Имя, last_name Фамилия, salary Оклад,
+(SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id ) as "Мин. Оклад"
+FROM employees e WHERE salary <= 1.2 * (SELECT trunc(min_salary,0) FROM jobs j WHERE j.job_id = e.job_id )
+```
+### Задание 4
+```SQL
+  SELECT last_name Фамилия_Р,first_name Имя_р,
+  (SELECT last_name Фамилия_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date),
+  (SELECT date(hire_date) Дата_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date) FROM employees e 
+  WHERE
+  (SELECT hire_date Фамилия_М FROM employees m WHERE m.employee_id = e.manager_id and e.hire_date < m.hire_date)  is not NULL
+```
+### Задание 5
+```SQL
+SELECT first_name Имя, last_name Фамилия, job_id Должность, salary Оклад FROM employees e WHERE salary =
+(SELECT max_salary FROM Jobs WHERE Jobs.job_id = e.job_id)
+```
+
 ## Вариант 7
 
 ### Задание 1
