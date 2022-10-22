@@ -248,7 +248,54 @@ SELECT last_name AS "Фамилия_Р", first_name AS "Имя", replace(to_char
 ```SQL
 SELECT last_name AS "Фамилия_Р", job_id AS "Ид_долж" FROM employees INNER JOIN jobs USING(job_id) WHERE
 department_id = (SELECT department_id FROM departments WHERE department_name = 'Executive');
+
 ```
+
+
+
+
+
+
+
+## Вариант 8
+
+### Задание 1
+```SQL
+SELECT first_name,last_name,salary,(SELECT job_title FROM jobs where job_id = e.job_id)FROM employees e WHERE (SELECT job_title FROM jobs where job_id = e.job_id) = 'Sales Representative' ORDER BY salary ASC
+```
+
+### Задание 2 
+```SQL
+SELECT first_name, last_name, (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id),
+(SELECT country_name FROM COUNTRIES c WHERE country_id = 
+ (SELECT country_id FROM LOCATIONS WHERE location_id = 
+  (SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id))) FROM employees e
+   WHERE
+  (SELECT country_name FROM COUNTRIES c WHERE country_id = 
+ (SELECT country_id FROM LOCATIONS WHERE location_id = 
+  (SELECT location_id FROM DEPARTMENTS WHERE department_id = e.department_id))) IS NOT NULL and (SELECT department_name FROM DEPARTMENTS WHERE department_id = e.department_id) IN ('Shipping','Finance')
+```
+### Задание 3
+```SQL
+SELECT e1.last_name AS "Фамилия_Р", to_char(e1.hire_date, 'DD.MM.YYYY') AS "Дата_Р",
+e2.last_name AS "Фамилия_М", to_char(e2.hire_date, 'DD.MM.YYYY') AS "Дата_М"
+FROM employees e1 INNER JOIN employees e2 ON e1.manager_id = e2.employee_id
+WHERE e1.hire_date < e2.hire_date;
+```
+### Задание 4
+```SQL
+SELECT last_name AS "Фамилия_Р", first_name AS "Имя", replace(to_char(trunc(salary,2), 'FM9999999D00'),'.',',') AS "Оклад" FROM employees WHERE salary >
+(SELECT AVG(salary) FROM employees) ORDER BY salary;
+```
+### Задание 5
+```SQL
+SELECT first_name Имя, last_name Фамилия FROM employees e  WHERE
+ (SELECT count(*) FROM employees WHERE e.employee_id = manager_id) > 0
+```
+
+
+
+
 ## БД
 ```SQL
 SET DateStyle TO German;
