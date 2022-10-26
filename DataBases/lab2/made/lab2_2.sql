@@ -330,4 +330,4 @@ FROM employees;
 SELECT job_id "Должность" ,
 REPLACE(to_char(trunc(max(salary),0),'99999'),'.',',') "Максимальная зарплата",
 REPLACE(to_char(trunc(min(salary),0),'99999'),'.',',') "Минимальная зарплата",
-REPLACE(to_char(trunc(avg(salary),2),'99999.99'),'.',',') "Средняя зарплата" FROM employees GROUP BY job_id;
+trunc(avg(salary),2) "Средняя зарплата" FROM employees GROUP BY job_id;
