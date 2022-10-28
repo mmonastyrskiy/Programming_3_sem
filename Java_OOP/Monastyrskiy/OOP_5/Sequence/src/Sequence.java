@@ -26,23 +26,23 @@ public class Sequence {
     }
 
 
-    public static void getSelector(Sequence sequence) {
+    public  void getSelector() {
         Selector selector = new Selector() {
             private int i = 0;
 
             @Override
             public boolean end() {
-                return i == sequence.items.length;
+                return i == items.length;
             }
 
             @Override
             public Object current() {
-                return sequence.items[i];
+                return items[i];
             }
 
             @Override
             public void next() {
-                if (i < sequence.items.length)
+                if (i < items.length)
                     i++;
             }
         };
@@ -55,18 +55,18 @@ public class Sequence {
     }
 
 
-    public static void getSelectorReverse(Sequence sequence) {
+    public  void getSelectorReverse(Sequence sequence) {
         Selector selector2 = new Selector() {
             private int i = 0;
 
             @Override
             public boolean end() {
-                return i == sequence.items.length;
+                return i == items.length;
             }
 
             @Override
             public Object current() {
-                return sequence.items[i];
+                return items[i];
             }
 
             @Override
