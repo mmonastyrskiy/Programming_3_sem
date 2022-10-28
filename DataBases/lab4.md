@@ -236,35 +236,56 @@ select * from rmanager
 
 ### Задание 1 
 ```SQL
-
+create table staff(
+    id integer primary key,
+  name varchar(64) not null,
+    department varchar(64) not null
+);
 ```
 ### Задание 2 
 ```SQL
-
+create sequence staff_id_seq start with 12
+	increment by -8
+	 CYCLE
+	cache 100;
+	MAXVALUE 12
 ```
 
 ### Задание 3 
 ```SQL
-
+insert into staff(id, name, department) 
+  values(nextval('staff_id_seq'),'Ivan Makarenko', 'Director')
+  returning *; 
 ```
 ### Задание 4 
 ```SQL
-
+insert into staff(id,name,department)
+	values(nextval("staff_id_seq"),substr(first_name,1,1) || substr(last_name,1,1),
+		department_name)
+	from employees join departments using(department_id)
+	returning *;
 ```
 
 ### Задание 5
 ```SQL
-
+update staff set department = 'Innovations department' where id in (12,4)
+	returning *;
 ```
 
 ### Задание 6 
 ```SQL
-
+delete from staff where name = "KK"
 ```
 
 ### Задание 8 
 ```SQL
-
+with recursive remployees(employee_id, manager_id) as
+  (select employee_id, manager_id 
+     from employees where employee_id = 206
+   union all
+   select employees.employee_id, employees.manager_id 
+     from employees join remployees on remployees.employee_id = employees.manager_id)
+select * from remployees;
 ```
 
 
