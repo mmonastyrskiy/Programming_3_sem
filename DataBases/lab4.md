@@ -356,33 +356,51 @@ select * from rmanager
 
 ### Задание 1 
 ```SQL
-
+CREATE TABLE accounts(
+  account_number INTEGER PRIMARY KEY,
+  person varchar(64) NOT NULL,
+  percents real
+  );
 ```
 ### Задание 2 
 ```SQL
-
+CREATE SEQUENCE accounts_account_number_seq
+  MAXVALUE 12
+  start with 12 
+  no cycle 
+  increment by -2 
+  cache 20 
+  MINVALUE -1200
 ```
 
 ### Задание 3 
 ```SQL
-
+INSERT INTO accounts(account_number, person, percents)
+  VALUES(nextval('accounts_account_number_seq'), 'Ivanov Ivan Ivanovich', '7,5')
+  RETURNING *;
 ```
 ### Задание 4 
 ```SQL
-
+insert into accounts values(nextval('accounts_account_number_seq'),last_name || ' ' || first_name,10.0) from employees
 ```
 
 ### Задание 5
 ```SQL
-
+UPDATE accounts SET percents = (percents/2);
 ```
 
 ### Задание 6 
 ```SQL
-
+DELETE FROM accounts WHERE (percents < 10) AND (percents > 5);
 ```
 
 ### Задание 8 
 ```SQL
-
+WITH recursive remployees(employee_id, manager_id) as
+  (select employee_id, manager_id 
+     from employees where employee_id = 206
+   union all
+   select employees.employee_id, employees.manager_id 
+     from employees join remployees on remployees.employee_id = employees.manager_id)
+select * from remployees;
 ```
