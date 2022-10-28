@@ -12,7 +12,7 @@ create table staff(
 ```SQL
 create sequence staff_id_seq start with 12 
   cycle increment by 8 cache 100;
-  
+
 ```
 
 ### Задание 3 
@@ -61,35 +61,57 @@ select * from remployees;
 
 ### Задание 1 
 ```SQL
-
+create table deps(
+id integer primary key,
+name varchar(64) not null,
+region varchar(64) not null
+);
 ```
 ### Задание 2 
 ```SQL
-
+create sequence deps_id_seq start with 31
+	increment by -2
+	NO CYCLE
+	MAXVALUE 31;
 ```
 
 ### Задание 3 
 ```SQL
-
+insert into deps(id, name, department) 
+  values(nextval('deps_id_seq'),'Direction', 'Mars')
+  returning *; 
 ```
 ### Задание 4 
 ```SQL
-
+insert into deps(id, name, region) 
+  select nextval('deps_id_seq'), department_name, 
+    region_name
+    from departments
+	join locations using(location_id) join countries using(country_id) join regions using(region_id)
+    returning *;
 ```
 
 ### Задание 5
 ```SQL
-
+update deps set region = 'Europe' where region = 'Mars'
+	returning *;
 ```
 
 ### Задание 6 
 ```SQL
-
+delete from deps where id > 15
+	returning *;
 ```
 
 ### Задание 8 
 ```SQL
-
+with recursive rmanager (employee_id,manager_id) as (
+select employee_id, manager_id from employees where employee_id  = 115 -- ИДшник
+union all
+select employees.employee_id, employees.manager_id
+from employees join rmanager on rmanager.manager_id = employees.employee_id
+)
+select * from rmanager 
 ```
 
 
