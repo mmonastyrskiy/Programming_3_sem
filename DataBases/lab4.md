@@ -294,35 +294,58 @@ select * from remployees;
 
 ### Задание 1 
 ```SQL
-
+create table deps(
+id integer primary key,
+name varchar(64) not null,
+region varchar(64) not null
+);
 ```
 ### Задание 2 
 ```SQL
-
+create sequence deps_id_seq start with 31
+	CYCLE
+	increment by -3
+	cache 10
+	-- правильный порядок этаче?
 ```
 
 ### Задание 3 
 ```SQL
-
+insert into deps(id, name, department) 
+  values(nextval('deps_id_seq'),'Direction', 'Mars')
+  returning *;
 ```
 ### Задание 4 
 ```SQL
+insert into deps values(nextval("deps_id_seq"), department_name || ' ' || department_id,
+region_name)
+    from departments
+	join locations using(location_id) join countries using(country_id) join regions using(region_id)
+	returning *;
 
 ```
 
 ### Задание 5
 ```SQL
-
+update deps set region = upper(substr(region,1,3))
+	returning *;
 ```
 
 ### Задание 6 
 ```SQL
-
+delete from deps where character_length(region) > 15
+	returning *;
 ```
 
 ### Задание 8 
 ```SQL
-
+with recursive rmanager (employee_id,manager_id) as (
+select employee_id, manager_id from employees where employee_id  = 115 -- ИДшник
+union all
+select employees.employee_id, employees.manager_id
+from employees join rmanager on rmanager.manager_id = employees.employee_id
+)
+select * from rmanager
 ```
 
 
