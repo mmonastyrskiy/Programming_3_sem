@@ -103,7 +103,7 @@ void calc(stack* head_ptr,const char* equasion){
 
     }
     res = pop(head_ptr);
-    printf("%c\n",res);
+    printf("Result: %c\n",res);
 
 }
 int main(int argc, const char** argv){
@@ -119,6 +119,7 @@ int main(int argc, const char** argv){
         exit(1);
     }
     head_ptr -> next = head;
+    printf("----------------STACK TRACEBACK -------------\n");
     calc(head_ptr,argv[1]);
     return 0;
 
