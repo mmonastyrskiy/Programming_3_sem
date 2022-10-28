@@ -77,10 +77,8 @@ void calc(stack* head_ptr,const char* equasion){
     int i;
     for (i = 0; equasion[i] != '\0'; i++){
         cur = equasion[i];
-        /*printf("%c:%d\n",cur,isdigit(cur));*/
         if(isdigit(cur)>0){
             push(head_ptr,cur);
-           /* printf("\n%c",head_ptr->next->i);*/
         }
         else if((cur == '+') ||(cur == '-') || (cur == '*') || (cur == '/'))
         {
@@ -109,7 +107,7 @@ void calc(stack* head_ptr,const char* equasion){
 int main(int argc, const char** argv){
     stack* head_ptr;
     stack* head = NULL;
-    if((argc < 2) || (argc > 3)){
+    if(argc != 2){
         printf("bad argument");
         exit(3);
     }
