@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <error.h>
 #include <fcntl.h>
-
 #define BUFFER_SIZE 4096
 #define N 10
 #define INFlags O_RDONLY
@@ -14,7 +13,7 @@ struct Data{
 int i;
 char c[128];
 
-};
+}data;
 
 typedef struct NodeFull
 {

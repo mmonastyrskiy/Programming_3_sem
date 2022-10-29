@@ -1,4 +1,6 @@
 #include "lists.h"
+#include <time.h>
+#include <stdlib.h>
 
 int main(int argc, char const *argv[])
 {

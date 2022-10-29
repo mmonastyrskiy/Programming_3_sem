@@ -21,7 +21,7 @@ size_t dump_to_file(node* ptr,const char* path){
 		exit(2);
 	}
 	for(i=0;i<N;i++){
-	fw += write(fdw,&t->data,sizeof(struct Data));
+	fw += write(fdw,&t->data,sizeof(data));
 	t = t-> next;
 }
 close(fdw);
@@ -44,7 +44,7 @@ size_t read_from_file(node* ptr,const char* path){
 		exit(3);	
 	}
 	for(i=0;i<N;i++){
-		fr += read(fdr,&t->data,sizeof(struct Data));
+		fr += read(fdr,&t->data,sizeof(data));
 		t = t-> next;
 	}
 	close(fdr);
