@@ -101,7 +101,7 @@ void calc(stack* head_ptr,const char* equasion){
 
     }
     res = pop(head_ptr);
-    printf("Result: %c\n",res);
+    printf("Result: %d\n",res-48);
 
 }
 int main(int argc, const char** argv){

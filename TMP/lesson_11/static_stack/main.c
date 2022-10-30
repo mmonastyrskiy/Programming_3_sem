@@ -104,7 +104,7 @@ void calc(char* head_ptr, char* equasion,int n,int* cur_head){
 
     }
     res = pop(head_ptr,cur_head);
-    printf("Result: %c\n",res);
+    printf("Result: %d\n",res-48);
 
 }
 
@@ -114,10 +114,18 @@ int main(int argc, const char** argv){
 	int cur_head;
 	char* equasion;
 	char* head_ptr;
-	equasion = malloc(sizeof(char)*100);
+    equasion = malloc(sizeof(char)*100);
+    if(equasion == NULL){
+        printf("malloc error\n");
+        exit(1);
+    }
 	cur_head =0;
 	scanf("%d\n%s",&n,equasion);
     head_ptr = malloc(sizeof(char)*n);
+    if (head_ptr == NULL){
+        printf("malloc error\n");
+        exit(1);
+    }
     printf("----------------STACK TRACEBACK -------------\n");
     calc(head_ptr,equasion,n,&cur_head);
     return 0;

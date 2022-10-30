@@ -41,6 +41,6 @@ char IsClean(stack* head_ptr){
     return head_ptr->next == NULL ? '0' : '1';
 }
 
-/*На выходные написать стек через стат массив + калькулятор через польскую нотацию
-// Ханойские башни 
-// польский калькуль через стек*/
+void clean(stack* head_ptr){
+head_ptr->next = NULL;
+}
