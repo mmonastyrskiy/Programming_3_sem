@@ -30,9 +30,12 @@ void clear(); /* Очистить экран */
  void SpawnSnake(char** field,snake* s);
  void ticker(char ** field, apple* a, snake* s);
 
+
 void printfield(char** f);
 
 void Start(char ** field,snake* s,apple* a); /*Начать игру*/
+
+void Start(); /*Начать игру*/
 void GameOver(int score, int code); /*Закончить игру*/
 
 
