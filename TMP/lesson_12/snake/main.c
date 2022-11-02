@@ -5,7 +5,7 @@
 #include <unistd.h>
 int main(int argc, char const *argv[])
 {
-	int i,j;
+	int i;
 	char** field;
 	snake* s;
 	apple* a;

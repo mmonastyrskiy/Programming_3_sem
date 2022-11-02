@@ -7,7 +7,7 @@ void printfield(char** f)
 {
 int i,j;
 for(i=0;i<Y_REZ;i++){
-	for (int j = 0; j < X_REZ; j++)
+	for (j = 0; j < X_REZ; j++)
 	{
 		printf(" %c ",f[i][j]);
 	}
