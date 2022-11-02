@@ -18,7 +18,7 @@ srand(time(NULL));
 	}
 	for (i=0;i<Y_REZ;i++){
 		field[i] = malloc(sizeof(char)* X_REZ);
-		if(field==NULL){
+		if(field[i]==NULL){
 			printf("Malloc error \n");
 			exit(1);
 		}
@@ -38,11 +38,11 @@ if(a==NULL){
 }
 
  Start(field, s, a); /*Начать игру*/
-	while (1){
-		printf("Ping");
+	/*while (1){
 		ticker(field, a, s);
 		sleep(1);
 	}
+	*/
 	return 0;
 } 
 

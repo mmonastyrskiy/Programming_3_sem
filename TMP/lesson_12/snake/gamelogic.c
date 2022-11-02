@@ -6,23 +6,27 @@ void printfield(char** f)
 {
 int i,j;
 for(i=0;i<Y_REZ;i++){
-	for (int j = 0; i < X_REZ; ++j)
+	for (int j = 0; j < X_REZ; j++)
 	{
-		printf("%c",f[i][j]);
+		printf(" %c ",f[i][j]);
 	}
 	printf("\n");
 }
 }
 
 void ticker(char ** field, apple* a, snake* s){
-	printfield(field);
+	/*system("clear");
+	printfield(field);*/
 }
 
 
 
 
 char isEmpty(char** field,int x, int y){
-	return (field[x][y]  == ' ') ? '0':'1';
+	if(field[x][y] == ' '){
+		return '0';
+	}
+	return '1';
 }
 
  void SpawnSnake(char** field,snake* s){
@@ -41,9 +45,11 @@ char isEmpty(char** field,int x, int y){
 
 
  void SpawnApple(char** field,apple* a){
- 	int x,y;
- 	x = rand()%X_REZ;
- 	y = rand()% Y_REZ;
+ 		int x,y;
+ 	srand(time(NULL));
+ 	x = (int)rand()%X_REZ;
+ 	y = (int)rand()% Y_REZ;
+ 	printf("%x %x",x,y);
  	if(isEmpty(field,x,y) == '0'){
  		a->x = x;
  		a->y =y;
@@ -52,27 +58,25 @@ char isEmpty(char** field,int x, int y){
  	}
  	SpawnApple(field,a);
  }
-void Start(char ** field,snake* s,apple* a) /*Начать игру*/{
+void Start(char** field, snake* s,apple* a) /*Начать игру*/{
 	int i,j;
-	for(i=0;i<X_REZ;i++){
-		field[0][i] = '-';
-		field[Y_REZ-1][i] = '-';
+
+	for(i=0;i<Y_REZ;i++){
+		field[i][0] = '-';
+		field[i][X_REZ] = '-';
 
 	}
 
 
-		for(i=0;i<Y_REZ;i++){
-		field[i][0] = '|';
-		field[i][X_REZ-1] = '|';
+	for(i=0;i<X_REZ-1;i++){
+	field[0][i] = '|';
+	field[Y_REZ-1][i] = '|';
+	}
+	for(i=1;i<Y_REZ-1;i++){
+		for(j=1;j<X_REZ-1;j++){
+			field[i][j] = ' ';
 		}
-
-for(i=1;i<Y_REZ-1;i++){
-	for(j=1;j<X_REZ-1;i++)
-		field[i][j]=' ';
-}
-
-
-
+	}
 	SpawnApple(field,a);
 	field[a->x][a->y] = a->repr;
 	/*
