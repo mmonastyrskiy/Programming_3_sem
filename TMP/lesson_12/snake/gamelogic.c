@@ -24,7 +24,7 @@ void ticker(char ** field, apple* a, snake* s){
 
 
 char isEmpty(char** field,int x, int y){
-	if(field[y][x] == '.'){
+	if((x >= 1 && x < X_REZ) && (y >=1 && y < Y_REZ) &&(field[y][x] == '.')){
 		return '0';
 	}
 	return '1';
@@ -32,8 +32,8 @@ char isEmpty(char** field,int x, int y){
 
  void SpawnSnake(char** field,snake* s){
  	int x,y;
- 	x = rand()%X_REZ;
- 	y = rand()% Y_REZ;
+ 	x = rand();
+ 	y = rand();
  	if(isEmpty(field,x,y) == '0'){
  		s->x = x;
  		s->y =y;
