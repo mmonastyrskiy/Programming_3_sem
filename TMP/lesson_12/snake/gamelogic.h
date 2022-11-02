@@ -21,7 +21,7 @@ void Eat(int* score); /*Кушоц*/
 void teleport(snake* s); /*Телепортировать змею, если за краем экрана*/
 void clear(); /* Очистить экран */
 
-void ticker(char *** field, apple* a, snake* s)
+void ticker(char *** field, apple* a, snake* s);
 void Start(); /*Начать игру*/
 void GameOver(int score, int code); /*Закончить игру*/
 
