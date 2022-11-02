@@ -2,6 +2,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 void printfield(char** f)
 {
 int i,j;
@@ -23,7 +24,7 @@ void ticker(char ** field, apple* a, snake* s){
 
 
 char isEmpty(char** field,int x, int y){
-	if(field[x][y] == ' '){
+	if(field[y][x] == '.'){
 		return '0';
 	}
 	return '1';
@@ -45,11 +46,11 @@ char isEmpty(char** field,int x, int y){
 
 
  void SpawnApple(char** field,apple* a){
- 		int x,y;
- 	srand(time(NULL));
- 	x = (int)rand()%X_REZ;
- 	y = (int)rand()% Y_REZ;
- 	printf("%x %x",x,y);
+ 		int x;
+ 		int y;
+ 	x = rand() % X_REZ;
+ 	y = rand()% Y_REZ;
+ 	printf("SpawnApple: %d %d",x,y);
  	if(isEmpty(field,x,y) == '0'){
  		a->x = x;
  		a->y =y;
@@ -57,6 +58,7 @@ char isEmpty(char** field,int x, int y){
  		return;
  	}
  	SpawnApple(field,a);
+
  }
 void Start(char** field, snake* s,apple* a) /*Начать игру*/{
 	int i,j;
@@ -74,7 +76,7 @@ void Start(char** field, snake* s,apple* a) /*Начать игру*/{
 	}
 	for(i=1;i<Y_REZ-1;i++){
 		for(j=1;j<X_REZ-1;j++){
-			field[i][j] = ' ';
+			field[i][j] = '.';
 		}
 	}
 	SpawnApple(field,a);
