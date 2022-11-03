@@ -6,6 +6,39 @@
 #include <termios.h> 
 #include <unistd.h>
 
+
+
+
+void Grow(char** field,snake* s){
+    snake* new;
+    snake* head;
+    head = s;
+    while(!(isHead(head)=='0')){
+        head = head-> next;
+    }
+    new = malloc(sizeof(snake));
+    if(new == NULL){
+        printf("malloc error");
+        exit(2);
+    }
+head->score +=1;
+new -> next = s;
+new-> repr = '=';
+new -> vel_x =0;
+new -> vel_y = 0;
+new -> x = s->x - head->vel_x;
+new -> y = s->y - head->vel_y;
+field[new->y][new->x] = new->repr;
+
+}
+
+
+
+void Eat(char** field,snake* s, apple* a){
+    Grow(field,s);
+    SpawnApple(field,a);
+}
+
 void offCanon(){
     struct termios orig_termios;
     struct termios raw;
@@ -68,37 +101,49 @@ void SetHorizontalSpeed(snake* s, int v){
     return;
 }
 
-void MoveUp(char** field,snake* s){ 
+void MoveUp(char** field,snake* s,apple* a){ 
     field[s->y][s->x] = '.';
-    if(s->y+1 >= Y_REZ-1){
+    if(s->y+1 >= Y_REZ){
         s->y = s->y+2-Y_REZ;
     }
     s->y = s->y+1;
+    if((a->x == s->x)&&(a->y == s->y)){
+        Eat(field,s,a);
+    }
     field[s->y][s->x] = '>';
 }
 
-void MoveDown(char** field,snake* s){
+void MoveDown(char** field,snake* s,apple* a){
   field[s->y][s->x] = '.';
         if(s->y-1 <= 1){
         s->y = s->y-2+Y_REZ;
     }
     s->y = s->y-1;
+    if((a->x == s->x)&&(a->y == s->y)){
+        Eat(field,s,a);
+    }
     field[s->y][s->x] = '>';
 }
-void MoveLeft(char** field, snake* s){
+void MoveLeft(char** field, snake* s,apple* a){
   field[s->y][s->x] = '.';
         if(s->x-1 <= 1){
         s->y = s->x-2+Y_REZ;
     }
     s->x = s->x-1;
+    if((a->x == s->x)&&(a->y == s->y)){
+        Eat(field,s,a);
+    }
     field[s->y][s->x] = '>';
 } 
-void MoveRight(char** field, snake* s){
+void MoveRight(char** field, snake* s,apple* a){
     field[s->y][s->x] = '.';
         if(s->x+1 >= X_REZ-1){
         s->x = s->x+2-X_REZ;
     }
     s->x = s->x+1;
+    if((a->x == s->x)&&(a->y == s->y)){
+        Eat(field,s,a);
+    }
     field[s->y][s->x] = '>';
 }
 
@@ -111,7 +156,7 @@ void Move(char** field, snake* s){
     s-> y = s -> next -> y;
     field[prev_y][prev_x] = '.';
 }
-void SnakeMover(char** field,snake* s) /*Общий метод движения змеи*/
+void SnakeMover(char** field,snake* s,apple* a) /*Общий метод движения змеи*/
 {
     snake* t;
     t = s;
@@ -120,16 +165,16 @@ void SnakeMover(char** field,snake* s) /*Общий метод движения 
         t = t-> next;
     }
     if(s-> vel_x == 1 ){
-        MoveRight(field,t);
+        MoveRight(field,t,a);
     }
     if(s-> vel_x == -1){
-        MoveLeft(field, t);
+        MoveLeft(field, t,a);
     }
     if(s-> vel_y == 1){
-        MoveUp(field,t);
+        MoveUp(field,t,a);
     }
     if(s->vel_y == -1){
-        MoveDown(field,t);
+        MoveDown(field,t,a);
     }
 }
 
@@ -146,9 +191,8 @@ for(i=0;i<Y_REZ;i++){
 }
 
 void ticker(char ** field, apple* a, snake* s){
-    char c,k;
+    char c;
     c=-1;
-    k=-1;
     c = getc(stdin);
     switch(c){
         case 'w':SetVerticalSpeed(s,-1);break;
@@ -157,7 +201,7 @@ void ticker(char ** field, apple* a, snake* s){
         case 'a':SetHorizontalSpeed(s,-1);break;
         case 'q':onCanon(); return;
     };
-    SnakeMover(field,s);
+    SnakeMover(field,s,a);
     system("clear");
     printfield(field);
 }

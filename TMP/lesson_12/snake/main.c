@@ -34,6 +34,7 @@ if(s == NULL){
 s->vel_x = 1;
 s-> vel_y =0;
 s-> next = NULL;
+s->score = 0;
 
 a = malloc(sizeof(apple));
 if(a==NULL){
@@ -44,7 +45,6 @@ if(a==NULL){
  Start(field, s, a); /*Начать игру*/
 	while (1){
 		ticker(field, a, s);
-		/*sleep(1);*/
 	}
 
 	return 0;
