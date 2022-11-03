@@ -14,11 +14,12 @@ typedef struct Apple {
     char repr;
 } apple;
 
-void MoveUp(char** field,snake* s); /* обрабатывает нажатие на стрелочку вверх для головы*/
-void MoveDown(char** field,snake* s); /* обрабатывает нажатие на стрелочку вниз для головы*/
-void MoveLeft(char** field, snake* s); /* обрабатывает нажатие на стрелочку влево для головы*/
-void MoveRight(char** field, snake* s); /* обрабатывает нажатие на стрелочку вправо для головы*/
-void Move(char** field,snake* s); /* Движение такт без нажатия клавиши, и Движение всей остальной змеи*/
+void MoveUp(char** field,snake* s);
+void MoveDown(char** field,snake* s);
+void MoveLeft(char** field, snake* s); 
+void MoveRight(char** field, snake* s); 
+void Move(char** field,snake* s); 
+
 void SnakeMover(char** field,snake* s); /*Общий метод движения змеи*/
 char isSnake(char** field,int x,int y); /* содержит ли клетка змею? '0' - True '1'*/
 char isApple(char** field,int x, int y); /* содержит ли клетка яблоко ? '0' - True '1'*/
@@ -35,11 +36,10 @@ void clear(); /* Очистить экран */
 void printfield(char** f);
 
 void Start(char ** field,snake* s,apple* a); /*Начать игру*/
-
-void Start(); /*Начать игру*/
 void GameOver(int score, int code); /*Закончить игру*/
 
-
+void SetVerticalSpeed(snake* s, int v);
+void SetHorizontalSpeed(snake* s, int v);
 
 
 void SpawnApple(char** field,apple* a); /*создать яблоко*/
