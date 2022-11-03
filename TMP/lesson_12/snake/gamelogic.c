@@ -42,36 +42,44 @@ void SetHorizontalSpeed(snake* s, int v){
 }
 
 void MoveUp(char** field,snake* s){ 
+    field[s->y][s->x] = '.';
     if(s->y+1 >= Y_REZ-1){
         s->y = s->y+2-Y_REZ;
     }
     s->y = s->y+1;
+    field[s->y][s->x] = '>';
 }
 
 void MoveDown(char** field,snake* s){
+  field[s->y][s->x] = '.';
         if(s->y-1 <= 1){
         s->y = s->y-2+Y_REZ;
     }
     s->y = s->y-1;
+    field[s->y][s->x] = '>';
 }
 void MoveLeft(char** field, snake* s){
+  field[s->y][s->x] = '.';
         if(s->x-1 <= 1){
         s->y = s->x-2+Y_REZ;
     }
     s->x = s->x-1;
+    field[s->y][s->x] = '>';
 } 
 void MoveRight(char** field, snake* s){
+    field[s->y][s->x] = '.';
         if(s->x+1 >= X_REZ-1){
         s->x = s->x+2-X_REZ;
     }
     s->x = s->x+1;
+    field[s->y][s->x] = '>';
 }
 
 
 void Move(char** field, snake* s){
         int prev_x, prev_y;
     prev_x = s-> x ;
-    prev_y - s -> y;
+    prev_y = s -> y;
     s-> x = s-> next ->x;
     s-> y = s -> next -> y;
     field[prev_y][prev_x] = '.';
