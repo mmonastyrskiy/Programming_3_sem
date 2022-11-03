@@ -3,7 +3,27 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h> 
+#include <unistd.h>
 
+void offCanon(){
+    struct termios orig_termios;
+    struct termios raw;
+    tcgetattr(STDIN_FILENO,&orig_termios);
+    raw = orig_termios;
+    raw.c_lflag &=  ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
+}
+
+
+void onCanon(){
+    struct termios orig_termios;
+    struct termios raw;
+    tcgetattr(STDIN_FILENO,&orig_termios);
+    raw = orig_termios;
+    raw.c_lflag |= (ECHO | ICANON);
+    tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
+}
 
 
 char isHead(snake* t){
@@ -11,23 +31,28 @@ char isHead(snake* t){
 }
 
 void SetVerticalSpeed(snake* s, int v){
-    if(isHead(s)=='0'){
-        switch(v){
-            case 1:{
-                s->vel_y = v;
-                s->vel_x = 0;
-            }
-            case -1:{
-                s->vel_y = v;
-                s->vel_x = 0;
-            }
-            default: return;
-        };
+    printf("SetVerticalSpeed");
+    snake* t;
+    t = s;
+    while(isHead(t)!= '0'){
+        t = t-> next;
     }
-    return;
+
+    switch(v){
+            case 1:
+                s->vel_x = 0;
+                s->vel_y = v;
+            case -1:
+                s->vel_x = 0;
+                s->vel_y = v;
+            default: return;
+        }
 }
 void SetHorizontalSpeed(snake* s, int v){
-    if(isHead(s)=='0'){
+    printf("SetHorizontalSpeed");
+    snake* t;
+    t = s;
+    if(isHead(t)=='0'){
         switch(v){
             case 1:
                 s->vel_x = v;
@@ -38,6 +63,8 @@ void SetHorizontalSpeed(snake* s, int v){
             default: return;
         }
     }
+    t = t-> next;
+    SetHorizontalSpeed(t,v);
     return;
 }
 
@@ -119,6 +146,17 @@ for(i=0;i<Y_REZ;i++){
 }
 
 void ticker(char ** field, apple* a, snake* s){
+    char c,k;
+    c=-1;
+    k=-1;
+    c = getc(stdin);
+    switch(c){
+        case 'w':SetVerticalSpeed(s,-1);break;
+        case 's':SetVerticalSpeed(s,1);break;
+        case 'd':SetHorizontalSpeed(s,1);break;
+        case 'a':SetHorizontalSpeed(s,-1);break;
+        case 'q':onCanon(); return;
+    };
     SnakeMover(field,s);
     system("clear");
     printfield(field);
@@ -154,7 +192,6 @@ char isEmpty(char** field,int x, int y){
         int y;
     x = rand() % X_REZ;
     y = rand() % Y_REZ;
-    printf("SpawnApple: %d",y);
     if(isEmpty(field,x,y) == '0'){
         a->x = x;
         a->y =y;
@@ -186,4 +223,5 @@ void Start(char** field, snake* s,apple* a) /*Начать игру*/{
     SpawnApple(field,a);
 
     SpawnSnake(field,s);
+    offCanon();
 }

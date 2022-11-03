@@ -44,7 +44,7 @@ if(a==NULL){
  Start(field, s, a); /*Начать игру*/
 	while (1){
 		ticker(field, a, s);
-		sleep(1);
+		/*sleep(1);*/
 	}
 
 	return 0;

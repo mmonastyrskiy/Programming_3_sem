@@ -1,7 +1,10 @@
 #include <stdlib.h>
+#include <termios.h>
 #include <stdlib.h>
 #define X_REZ 80
 #define Y_REZ 24
+
+struct termios orig_termios;
 typedef struct Snake{
     int x,y,vel_y,vel_x;
     char repr;
