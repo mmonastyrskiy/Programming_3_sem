@@ -31,6 +31,10 @@ if(s == NULL){
 	printf("Malloc error\n");
 	exit(1);
 }
+s->vel_x = 1;
+s-> vel_y =0;
+s-> next = NULL;
+
 a = malloc(sizeof(apple));
 if(a==NULL){
 	printf("Malloc error\n");
@@ -38,11 +42,11 @@ if(a==NULL){
 }
 
  Start(field, s, a); /*Начать игру*/
-	/*while (1){
+	while (1){
 		ticker(field, a, s);
 		sleep(1);
 	}
-	*/
+
 	return 0;
 } 
 
