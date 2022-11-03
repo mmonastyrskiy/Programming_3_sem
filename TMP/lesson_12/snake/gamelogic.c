@@ -7,7 +7,31 @@
 #include <unistd.h>
 
 
+char isSnake(char** f, int x, int y){
+    if ((f[y][x] == '=')||(f[y][x]=='>')){
+        return '0';
+    }
+    return '1';
+}
 
+void onCanon(){
+    struct termios orig_termios;
+    struct termios raw;
+    tcgetattr(STDIN_FILENO,&orig_termios);
+    raw = orig_termios;
+    raw.c_lflag |= (ECHO | ICANON);
+    tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
+}
+
+
+
+void GameOver(int score, int sig){
+    system("clear");
+    printf("СПАСИБО ЗА ИГРУ\n ваш счет:%d",score);
+    getc(stdin);
+    onCanon();
+    exit(0);
+}
 
 void Grow(char** field,snake* s){
     snake* new;
@@ -49,14 +73,6 @@ void offCanon(){
 }
 
 
-void onCanon(){
-    struct termios orig_termios;
-    struct termios raw;
-    tcgetattr(STDIN_FILENO,&orig_termios);
-    raw = orig_termios;
-    raw.c_lflag |= (ECHO | ICANON);
-    tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
-}
 
 
 char isHead(snake* t){
@@ -110,6 +126,14 @@ void MoveUp(char** field,snake* s,apple* a){
     if((a->x == s->x)&&(a->y == s->y)){
         Eat(field,s,a);
     }
+    if(isSnake(field,s->x,s->y)=='0'){
+        snake* head;
+        head = s;
+        while(isHead(head)!='0'){
+            head = head->next;
+        }
+        GameOver(head->score,0);
+    }
     field[s->y][s->x] = '>';
 }
 
@@ -122,6 +146,14 @@ void MoveDown(char** field,snake* s,apple* a){
     if((a->x == s->x)&&(a->y == s->y)){
         Eat(field,s,a);
     }
+    if(isSnake(field,s->x,s->y)=='0'){
+        snake* head;
+        head = s;
+        while(isHead(head)!='0'){
+            head = head->next;
+        }
+        GameOver(head->score,0);
+    }
     field[s->y][s->x] = '>';
 }
 void MoveLeft(char** field, snake* s,apple* a){
@@ -133,6 +165,14 @@ void MoveLeft(char** field, snake* s,apple* a){
     if((a->x == s->x)&&(a->y == s->y)){
         Eat(field,s,a);
     }
+    if(isSnake(field,s->x,s->y)=='0'){
+        snake* head;
+        head = s;
+        while(isHead(head)!='0'){
+            head = head->next;
+        }
+        GameOver(head->score,0);
+    }
     field[s->y][s->x] = '>';
 } 
 void MoveRight(char** field, snake* s,apple* a){
@@ -143,6 +183,14 @@ void MoveRight(char** field, snake* s,apple* a){
     s->x = s->x+1;
     if((a->x == s->x)&&(a->y == s->y)){
         Eat(field,s,a);
+    }
+    if(isSnake(field,s->x,s->y)=='0'){
+        snake* head;
+        head = s;
+        while(isHead(head)!='0'){
+            head = head->next;
+        }
+        GameOver(head->score,0);
     }
     field[s->y][s->x] = '>';
 }
