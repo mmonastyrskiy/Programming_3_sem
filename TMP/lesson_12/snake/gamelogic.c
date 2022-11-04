@@ -8,7 +8,7 @@
 
 
 char isSnake(char** f, int x, int y){
-    if ((f[y][x] == '=')||(f[y][x]=='>')){
+    if (f[y][x] == '='){
         return '0';
     }
     return '1';
@@ -35,24 +35,15 @@ void GameOver(int score, int sig){
 
 void Grow(char** field,snake* s){
     snake* new;
-    snake* head;
-    head = s;
-    while(!(isHead(head)=='0')){
-        head = head-> next;
-    }
     new = malloc(sizeof(snake));
     if(new == NULL){
         printf("malloc error");
         exit(2);
     }
-head->score +=1;
-new -> next = s;
-new-> repr = '=';
-new -> vel_x =0;
-new -> vel_y = 0;
-new -> x = s->x - head->vel_x;
-new -> y = s->y - head->vel_y;
-field[new->y][new->x] = new->repr;
+
+new -> next = s->next;
+
+
 
 }
 
@@ -75,47 +66,35 @@ void offCanon(){
 
 
 
-char isHead(snake* t){
-    return (t->next == NULL) ? '0':'1';
+char isTail(snake* t){
+    return (t->repr == '=') ? '0':'1';
 }
 
 void SetVerticalSpeed(snake* s, int v){
     printf("SetVerticalSpeed");
-    snake* t;
-    t = s;
-    while(isHead(t)!= '0'){
-        t = t-> next;
-    }
 
     switch(v){
             case 1:
-                s->vel_x = 0;
-                s->vel_y = v;
+                s->next->vel_x = 0;
+                s->next->vel_y = v;
             case -1:
-                s->vel_x = 0;
-                s->vel_y = v;
+                s->next->vel_x = 0;
+                s->next->vel_y = v;
             default: return;
         }
 }
 void SetHorizontalSpeed(snake* s, int v){
     printf("SetHorizontalSpeed");
-    snake* t;
-    t = s;
-    if(isHead(t)=='0'){
         switch(v){
             case 1:
-                s->vel_x = v;
-                s->vel_y = 0;
+                s->next->vel_x = v;
+                s->next->vel_y = 0;
             case -1:
-                s->vel_x = v;
-                s->vel_y = 0;
+                s->next->vel_x = v;
+                s->next->vel_y = 0;
             default: return;
         }
     }
-    t = t-> next;
-    SetHorizontalSpeed(t,v);
-    return;
-}
 
 void MoveUp(char** field,snake* s,apple* a){ 
     field[s->y][s->x] = '.';
@@ -129,9 +108,6 @@ void MoveUp(char** field,snake* s,apple* a){
     if(isSnake(field,s->x,s->y)=='0'){
         snake* head;
         head = s;
-        while(isHead(head)!='0'){
-            head = head->next;
-        }
         GameOver(head->score,0);
     }
     field[s->y][s->x] = '>';
@@ -149,9 +125,6 @@ void MoveDown(char** field,snake* s,apple* a){
     if(isSnake(field,s->x,s->y)=='0'){
         snake* head;
         head = s;
-        while(isHead(head)!='0'){
-            head = head->next;
-        }
         GameOver(head->score,0);
     }
     field[s->y][s->x] = '>';
@@ -168,9 +141,6 @@ void MoveLeft(char** field, snake* s,apple* a){
     if(isSnake(field,s->x,s->y)=='0'){
         snake* head;
         head = s;
-        while(isHead(head)!='0'){
-            head = head->next;
-        }
         GameOver(head->score,0);
     }
     field[s->y][s->x] = '>';
@@ -187,9 +157,6 @@ void MoveRight(char** field, snake* s,apple* a){
     if(isSnake(field,s->x,s->y)=='0'){
         snake* head;
         head = s;
-        while(isHead(head)!='0'){
-            head = head->next;
-        }
         GameOver(head->score,0);
     }
     field[s->y][s->x] = '>';
@@ -207,24 +174,28 @@ void Move(char** field, snake* s){
 void SnakeMover(char** field,snake* s,apple* a) /*Общий метод движения змеи*/
 {
     snake* t;
-    t = s;
-    while (!(isHead(t)=='0')){
-        Move(field, s);
-        t = t-> next;
-    }
     if(s-> vel_x == 1 ){
-        MoveRight(field,t,a);
+        MoveRight(field,s->next,a);
     }
     if(s-> vel_x == -1){
-        MoveLeft(field, t,a);
+        MoveLeft(field, s->next,a);
     }
     if(s-> vel_y == 1){
-        MoveUp(field,t,a);
+        MoveUp(field,s->next,a);
     }
     if(s->vel_y == -1){
-        MoveDown(field,t,a);
+        MoveDown(field,s->next,a);
     }
+    t =s->next;
+    while(t!= NULL || isTail(t)=='0'){
+        Move(field,t);
+        t =t->next;
+
+    }
+    printf("head: %d %d\n",t->x, t->y);
+    printf("tail: %d %d",s->x, s->y);
 }
+
 
 void printfield(char** f)
 {
@@ -269,8 +240,8 @@ char isEmpty(char** field,int x, int y){
     x = rand()% X_REZ;
     y = rand()%Y_REZ;
     if(isEmpty(field,x,y) == '0'){
-        s->x = x;
-        s->y =y;
+        s->next->x = x;
+        s->next->y =y;
         field[x][y] = '>';
         return;
     }

@@ -7,7 +7,8 @@ int main(int argc, char const *argv[])
 {
 	int i;
 	char** field;
-	snake* s;
+	snake* real_head;
+	snake* head_ptr;
 	apple* a;
 
 srand(time(NULL));
@@ -26,15 +27,23 @@ srand(time(NULL));
 		}
 	
 
-s = malloc(sizeof(snake));
-if(s == NULL){
+real_head = malloc(sizeof(snake));
+if(real_head == NULL){
 	printf("Malloc error\n");
 	exit(1);
 }
-s->vel_x = 1;
-s-> vel_y =0;
-s-> next = NULL;
-s->score = 0;
+
+
+head_ptr = malloc(sizeof(snake));
+if(head_ptr == NULL){
+	printf("Malloc error\n");
+	exit(1);
+}
+head_ptr->next = real_head;
+real_head->vel_x = 1;
+real_head-> vel_y =0;
+real_head-> next = NULL;
+real_head->score = 0;
 
 a = malloc(sizeof(apple));
 if(a==NULL){
@@ -42,9 +51,9 @@ if(a==NULL){
 	exit(1);
 }
 
- Start(field, s, a); /*Начать игру*/
+ Start(field,head_ptr, a); /*Начать игру*/
 	while (1){
-		ticker(field, a, s);
+		ticker(field, a, head_ptr);
 	}
 
 	return 0;
