@@ -6,7 +6,7 @@
 
 
 typedef struct Snake{
-    int x,y,vel_y,vel_x;
+    int x,y,vel_y,vel_x,prev_x,prev_y;
     int score;
     char repr;
     struct Snake* next;
