@@ -10,6 +10,7 @@ typedef struct Snake{
     int score;
     char repr;
     struct Snake* next;
+    struct Snake* prev;
 } snake;
 
 

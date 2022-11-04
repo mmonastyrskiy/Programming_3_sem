@@ -30,6 +30,16 @@ void Grow(char** field, snake* head_ptr){
         exit(1);
 
     }
+    snake* new;
+    new->next = head_ptr->next;
+    new -> prev = head_ptr->next->prev;
+    head_ptr->next->prev = new;
+    new->repr='=';
+    new->vel_y =0;
+    new->vel_x = 0;
+    new->x = head_ptr->next->x - head_ptr-> next -> vel_x;
+    new->y = head_ptr->next->y - head_ptr->next->vel_y;
+    field[new->y][new->x] = new->repr;
 }
 
 void Eat(char** field,snake* head_ptr, apple* a){
@@ -82,6 +92,24 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
         GameOver(head->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
+
+
+    snake* tail;
+    tail = head_ptr->next;
+    while(tail->prev != NULL){
+        if(tail->next=head_ptr->next){
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->x + head_ptr->next->vel_x;
+            tail->y = tail->y + head_ptr->next->vel_y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+        else{
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->next->x;
+            tail->y=tail->next->y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+    }
 }
 
 void MoveDown(char** field,snake* head_ptr,apple* a){
@@ -97,6 +125,24 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
         GameOver(head_ptr->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
+
+
+    snake* tail;
+    tail = head_ptr->next;
+    while(tail->prev != NULL){
+        if(tail->next=head_ptr->next){
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->x + head_ptr->next->vel_x;
+            tail->y = tail->y + head_ptr->next->vel_y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+        else{
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->next->x;
+            tail->y=tail->next->y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+    }
 }
 void MoveLeft(char** field, snake* head_ptr,apple* a){
   field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -113,6 +159,24 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
         GameOver(head->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
+
+
+    snake* tail;
+    tail = head_ptr->next;
+    while(tail->prev != NULL){
+        if(tail->next=head_ptr->next){
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->x + head_ptr->next->vel_x;
+            tail->y = tail->y + head_ptr->next->vel_y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+        else{
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->next->x;
+            tail->y=tail->next->y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+    }
 } 
 void MoveRight(char** field, snake* head_ptr,apple* a){
     field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -129,6 +193,24 @@ void MoveRight(char** field, snake* head_ptr,apple* a){
         GameOver(head->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
+
+
+    snake* tail;
+    tail = head_ptr->next;
+    while(tail->prev != NULL){
+        if(tail->next=head_ptr->next){
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->x + head_ptr->next->vel_x;
+            tail->y = tail->y + head_ptr->next->vel_y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+        else{
+            field[tail->y][tail->x] = '.';
+            tail->x = tail->next->x;
+            tail->y=tail->next->y;
+            field[tail->y][tail->x] = tail->repr;
+        }
+    }
 }
 
 
@@ -160,14 +242,6 @@ void SnakeMover(char** field,snake* head_ptr,apple* a) /*Общий метод �
     if(head_ptr->vel_y == -1){
         MoveDown(field,head_ptr,a);
     }
-    t =head_ptr->next;
-    while(t!= NULL || isTail(t)=='0'){
-        Move(field,t);
-        t =t->next;
-
-    }
-    printf("head: %d %d\n",head_ptr->x, head_ptr->y);
-}
 
 char isTail(snake* t){
     return (t->repr == '=') ? '0':'1';
