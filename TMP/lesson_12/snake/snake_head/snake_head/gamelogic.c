@@ -88,6 +88,9 @@ void offCanon(){
 
 void MoveUp(char** field,snake* head_ptr,apple* a){ 
       printf("UP");
+      int prev_x,prev_y;
+      prev_x = head_ptr->next->x;
+      prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
     if(head_ptr->next->y+1 >= Y_REZ){
         head_ptr->next->y = head_ptr->next->y+2-Y_REZ;
@@ -110,8 +113,8 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
     while(tail != NULL){
         if(tail->next==head_ptr->next){
             field[tail->y][tail->x] = '.';
-            tail->x = tail->x + head_ptr->next->vel_x;
-            tail->y = tail->y + head_ptr->next->vel_y;
+            tail->x =  prev_x;
+            tail->y = prev_y;
             field[tail->y][tail->x] = tail->repr;
         }
         else{
@@ -126,6 +129,9 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
 
 void MoveDown(char** field,snake* head_ptr,apple* a){
       printf("DWN");
+      int prev_x,prev_y;
+      prev_x = head_ptr->next->x;
+      prev_y = head_ptr->next->y;
   field[head_ptr->next->y][head_ptr->next->x] = '.';
         if(head_ptr->next->y-1 <= 1){
         head_ptr->next->y = head_ptr->next->y-2+Y_REZ;
@@ -147,8 +153,8 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
         
         if(tail->next==head_ptr->next){
             field[tail->y][tail->x] = '.';
-            tail->x = tail->x + head_ptr->next->vel_x;
-            tail->y = tail->y + head_ptr->next->vel_y;
+            tail->x =  prev_x;
+            tail->y = prev_y;
             field[tail->y][tail->x] = tail->repr;
         }
         else{
@@ -162,6 +168,9 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
 }
 void MoveLeft(char** field, snake* head_ptr,apple* a){
     printf("Left");
+    int prev_x,prev_y;
+    prev_x = head_ptr->next->x;
+    prev_y = head_ptr->next->y;
   field[head_ptr->next->y][head_ptr->next->x] = '.';
         if(head_ptr->next->x-1 <= 1){
         head_ptr->next->y = head_ptr->next->x-2+Y_REZ;
@@ -184,8 +193,8 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     while(tail != NULL){
         if(tail->next==head_ptr->next){
             field[tail->y][tail->x] = '.';
-            tail->x = tail->x + head_ptr->next->vel_x;
-            tail->y = tail->y + head_ptr->next->vel_y;
+            tail->x =  prev_x;
+            tail->y = prev_y;
             field[tail->y][tail->x] = tail->repr;
         }
         else{
@@ -199,6 +208,9 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
 } 
 void MoveRight(char** field, snake* head_ptr,apple* a){
     printf("Right");
+    int prev_x,prev_y;
+    prev_x = head_ptr->next->x;
+    prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
         if(head_ptr->next->x+1 >= X_REZ-1){
         head_ptr->next->x = head_ptr->next->x+2-X_REZ;
@@ -221,8 +233,8 @@ void MoveRight(char** field, snake* head_ptr,apple* a){
     while(tail != NULL){
         if(tail->next==head_ptr->next){
             field[tail->y][tail->x] = '.';
-            tail->x = tail->x + head_ptr->next->vel_x;
-            tail->y = tail->y + head_ptr->next->vel_y;
+            tail->x = prev_x;
+            tail->y = prev_y;
             field[tail->y][tail->x] = tail->repr;
         }
         else{
