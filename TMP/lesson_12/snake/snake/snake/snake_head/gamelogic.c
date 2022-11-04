@@ -30,19 +30,16 @@ void Grow(char** field, snake* head_ptr){
         exit(1);
 
     }
+    head_ptr->next->score +=1;
     new-> next = head_ptr->next;
     head_ptr->next->prev = new;
     new->prev =NULL;
     new->repr = '=';
     new->vel_x =0;
     new->vel_y=0;
-    new->x = head_ptr->next->x - head_ptr->next->vel_x;
-    new->y = head_ptr->next->y - head_ptr->next->vel_y;
+    new->x = head_ptr->next->x -head_ptr->next->vel_x;
+    new->y = head_ptr->next->y -head_ptr->next->vel_y;
     field[new->y][new->x] =new->repr;
-    
-    head_ptr->next->x = head_ptr->next->x+head_ptr->next->vel_x;
-   head_ptr->next->y = head_ptr->next->y+head_ptr->next->vel_y;
-    field[head_ptr->next->y][head_ptr->next->x] = head_ptr->next->repr;
 }
 
 void Eat(char** field,snake* head_ptr, apple* a){
@@ -90,9 +87,7 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
         Eat(field,head_ptr,a);
     }
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
-        snake* head;
-        head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head_ptr->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 }
@@ -121,9 +116,7 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
         Eat(field,head_ptr,a);
     }
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
-        snake* head;
-        head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head_ptr->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 } 
@@ -138,9 +131,7 @@ void MoveRight(char** field, snake* head_ptr,apple* a){
         Eat(field,head_ptr,a);
     }
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
-        snake* head;
-        head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head_ptr->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 }
@@ -176,13 +167,13 @@ void SnakeMover(char** field,snake* head_ptr,apple* a) /*Общий метод �
     if(head_ptr->next->vel_y == -1){
         MoveDown(field,head_ptr,a);
     }
-    t =head_ptr->next;
-    while(t-> prev != NULL){
+    t =head_ptr->next->prev;
+    while(t!= NULL){
         t =t->prev;
     }
-    while(t != head_ptr->next){
+    while(t != NULL){
         Move(field,t);
-        t = t->next;
+        t = t->prev;
     printf("head: %d %d\n",head_ptr->x, head_ptr->y);
 }
 }

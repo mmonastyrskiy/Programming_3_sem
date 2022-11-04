@@ -43,6 +43,7 @@ head_ptr->next = real_head;
 real_head->vel_x = 1;
 real_head-> vel_y =0;
 real_head-> next = NULL;
+real_head-> prev = NULL;
 real_head->score = 0;
 
 a = malloc(sizeof(apple));
