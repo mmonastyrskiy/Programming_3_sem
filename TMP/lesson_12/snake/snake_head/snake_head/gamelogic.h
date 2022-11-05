@@ -45,7 +45,9 @@ void GameOver(int score, int code); /*Закончить игру*/
 void SetVerticalSpeed(snake* s, int v);
 void SetHorizontalSpeed(snake* s, int v);
 
-
+int last_y(snake* head_ptr);
+int last_x(snake* head_ptr);
+int snake_len(snake* head_ptr);
 void SpawnApple(char** field,apple* a); /*создать яблоко*/
 void DelApple(apple* a );/* Удолить яблоко */
 

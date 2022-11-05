@@ -71,6 +71,7 @@ void Grow(char** field, snake* head_ptr){
     field[new->y][new->x] = new->repr;
 }
 
+
 void Eat(char** field,snake* head_ptr, apple* a){
     Grow(field,head_ptr);
     SpawnApple(field,a);
@@ -107,7 +108,6 @@ void offCanon(){
 
 
 void MoveUp(char** field,snake* head_ptr,apple* a){ 
-      printf("UP");
       head_ptr->next->prev_x = head_ptr->next->x;
       head_ptr->next->prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -151,7 +151,6 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
 }
 
 void MoveDown(char** field,snake* head_ptr,apple* a){
-      printf("DWN");
     
       head_ptr->next->prev_x = head_ptr->next->x;
       head_ptr->next->prev_y = head_ptr->next->y;
@@ -194,7 +193,6 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
     }
 }
 void MoveLeft(char** field, snake* head_ptr,apple* a){
-    printf("Left");
     head_ptr->next->prev_x = head_ptr->next->x;
     head_ptr->next->prev_y = head_ptr->next->y;
   field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -237,7 +235,6 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     }
 } 
 void MoveRight(char** field, snake* head_ptr,apple* a){
-    printf("Right");
     head_ptr->next->prev_x = head_ptr->next->x;
     head_ptr->next->prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -306,10 +303,10 @@ char isTail(snake* t){
     return (t->repr == '=') ? '0':'1';
 }
 char isTailCRD(char** f,int x,int y){
+    if(x == 1){return '1';}
     return(f[y][x] == '=') ? '0':'1';
 }
 void SetVerticalSpeed(snake* head_ptr, int v){
-    printf("SetVerticalSpeed");
 
     switch(v){
             case 1:
@@ -322,7 +319,6 @@ void SetVerticalSpeed(snake* head_ptr, int v){
         }
 }
 void SetHorizontalSpeed(snake* head_ptr, int v){
-    printf("SetHorizontalSpeed");
         switch(v){
             case 1:
                 head_ptr->next->vel_x = v;
@@ -379,8 +375,8 @@ char isEmpty(char** field,int x, int y){
 
  void SpawnSnake(char** field,snake* head_ptr){
     int x,y;
-    x = rand()% X_REZ;
-    y = rand()%Y_REZ;
+    x = rand()% 10;
+    y = rand()%10;
     if(isEmpty(field,x,y) == '0'){
         head_ptr->next->x = x;
         head_ptr->next->y =y;
