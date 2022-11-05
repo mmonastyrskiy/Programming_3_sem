@@ -28,7 +28,7 @@ classDiagram
     	toString()
     	getCharacters()
     	getAllTranslations()
-    	
+
 
     }
     class Person{
@@ -42,6 +42,6 @@ classDiagram
     	getCharacters()
 
     }
-    Person <|--  Actor 
+    Actor <|-- Person  
 
 ```
