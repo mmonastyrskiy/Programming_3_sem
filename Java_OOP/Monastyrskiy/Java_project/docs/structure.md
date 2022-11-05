@@ -14,6 +14,7 @@
 ```mermaid
 classDiagram
     class Film{
+    	<<final>>
     	+String id
     	+String orig_name
     	+String ru_name
@@ -21,25 +22,29 @@ classDiagram
     	+int release_year
     	+float rating
     	+int ammount
-    	+Director[] directors
-    	+Writer[] writers
-    	+Producer[] produsers
+    	+Person[] directors
+    	+Person[] writers
+    	+Person[] produsers
     	+Actor[] actors
-    	toString()
-    	getCharacters()
-    	getAllTranslations()
+    	+toString()
+    	+getCharacters()
+    	+getAllTranslations()
 
 
     }
     class Person{
     	+String person_id
     	+String name
-    	Film[] Films
-    	getfilms()
+    	+Film[] Films
+    	+getfilms()
 
     }
     class Actor{
-    	getCharacters()
+    	<<final>>
+    	+getCharacters()
+    	+toString()
+
+
 
     }
     Actor <|-- Person  
