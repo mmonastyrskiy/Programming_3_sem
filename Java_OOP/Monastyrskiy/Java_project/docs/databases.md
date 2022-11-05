@@ -86,4 +86,4 @@
 
 ## Схема БД 
 
-![Схема БД]( ./img/information_schema.jpg "Схема БД")
+![Схема БД]( .\img\information_schema.jpg "Схема БД")
