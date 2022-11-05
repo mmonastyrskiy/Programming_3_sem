@@ -75,6 +75,7 @@ void Grow(char** field, snake* head_ptr){
 void Eat(char** field,snake* head_ptr, apple* a){
     Grow(field,head_ptr);
     SpawnApple(field,a);
+    printf("\a");
 }
 
 void onCanon(){
@@ -111,7 +112,7 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
       head_ptr->next->prev_x = head_ptr->next->x;
       head_ptr->next->prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
-    if(head_ptr->next->y+1 >= Y_REZ){
+    if(head_ptr->next->y+1 >= Y_REZ-1){
         head_ptr->next->y = head_ptr->next->y+2-Y_REZ;
     }
     head_ptr->next->y = head_ptr->next->y+1;

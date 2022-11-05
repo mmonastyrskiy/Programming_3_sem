@@ -32,7 +32,6 @@ char isTail(snake* s); /* Является ли участок хвостом з
 char isEmpty(char** field, int x, int y );  /*Является ли клетка пустой '0' - True , '1' - False*/
 void Grow(char** field,snake* s); /*Увеличить питона*/
 void Eat(char** field,snake* s, apple* a); /*Кушоц*/
-void clear(); /* Очистить экран */
  void SpawnSnake(char** field,snake* s);
  void ticker(char ** field, apple* a, snake* s);
 char isTailCRD(char** f,int x,int y);
