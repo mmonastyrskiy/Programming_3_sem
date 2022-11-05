@@ -59,12 +59,15 @@ void Grow(char** field, snake* head_ptr){
     head_ptr->next->score+=1;
     new->next = head_ptr->next;
     new -> prev = head_ptr->next->prev;
-    head_ptr->next->prev = new;
+    if(head_ptr->next->prev != NULL){
+        head_ptr->next->prev->next = new;
+    }
+    head_ptr->next->prev=new;
     new->repr='=';
     new->vel_y =0;
     new->vel_x = 0;
-    new->x =last_x(head_ptr)-head_ptr->next->vel_x;
-    new->y = last_y(head_ptr)-head_ptr->next->vel_y;
+    new->x =last_x(head_ptr);
+    new->y = last_y(head_ptr);
     field[new->y][new->x] = new->repr;
 }
 
@@ -118,7 +121,7 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
         snake* head;
         head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
@@ -205,7 +208,7 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
         snake* head;
         head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
@@ -248,7 +251,7 @@ void MoveRight(char** field, snake* head_ptr,apple* a){
     if(isTailCRD(field,head_ptr->next->x,head_ptr->next->y)=='0'){
         snake* head;
         head = head_ptr;
-        GameOver(head->score,0);
+        GameOver(head->next->score,0);
     }
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
