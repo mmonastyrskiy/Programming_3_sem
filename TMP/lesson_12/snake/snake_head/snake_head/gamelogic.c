@@ -197,7 +197,7 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     head_ptr->next->prev_y = head_ptr->next->y;
   field[head_ptr->next->y][head_ptr->next->x] = '.';
         if(head_ptr->next->x-1 <= 1){
-        head_ptr->next->y = head_ptr->next->x-2+Y_REZ;
+        head_ptr->next->x = head_ptr->next->x-2+X_REZ;
     }
     head_ptr->next->x = head_ptr->next->x-1;
     if((a->x == head_ptr->next->x)&&(a->y == head_ptr->next->y)){
@@ -303,7 +303,6 @@ char isTail(snake* t){
     return (t->repr == '=') ? '0':'1';
 }
 char isTailCRD(char** f,int x,int y){
-    if(x == 1){return '1';}
     return(f[y][x] == '=') ? '0':'1';
 }
 void SetVerticalSpeed(snake* head_ptr, int v){
