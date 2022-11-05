@@ -87,3 +87,9 @@
 ## Схема БД 
 
 ![Схема БД](https://github.com/mmonastyrskiy/Programming_3_sem/blob/main/Java_OOP/Monastyrskiy/Java_project/docs/images/information_schema.jpg "Схема БД")
+
+
+### Префиксы
+
+- Префикс ID персонала : **nm**
+-Префикс ID фильма : **tt**
