@@ -108,7 +108,8 @@ void offCanon(){
 
 
 
-void MoveUp(char** field,snake* head_ptr,apple* a){ 
+void MoveUp(char** field,snake* head_ptr,apple* a){
+    snake* tail;
       head_ptr->next->prev_x = head_ptr->next->x;
       head_ptr->next->prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -127,7 +128,6 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
 
-    snake* tail;
     tail = head_ptr->next->prev;
     if(tail == NULL){return;}
     while(tail != NULL){
@@ -152,6 +152,7 @@ void MoveUp(char** field,snake* head_ptr,apple* a){
 }
 
 void MoveDown(char** field,snake* head_ptr,apple* a){
+     snake* tail;
     
       head_ptr->next->prev_x = head_ptr->next->x;
       head_ptr->next->prev_y = head_ptr->next->y;
@@ -169,7 +170,6 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
 
-    snake* tail;
     tail = head_ptr->next->prev;
     if(tail == NULL){return;}
     while(tail != NULL){
@@ -194,6 +194,7 @@ void MoveDown(char** field,snake* head_ptr,apple* a){
     }
 }
 void MoveLeft(char** field, snake* head_ptr,apple* a){
+    snake* tail;
     head_ptr->next->prev_x = head_ptr->next->x;
     head_ptr->next->prev_y = head_ptr->next->y;
   field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -212,7 +213,6 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
 
-    snake* tail;
     tail = head_ptr->next->prev;
     if(tail == NULL){return;}
     while(tail != NULL){
@@ -236,6 +236,7 @@ void MoveLeft(char** field, snake* head_ptr,apple* a){
     }
 } 
 void MoveRight(char** field, snake* head_ptr,apple* a){
+    snake* tail;
     head_ptr->next->prev_x = head_ptr->next->x;
     head_ptr->next->prev_y = head_ptr->next->y;
     field[head_ptr->next->y][head_ptr->next->x] = '.';
@@ -254,7 +255,6 @@ void MoveRight(char** field, snake* head_ptr,apple* a){
     field[head_ptr->next->y][head_ptr->next->x] = '>';
 
 
-    snake* tail;
     tail = head_ptr->next->prev;
     if(tail == NULL){return;}
     while(tail != NULL){
