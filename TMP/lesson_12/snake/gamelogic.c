@@ -336,7 +336,38 @@ void SetHorizontalSpeed(snake* head_ptr, int v){
 void ticker(char ** field, apple* a, snake* head_ptr){
     char c;
     c=-1;
-    c = getc(stdin);
+    /*c = getc(stdin);
+    switch(c){
+        case 0x1b: k++;break;
+        case 0x5b: k==0?++k:(0);break;
+        case 0x41:
+        if(k>0){
+        SetVerticalSpeed(head_ptr,-1);
+        }
+        else{k=-1;}
+        break;
+        case 0x42:
+        if(k>0){
+        SetVerticalSpeed(head_ptr,1);
+    }
+    else{k=-1;}
+        break;
+        case 0x43:
+        if(k>0){
+        SetHorizontalSpeed(head_ptr,1);
+    }
+    else{k=-1;}
+    break;
+        case 0x44:
+        if(k>0){
+        SetHorizontalSpeed(head_ptr,-1);
+    }
+    else{k=-1;}
+        break;
+        case 0x71:onCanon(); return;
+    };*/
+
+     c = getc(stdin);
     switch(c){
         case 'w':SetVerticalSpeed(head_ptr,-1);break;
         case 's':SetVerticalSpeed(head_ptr,1);break;
@@ -344,6 +375,8 @@ void ticker(char ** field, apple* a, snake* head_ptr){
         case 'a':SetHorizontalSpeed(head_ptr,-1);break;
         case 'q':onCanon(); return;
     };
+
+    
     SnakeMover(field,head_ptr,a);
     system("clear");
     printfield(field);
