@@ -37,6 +37,7 @@ classDiagram
     	+String name
     	+Film[] Films
     	+getfilms()
+        +toString()
 
     }
     class Actor{
