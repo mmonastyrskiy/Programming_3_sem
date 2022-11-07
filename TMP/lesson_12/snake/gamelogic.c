@@ -1,4 +1,4 @@
-
+#include <fcntl.h>
 #include "gamelogic.h"
 #include <time.h>
 #include <string.h>
@@ -90,19 +90,21 @@ void onCanon(){
 
 
 void GameOver(int score, int sig){
-    system("clear");
+    printf("\e[1;1H\e[2J");
     printf("СПАСИБО ЗА ИГРУ\n ваш счет:%d",score);
     getc(stdin);
     onCanon();
     exit(0);
 }
 void offCanon(){
+
     struct termios orig_termios;
     struct termios raw;
     tcgetattr(STDIN_FILENO,&orig_termios);
     raw = orig_termios;
     raw.c_lflag &=  ~(ECHO | ICANON);
     tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
+    fcntl(0,F_SETFL,fcntl(0,F_GETFL,0)|O_NONBLOCK);
 }
 
 
@@ -310,9 +312,11 @@ void SetVerticalSpeed(snake* head_ptr, int v){
 
     switch(v){
             case 1:
+                if(head_ptr->next->vel_x == 0 && head_ptr->next->vel_y == -1 * v){return;}
                 head_ptr->next->vel_x = 0;
                 head_ptr->next->vel_y = v;
             case -1:
+                if(head_ptr->next->vel_x == 0 && head_ptr->next->vel_y == -1 * v){return;}
                 head_ptr->next->vel_x = 0;
                 head_ptr->next->vel_y = v;
             default: return;
@@ -321,9 +325,11 @@ void SetVerticalSpeed(snake* head_ptr, int v){
 void SetHorizontalSpeed(snake* head_ptr, int v){
         switch(v){
             case 1:
+            if(head_ptr->next->vel_y == 0 && head_ptr->next->vel_x == -1 * v){return;}
                 head_ptr->next->vel_x = v;
                 head_ptr->next->vel_y = 0;
             case -1:
+                if(head_ptr->next->vel_y == 0 && head_ptr->next->vel_x == -1 * v){return;}
                 head_ptr->next->vel_x = v;
                 head_ptr->next->vel_y = 0;
             default: return;
@@ -336,49 +342,18 @@ void SetHorizontalSpeed(snake* head_ptr, int v){
 void ticker(char ** field, apple* a, snake* head_ptr){
     char c;
     c=-1;
-    /*c = getc(stdin);
-    switch(c){
-        case 0x1b: k++;break;
-        case 0x5b: k==0?++k:(0);break;
-        case 0x41:
-        if(k>0){
-        SetVerticalSpeed(head_ptr,-1);
-        }
-        else{k=-1;}
-        break;
-        case 0x42:
-        if(k>0){
-        SetVerticalSpeed(head_ptr,1);
-    }
-    else{k=-1;}
-        break;
-        case 0x43:
-        if(k>0){
-        SetHorizontalSpeed(head_ptr,1);
-    }
-    else{k=-1;}
-    break;
-        case 0x44:
-        if(k>0){
-        SetHorizontalSpeed(head_ptr,-1);
-    }
-    else{k=-1;}
-        break;
-        case 0x71:onCanon(); return;
-    };*/
-
      c = getc(stdin);
     switch(c){
         case 'w':SetVerticalSpeed(head_ptr,-1);break;
         case 's':SetVerticalSpeed(head_ptr,1);break;
         case 'd':SetHorizontalSpeed(head_ptr,1);break;
         case 'a':SetHorizontalSpeed(head_ptr,-1);break;
-        case 'q':onCanon(); return;
+        case 'q':onCanon(); GameOver(head_ptr->next->score,1);
     };
 
     
     SnakeMover(field,head_ptr,a);
-    system("clear");
+    printf("\e[1;1H\e[2J");
     printfield(field);
 }
 
@@ -416,6 +391,7 @@ char isEmpty(char** field,int x, int y){
         field[x][y] = '>';
         return;
     }
+
     SpawnSnake(field,head_ptr);
  }
 

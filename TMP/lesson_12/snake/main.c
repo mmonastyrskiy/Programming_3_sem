@@ -54,6 +54,7 @@ if(a==NULL){
 
  Start(field,head_ptr, a); /*Начать игру*/
 	while (1){
+		usleep(300000);
 		ticker(field, a, head_ptr);
 	}
 
