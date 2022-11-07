@@ -90,7 +90,7 @@ void onCanon(){
 
 
 void GameOver(int score, int sig){
-    printf("\033[1;1H\033[2J");
+    printf("\e[1;1H\e[2J");
     printf("СПАСИБО ЗА ИГРУ\n ваш счет:%d",score);
     getc(stdin);
     onCanon();
@@ -353,7 +353,7 @@ void ticker(char ** field, apple* a, snake* head_ptr){
 
     
     SnakeMover(field,head_ptr,a);
-    printf("\033[1;1H\033[2J");
+    printf("\e[1;1H\e[2J");
     printfield(field);
 }
 
