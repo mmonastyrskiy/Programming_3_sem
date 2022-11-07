@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include "gamelogic.h"
 #include <time.h>
 #include <stdio.h>
