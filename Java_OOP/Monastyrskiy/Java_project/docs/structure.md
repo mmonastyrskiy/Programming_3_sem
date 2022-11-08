@@ -34,7 +34,6 @@ classDiagram
     	+String ru_name
     	+String[] janres
     	+int release_year
-        +int end_year
     	+float rating
     	+int ammount
     	+Person[] directors
@@ -46,6 +45,13 @@ classDiagram
     	+getAllTranslations()
 
 
+    }
+    class Series {
+    + String parent_id
+    + String episode_id
+    +int episodes
+    +int end_year
+    
     }
     class Person{
     	+String person_id
@@ -97,6 +103,7 @@ classDiagram
     
     Actor <|-- Person
     User <|-- Person
+    Series <| -- Film
     Director <|-- Person
     Film <|.. Saveable
     Person <|.. Saveable
