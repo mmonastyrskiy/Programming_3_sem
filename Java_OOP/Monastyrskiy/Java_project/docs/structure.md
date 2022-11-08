@@ -35,9 +35,7 @@ classDiagram
     	+int release_year
     	+float rating
     	+int ammount
-    	+Person[] directors
-    	+Person[] writers
-    	+Person[] produsers
+    	+Director[] directors
     	+Actor[] actors
     	+toString()
     	+getCharacters()
