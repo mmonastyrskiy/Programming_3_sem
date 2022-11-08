@@ -34,6 +34,7 @@ classDiagram
     	+String ru_name
     	+String[] janres
     	+int release_year
+        +int end_year
     	+float rating
     	+int ammount
     	+Person[] directors
