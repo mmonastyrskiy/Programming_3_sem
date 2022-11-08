@@ -13,18 +13,29 @@
 
 ```mermaid
 classDiagram
+    class Terminal{
+    <<final>>
+    +String Query
+    +ParceQuery(query)
+    +Save(query)
+    +Load(query)
+    +Search(query)
+    +Stat(query)
+    +add(query)
+    +del(query)
+    +quit()
+    
+    }
+    
     class Film{
-    	<<final>>
     	+String id
     	+String orig_name
     	+String ru_name
     	+String[] janres
     	+int release_year
     	+float rating
-    	+int ammount
-    	+Person[] directors
-    	+Person[] writers
-    	+Person[] produsers
+    	+int ammount_of_votes
+    	+Director[] directors
     	+Actor[] actors
     	+toString()
     	+getCharacters()
@@ -32,22 +43,78 @@ classDiagram
 
 
     }
+    class Series {
+    <<final>>
+    + String parent_id
+    +Film[] episodes
+    +int episodes
+    +int end_year
+    
+    }
     class Person{
     	+String person_id
     	+String name
     	+Film[] Films
-    	+getfilms()
+    	+Getfilms()
         +toString()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
+        
 
     }
     class Actor{
     	<<final>>
     	+getCharacters()
     	+toString()
-
+        +GetStatistics()
 
 
     }
-    Actor <|-- Person  
+    class Director{
+    <<final>>
+    +GetStatistics()
+    }
+    
+    class User {
+    <<final>>
+    +String passwd
+    RateFilm();
+    +Auth()
+    +GetFavoriteActors()
+    +GetFavoriteJanres()
+    
+    }
+    
+    class Saveable {
+    <<interface>>
+    +Save()
+    +Load()
+    }
+    
+    class Searcher{
+    <<final>>
+    +SearchFilmsByJanres()
+    +SearchFilmByRaiting()
+    +SearchFilmByYear()
+    +SearchFilmByActor()
+    }
+    
+    Actor <|-- Person
+    User <|-- Person
+    Series <| -- Film
+    Director <|-- Person
+    Film <|.. Saveable
+    Person <|.. Saveable
+    Searcher o-- Film
+    
+    
+    Terminal --> Searcher
+    Terminal --> Actor
+    Terminal --> User
+    Terminal --> Director
+     Terminal --> Person
+      Terminal --> Film
+    
+    
 
 ```
