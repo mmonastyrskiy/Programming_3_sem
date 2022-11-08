@@ -36,18 +36,45 @@ classDiagram
     	+String person_id
     	+String name
     	+Film[] Films
-    	+getfilms()
+    	+Getfilms()
         +toString()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
+        
 
     }
     class Actor{
     	<<final>>
     	+getCharacters()
     	+toString()
-
+        +GetStatistics()
 
 
     }
-    Actor <|-- Person  
+    class Prosucer{
+    <<final>>
+    +GetStatistics()
+    }
+    
+    class User {
+    <<final>>
+    +GetFavoriteActors()
+    +GetFavoriteJanres()
+    
+    }
+    
+    class Saveable {
+    <<interface>>
+    +Save()
+    +Load()
+    }
+    
+    Actor <|-- Person
+    User <|-- Person
+    Prosucer <|-- Person
+    Film <|.. Saveable()
+    Person <|-- Saveable()
+    
+    
 
 ```
