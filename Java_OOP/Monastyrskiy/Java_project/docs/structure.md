@@ -105,7 +105,7 @@ classDiagram
     Terminal --> Actor
     Terminal --> User
     Terminal --> Saveable
-    Terminal --> Prosucer
+    Terminal --> Director
      Terminal --> Person
       Terminal --> Film
     
