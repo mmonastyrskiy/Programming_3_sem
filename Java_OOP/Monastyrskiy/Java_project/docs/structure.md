@@ -16,7 +16,7 @@ classDiagram
     class Terminal{
     <<User input>>
     +String Query
-    +ParceQuery
+    +ParceQuery(query)
     +Save(query)
     +Load(query)
     +Search(query)
