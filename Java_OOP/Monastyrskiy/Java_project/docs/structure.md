@@ -34,7 +34,7 @@ classDiagram
     	+String[] janres
     	+int release_year
     	+float rating
-    	+int ammount
+    	+int ammount_of_votes
     	+Director[] directors
     	+Actor[] actors
     	+toString()
