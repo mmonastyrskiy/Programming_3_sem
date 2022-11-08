@@ -106,7 +106,6 @@ classDiagram
     Film <|.. Saveable
     Person <|.. Saveable
     Searcher o-- Film
-    Searcher o-- Series
     
     
     Terminal --> Searcher
