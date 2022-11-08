@@ -72,6 +72,8 @@ classDiagram
     
     class User {
     <<final>>
+    +String passwd
+    +Auth()
     +GetFavoriteActors()
     +GetFavoriteJanres()
     
