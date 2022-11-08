@@ -72,8 +72,8 @@ classDiagram
     Actor <|-- Person
     User <|-- Person
     Prosucer <|-- Person
-    Film <|.. Saveable()
-    Person <|-- Saveable()
+    Film <|.. Saveable
+    Person <|.. Saveable
     
     
 
