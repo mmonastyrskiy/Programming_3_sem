@@ -65,7 +65,7 @@ classDiagram
 
 
     }
-    class Prosucer{
+    class Director{
     <<final>>
     +GetStatistics()
     }
@@ -95,7 +95,7 @@ classDiagram
     
     Actor <|-- Person
     User <|-- Person
-    Prosucer <|-- Person
+    Director <|-- Person
     Film <|.. Saveable
     Person <|.. Saveable
     Searcher o-- Film
