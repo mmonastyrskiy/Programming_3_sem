@@ -69,12 +69,22 @@ classDiagram
     +Load()
     }
     
+    class Searcher{
+    <<final>>
+    <<>>
+    +SearchFilmsByJanres()
+    +SearchFilmByRaiting()
+    +SearchFilmByYear()
+    +SearchFilmByActor()
+    +ExecQuery()
+    }
+    
     Actor <|-- Person
     User <|-- Person
     Prosucer <|-- Person
     Film <|.. Saveable
     Person <|.. Saveable
-    
+    Searcher o-- Film
     
 
 ```
