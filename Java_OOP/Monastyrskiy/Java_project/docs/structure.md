@@ -28,7 +28,6 @@ classDiagram
     }
     
     class Film{
-    	<<final>>
     	+String id
     	+String orig_name
     	+String ru_name
@@ -47,6 +46,7 @@ classDiagram
 
     }
     class Series {
+    <<final>>
     + String parent_id
     + String episode_id
     +int episodes
