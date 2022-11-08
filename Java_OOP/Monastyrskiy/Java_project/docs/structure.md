@@ -111,7 +111,6 @@ classDiagram
     Terminal --> Searcher
     Terminal --> Actor
     Terminal --> User
-    Terminal --> Saveable
     Terminal --> Director
      Terminal --> Person
       Terminal --> Film
