@@ -13,6 +13,12 @@
 
 ```mermaid
 classDiagram
+    class Terminal{
+    <<User input>>
+    +String Query
+    +ExecQuery()
+    }
+    
     class Film{
     	<<final>>
     	+String id
@@ -85,6 +91,16 @@ classDiagram
     Film <|.. Saveable
     Person <|.. Saveable
     Searcher o-- Film
+    
+    
+    Terminal --> Searcher
+    Terminal --> Actor
+    Terminal --> User
+    Terminal --> Saveable
+    Terminal --> Prosucer
+     Terminal --> Person
+      Terminal --> Film
+    
     
 
 ```
