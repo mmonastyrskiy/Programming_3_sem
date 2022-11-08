@@ -48,7 +48,7 @@ classDiagram
     class Series {
     <<final>>
     + String parent_id
-    + String episode_id
+    +Film[] episodes
     +int episodes
     +int end_year
     
