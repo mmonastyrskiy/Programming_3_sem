@@ -16,7 +16,15 @@ classDiagram
     class Terminal{
     <<User input>>
     +String Query
-    +ExecQuery()
+    +ParceQuery
+    +Save(query)
+    +Load(query)
+    +Search(query)
+    +Stat(query)
+    +add(query)
+    +del(query)
+    +quit()
+    
     }
     
     class Film{
