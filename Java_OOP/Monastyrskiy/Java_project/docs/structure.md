@@ -14,7 +14,6 @@
 ```mermaid
 classDiagram
     class Terminal{
-    <<User input>>
     <<final>>
     +String Query
     +ParceQuery(query)
