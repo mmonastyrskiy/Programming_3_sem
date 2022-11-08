@@ -85,12 +85,10 @@ classDiagram
     
     class Searcher{
     <<final>>
-    <<>>
     +SearchFilmsByJanres()
     +SearchFilmByRaiting()
     +SearchFilmByYear()
     +SearchFilmByActor()
-    +ExecQuery()
     }
     
     Actor <|-- Person
