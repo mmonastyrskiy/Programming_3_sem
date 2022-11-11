@@ -259,11 +259,11 @@ insert into staff(id, name, department)
 ```
 ### Задание 4 
 ```SQL
-insert into staff(id,name,department)
-	values(nextval("staff_id_seq"),substr(first_name,1,1) || substr(last_name,1,1),
-		department_name)
-	from employees join departments using(department_id)
-	returning *;
+insert into staff(id, name, department) 
+  select nextval('staff_id_seq'), substr(first_name,1,1)||substr(last_name,1,1), 
+    department_name
+    from employees join departments using(department_id)
+    returning *;
 ```
 
 ### Задание 5
