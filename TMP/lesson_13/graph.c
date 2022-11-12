@@ -9,16 +9,21 @@ struct Node* neighbors;
 
 }node;
 
-void expand_array(){
+void expand_arrayS(node* n){
 
 
-
+n.neighbors = realloc(n.neighbors,sizeof(node)*n.capacity+1);
 }
+
+void expand_array(node* n , int c){
+n = realloc(n,sizeof(node)*c+1);
+}
+
 
 void create_new_node(int current_size,int current_count, node* global){
 
 if (current_count == current_size){
-	expand_array();
+	expand_array(global,current_size);
 	current_size+=1;
 
 }
@@ -40,7 +45,7 @@ current_count++;
 
 void add_neighbor(node n,node new_nei){
 	if(n.current_count ==n.capacity){
-		expand_array();
+		expand_arrayS(&n);
 		n.capacity+=1;
 	}
 	n.neighbors[n.current_count] = new_nei;
