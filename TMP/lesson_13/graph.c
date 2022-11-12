@@ -12,7 +12,7 @@ struct Node* neighbors;
 void expand_arrayS(node* n){
 
 
-n.neighbors = realloc(n.neighbors,sizeof(node)*n.capacity+1);
+n->neighbors = realloc(n->neighbors,sizeof(node)*n->capacity+1);
 }
 
 void expand_array(node* n , int c){
@@ -36,7 +36,7 @@ if(a == NULL){
 	exit(2);
 }
 new.neighbors = a;
-neighbors_counter =0;
+new.neighbors_counter =0;
 new.capacity = current_size;
 global[current_count] = new;
 current_count++;
@@ -44,23 +44,23 @@ current_count++;
 
 
 void add_neighbor(node n,node new_nei){
-	if(n.current_count ==n.capacity){
+	if(n.neighbors_counter ==n.capacity){
 		expand_arrayS(&n);
 		n.capacity+=1;
 	}
-	n.neighbors[n.current_count] = new_nei;
-	n.current_count+=1;
+	n.neighbors[n.neighbors_counter] = new_nei;
+	n.neighbors_counter+=1;
 
 }
 
 
 
-int find_neighbor_ammount(int n){
+int find_neighbor_ammount(int n,const char* path){
 		FILE* f;
 	int node1,node2,a;
 	a =0;
 
-	f =fopen(path,'r');
+	f =fopen(path,"r");
 	if(f == NULL){
 		printf("Error opening file");
 		exit(2);
@@ -71,15 +71,15 @@ int find_neighbor_ammount(int n){
 		}
 	}
 fclose(f);
-return a/2
+return a/2;
 
 }
 
 
-void fill_zeros(int n, int[n][n] nodes){
+void fill_zeros(int n, int nodes[n][n]){
 	int i,j;
 	for (i=0;i<n;i++){
-		for(j=0,j<n,j++){
+		for(j=0;j<n;j++){
 			nodes[i][j] = 0;
 		}
 	}
@@ -89,25 +89,25 @@ int find_max(const char* path){
 	int node1,node2,max;
 	max = -1;
 
-	f =fopen(path,'r');
+	f =fopen(path,"r");
 	if(f == NULL){
 		printf("Error opening file");
 		exit(2);
 	}
 	while(fscanf(f,"%d %d",&node1,&node2)){
-		if(node1 > max){max = node1}
-		if(node2 > max){max = node2}
+		if(node1 > max){max = node1;}
+		if(node2 > max){max = node2;}
 	}
 fclose(f);
-return max
+return max;
 }
-void read_adj_matrix(const char* path, int n, int[n][n] nodes){
+void read_adj_matrix(const char* path, int n, int nodes[n][n]){
 
 
 	FILE* f;
 	int node1,node2;
 
-	f =fopen(path,'r');
+	f =fopen(path,"r");
 	if(f == NULL){
 		printf("Error opening file");
 		exit(2);
@@ -132,7 +132,7 @@ int main(int argc, char const *argv[])
 	}
 path = argv[1];
 n = find_max(path);
-int[n][n] nodes;
+int nodes[n][n];
 fill_zeros(n,nodes);
 global = malloc(sizeof(node)*BASIC_SIZE);
 if(global == NULL){
