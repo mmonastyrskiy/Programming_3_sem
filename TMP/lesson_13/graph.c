@@ -3,12 +3,51 @@
 
 
 
-
 typedef struct Node
-{ int n;
-struct Node[];
+{ int n,neighbors_counter,capacity;
+struct Node* neighbors;
 
 }node;
+
+void expand_array(){
+
+
+
+}
+
+void create_new_node(int current_size,int current_count, node* global){
+
+if (current_count == current_size){
+	expand_array();
+	current_size+=1;
+
+}
+node new;
+node* a;
+new.n = current_count+1;
+a = malloc(sizeof(node)*current_size);
+if(a == NULL){
+	printf("malloc error");
+	exit(2);
+}
+new.neighbors = a;
+neighbors_counter =0;
+new.capacity = current_size;
+global[current_count] = new;
+current_count++;
+}
+
+
+void add_neighbor(node n,node new_nei){
+	if(n.current_count ==n.capacity){
+		expand_array();
+		n.capacity+=1;
+	}
+	n.neighbors[n.current_count] = new_nei;
+	n.current_count+=1;
+
+}
+
 
 
 int find_neighbor_ammount(int n){
@@ -75,7 +114,10 @@ fclose(f);
 
 }
 int main(int argc, char const *argv[])
-{
+{	
+	int BASIC_SIZE = 10;
+	int gl_ptr = 0;
+	node* global;
 	const char* path;
 	int n;
 	if(argc != 2 ){
@@ -87,6 +129,11 @@ path = argv[1];
 n = find_max(path);
 int[n][n] nodes;
 fill_zeros(n,nodes);
+global = malloc(sizeof(node)*BASIC_SIZE);
+if(global == NULL){
+	printf("malloc error");
+	exit(2);
+}
 
 	return 0;
 }
