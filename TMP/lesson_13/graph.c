@@ -9,6 +9,72 @@ struct Node* neighbors;
 
 }node;
 
+
+
+
+char IsInList(node* global, int search,int max){
+	int i;
+	for(i=0;i<max;i++){
+		if((global+i)->n == search){
+			return '0';
+		}
+	}
+return '1';
+}
+
+
+node NodeFinder(int n,int max, node* nodes){
+	int i;
+	for(i=0;i<max;i++){
+		if(nodes[i].n == max){
+			return nodes[i];
+		}
+	}
+}
+
+
+void GraphLoader(const char* path, int max, node* global, int* gl_ptr){
+	FILE* f;
+	int node1, node2;
+	f =fopen(path,"r");
+	if(f == NULL){
+		printf("Error opening file");
+		exit(2);
+	}
+	while(fscanf(f,"%d %d",&node1,&node2)){
+		if(IsInList(global,node1,max)=='1'){
+			create_new_node(max,gl_ptr,global);
+		}
+		else if (IsInList(global,node2,max)=='1'){
+			create_new_node(max,gl_ptr,global);
+
+		}
+		else if(IsInList(global,node1,max) == '0' && IsInList(NodeFinder(node1,max,global).neighbors
+																	,node2,max) == '1')
+		{
+			add_neighbor(NodeFinder(node1,max,global),NodeFinder(node2,max,global));
+		}
+		else if (IsInList(global,node2,max) == '0' && IsInList(NodeFinder(node2,max,global).neighbors,
+			node1,max) == '1')
+		{
+			add_neighbor(NodeFinder(node2,max,global),NodeFinder(node1,max,global));
+		}
+
+
+
+
+
+
+	}
+fclose(f);
+
+
+}
+
+
+
+
+
 void expand_arrayS(node* n){
 
 
@@ -133,7 +199,13 @@ int main(int argc, char const *argv[])
 path = argv[1];
 n = find_max(path);
 int nodes[n][n];
+
 fill_zeros(n,nodes);
+read_adj_matrix(path,n,nodes);
+
+
+
+
 global = malloc(sizeof(node)*BASIC_SIZE);
 if(global == NULL){
 	printf("malloc error");
