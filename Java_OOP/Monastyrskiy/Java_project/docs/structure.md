@@ -89,6 +89,7 @@ classDiagram
     <<interface>>
     +Save()
     +Load()
+    +Parse()
     }
     
     class Searcher{
