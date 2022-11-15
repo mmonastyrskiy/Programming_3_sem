@@ -305,4 +305,4 @@ public void DelFilm(Film m)
 public void Parse(Path FilmsFile, Path ActorsFile)
 public void Parse()
 ```
-Второй вариант функции использует пути к файлам из ~~Файла конфигурации? ~~
+Второй вариант функции использует пути к файлам из ~~Файла конфигурации?~~
