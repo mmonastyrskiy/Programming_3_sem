@@ -124,7 +124,6 @@ classDiagram
 ---
 ---
 
-![[Pasted image 20221115231227.png]]
 ### Аннотация 
 Класс **Terminal** является управляющим классом всего проекта, его методы направлены на вызов методов остальных классов, работу с внутренними данными и реализацию работы с пользователем посредством обработки консольно вводимых команд.
 
@@ -133,13 +132,10 @@ classDiagram
   public String[] ParceQuery(String input)
   ["Ключ", "Значение",...]
   ```
-
-
-
-- Метод **Save(String query)** интерфейса **Saveable** содержит три перегруженных варианта.  Класс **Terminal** вызывает нужный, основывясь на запросе, переданным в строке *query*. 
+  
+ - Метод ***Save(String query)*** интерфейса **Saveable** содержит три перегруженных варианта.  Класс **Terminal** вызывает нужный, основывясь на запросе, переданным в строке *query*. 
  Операция вызывается в случае, если строка *query* содержит в себе команду **Save**.
  Первый вариант метода не принимает аргументы:
- 
   ```java
   public boolean Save() // Первый вариант перегрузки
   ```
@@ -159,9 +155,9 @@ classDiagram
   ```
   
 -  Метод **Search()** в качестве единственного **обязательного** параметра принимает строку-запрос для поиска.
-    ```java
-    private void Search(String SearchFor)
-    ```
+   ```java
+private void Search(String SearchFor)
+   ```
  Он создает экземпляр класса **Searcher**, который реализует дальнейшую логику поиска по объектам и возвращение результата в основной код (или выводу его на экран). 
  
  Строкой поиска считается строка, которая идет после команды **Search** в строке *query*.
@@ -173,7 +169,7 @@ Person[] или Film[]
 ```
 Прототип метода **Stat**():
   ```java
-  private void Stat(Person p)
+private void Stat(Person p)
 ```
 Вызов осуществляется при помощи команды **stat**, аргументом принимается индекс фильма/человека.
 
@@ -209,13 +205,13 @@ private void quit()
 
  Таким образом, прототипы функций класса **Searcher**:
  ```java
-    public Film[] SearchFilmsByJanres(String query)
-    public Film[]SearchFilmByRaiting(String query)
-    public Film[]SearchFilmByYear(String query)
-    public Film[]SearchFilmByActor(String query)
-    public Person[]SearchActorByFilm(String query)
-    public Person[]SearchActorByChar(String query)
-    public Person[]SearchDirectorByFilm(String query)
+public Film[] SearchFilmsByJanres(String query)
+public Film[]SearchFilmByRaiting(String query)
+public Film[]SearchFilmByYear(String query)
+public Film[]SearchFilmByActor(String query)
+public Person[]SearchActorByFilm(String query)
+public Person[]SearchActorByChar(String query)
+public Person[]SearchDirectorByFilm(String query)
 ```
 
 -  Для класса **Actor** специально определен метод **getCharacters()**, который возвращает
