@@ -77,7 +77,7 @@ classDiagram
     
     class User {
     <<final>>
-    +String passwd
+    +String Username
     RateFilm();
     +Auth()
     +GetFavoriteActors()
