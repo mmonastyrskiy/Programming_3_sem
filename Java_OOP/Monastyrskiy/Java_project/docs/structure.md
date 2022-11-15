@@ -98,6 +98,9 @@ classDiagram
     +SearchFilmByRaiting()
     +SearchFilmByYear()
     +SearchFilmByActor()
+    +SearchActorByFilm()
+    +SearchActorByChar()
+    +SearchDirectorByFilm()
     }
     
     Actor <|-- Person
