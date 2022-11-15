@@ -153,7 +153,7 @@ classDiagram
   ```
 -  Метод ***Search()*** в качестве единственного ** Обязательного** параметра принимает строку запрос для поиска
     ```java
-    void Search(String SearchFor)
+    private void Search(String SearchFor)
     ```
     создает экземпляр класса **Searcher**, который реализует дальнейшую логику поиска по объектам.
     
