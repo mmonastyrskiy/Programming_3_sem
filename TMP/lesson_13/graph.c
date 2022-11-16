@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 
 typedef struct Node
@@ -210,6 +210,36 @@ for(i=0;i<n;i++){
 }
 
 }
+
+
+
+
+
+
+
+
+
+
+int Deijktsra(int n, int nodes[n][n],int start, int end, int counter){
+
+	int i,counter;
+	int copy[n][n];
+	counter =0;
+	memcpy(copy,nodes,sizeof(int*)*n+sizeof(int)*n);
+	if(nodes[start-1][end-1] != 0){
+		return counter
+	}
+	for(i=0;i<n;i++){
+		if(nodes[start-1][n] != 0){
+			counter++;
+			Deijktsra(n,nodes,n+1,end,counter);
+		}
+
+	}
+
+
+}
+
 
 
 int main(int argc, char const *argv[])
