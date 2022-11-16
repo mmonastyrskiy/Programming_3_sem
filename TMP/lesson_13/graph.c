@@ -222,12 +222,12 @@ for(i=0;i<n;i++){
 
 int Deijktsra(int n, int nodes[n][n],int start, int end, int counter){
 
-	int i,counter;
+	int i;
 	int copy[n][n];
 	counter =0;
 	memcpy(copy,nodes,sizeof(int*)*n+sizeof(int)*n);
 	if(nodes[start-1][end-1] != 0){
-		return counter
+		return counter;
 	}
 	for(i=0;i<n;i++){
 		if(nodes[start-1][n] != 0){
