@@ -10,77 +10,6 @@ struct Node* neighbors;
 }node;
 
 
-
-
-char IsInList(node* global, int search,int max){
-	int i;
-	for(i=0;i<max;i++){
-		if((global+i)->n == search){
-			return '0';
-		}
-	}
-return '1';
-}
-
-
-node NodeFinder(int n,int max, node* nodes){
-	int i;
-	for(i=0;i<max;i++){
-		if(nodes[i].n == max){
-			return nodes[i];
-		}
-	}
-}
-
-
-void GraphLoader(const char* path, int max, node* global, int* gl_ptr){
-	FILE* f;
-	int node1, node2;
-	f =fopen(path,"r");
-	if(f == NULL){
-		printf("Error opening file");
-		exit(2);
-	}
-	while(fscanf(f,"%d %d",&node1,&node2)){
-		if(IsInList(global,node1,max)=='1'){
-			create_new_node(max,gl_ptr,global);
-		}
-		else if (IsInList(global,node2,max)=='1'){
-			create_new_node(max,gl_ptr,global);
-
-		}
-		else if(IsInList(global,node1,max) == '0' && IsInList(NodeFinder(node1,max,global).neighbors
-																	,node2,max) == '1')
-		{
-			add_neighbor(NodeFinder(node1,max,global),NodeFinder(node2,max,global));
-		}
-		else if (IsInList(global,node2,max) == '0' && IsInList(NodeFinder(node2,max,global).neighbors,
-			node1,max) == '1')
-		{
-			add_neighbor(NodeFinder(node2,max,global),NodeFinder(node1,max,global));
-		}
-
-
-
-
-
-
-	}
-fclose(f);
-
-
-}
-
-
-
-
-
-void expand_arrayS(node* n){
-
-
-n->neighbors = realloc(n->neighbors,sizeof(node)*n->capacity+1);
-}
-
 void expand_array(node* n , int c){
 n = realloc(n,sizeof(node)*c+1);
 }
@@ -109,6 +38,37 @@ current_count++;
 }
 
 
+
+void expand_arrayS(node* n){
+
+
+n->neighbors = realloc(n->neighbors,sizeof(node)*n->capacity+1);
+}
+
+
+char IsInList(node* global, int search,int max){
+	int i;
+	for(i=0;i<max;i++){
+		if((global+i)->n == search){
+			return '0';
+		}
+	}
+return '1';
+}
+
+
+node NodeFinder(int n,int max, node* nodes){
+	int i;
+	for(i=0;i<max;i++){
+		if(nodes[i].n == max){
+			return nodes[i];
+		}
+		printf("Error");
+		exit(3);
+	}
+}
+
+
 void add_neighbor(node n,node new_nei){
 	if(n.neighbors_counter ==n.capacity){
 		expand_arrayS(&n);
@@ -118,6 +78,55 @@ void add_neighbor(node n,node new_nei){
 	n.neighbors_counter+=1;
 
 }
+
+
+void GraphLoader(const char* path, int max, node* global, int* gl_ptr){
+	FILE* f;
+	int node1, node2;
+	f =fopen(path,"r");
+	if(f == NULL){
+		printf("Error opening file");
+		exit(2);
+	}
+	while(fscanf(f,"%d %d",&node1,&node2)!=EOF){
+		if(IsInList(global,node1,max)=='1'){
+			create_new_node(max,*gl_ptr,global);
+		}
+		else if (IsInList(global,node2,max)=='1'){
+			create_new_node(max,*gl_ptr,global);
+
+		}
+		else if(IsInList(global,node1,max) == '0' && IsInList(NodeFinder(node1,max,global).neighbors
+																	,node2,max) == '1')
+		{
+			add_neighbor(NodeFinder(node1,max,global),NodeFinder(node2,max,global));
+		}
+		else if (IsInList(global,node2,max) == '0' && IsInList(NodeFinder(node2,max,global).neighbors,
+			node1,max) == '1')
+		{
+			add_neighbor(NodeFinder(node2,max,global),NodeFinder(node1,max,global));
+		}
+
+
+
+
+
+
+	}
+fclose(f);
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -160,7 +169,8 @@ int find_max(const char* path){
 		printf("Error opening file");
 		exit(2);
 	}
-	while(fscanf(f,"%d %d",&node1,&node2)){
+	while(fscanf(f,"%d %d",&node1,&node2)!=EOF){
+		printf("%d %d", node1, node2);
 		if(node1 > max){max = node1;}
 		if(node2 > max){max = node2;}
 	}
@@ -178,12 +188,30 @@ void read_adj_matrix(const char* path, int n, int nodes[n][n]){
 		printf("Error opening file");
 		exit(2);
 	}
-	while(fscanf(f,"%d %d",&node1,&node2)){
+	while(fscanf(f,"%d %d\n",&node1,&node2)!=EOF){
 		nodes[node1-1][node2-1] += 1;
 	}
 fclose(f);
 
+
+
 }
+
+
+
+void print_matrix(int n, int nodes[n][n]){
+	int i,j;
+
+for(i=0;i<n;i++){
+	for(j=0;j<n;j++){
+		printf(" %d ",nodes[i][j]);
+	}
+	printf("\n");
+}
+
+}
+
+
 int main(int argc, char const *argv[])
 {	
 	int BASIC_SIZE = 10;
@@ -198,10 +226,14 @@ int main(int argc, char const *argv[])
 	}
 path = argv[1];
 n = find_max(path);
+printf("\n%d\n",n);
+
 int nodes[n][n];
 
 fill_zeros(n,nodes);
+
 read_adj_matrix(path,n,nodes);
+print_matrix(n,nodes);
 
 
 
@@ -211,6 +243,7 @@ if(global == NULL){
 	printf("malloc error");
 	exit(2);
 }
+GraphLoader(path,BASIC_SIZE,global,&gl_ptr);
 
 	return 0;
 }
