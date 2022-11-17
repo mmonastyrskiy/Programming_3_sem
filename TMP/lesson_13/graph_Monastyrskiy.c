@@ -220,7 +220,7 @@ for(i=0;i<n;i++){
 
 
 
-int Deijktsra(int n, int nodes[n][n],int start, int end, int counter){
+int Deijktstra(int n, int nodes[n][n],int start, int end, int counter){
 
 	int i;
 	int copy[n][n];
@@ -229,11 +229,13 @@ int Deijktsra(int n, int nodes[n][n],int start, int end, int counter){
 	if(nodes[start-1][end-1] != 0){
 		return counter;
 	}
+	else{
 	for(i=0;i<n;i++){
 		if(nodes[start-1][n] != 0){
 			counter++;
-			Deijktsra(n,nodes,n+1,end,counter);
+			Deijktstra(n,nodes,n+1,end,counter);
 		}
+	}
 
 	}
 
