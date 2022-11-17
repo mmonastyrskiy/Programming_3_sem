@@ -16,6 +16,7 @@ public class Terminal{
     }
     private void Search(String[] query){
 
+
     }
     private void Stat(String[] query){
 
