@@ -1,13 +1,4 @@
 
-##  Легенда:
-"+ — public;"
-
-"- — private;"
-
-"# — protected;"
-
-"~ — package."
-
 
 
 
@@ -54,17 +45,17 @@ classDiagram
     class Person{
     	+String person_id
     	+String name
-    	+Film[] Films
-    	+Getfilms()
         +toString()
-        +Addfilm(Film f)
-        +DelFilm(Film m)
         
 
     }
     class Actor{
     	<<final>>
     	+getCharacters()
+          +Film[] Films
+    	+Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     	+toString()
         +GetStatistics()
 
@@ -72,6 +63,10 @@ classDiagram
     }
     class Director{
     <<final>>
+     +Film[] Films
+    +Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     +GetStatistics()
     }
     
@@ -81,6 +76,10 @@ classDiagram
     +Auth()
     +GetFavoriteActors()
     +GetFavoriteJanres()
+        	+Film[] Films
+    	+Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     
     }
     
@@ -92,7 +91,7 @@ classDiagram
     }
     
     class Searcher{
-    <<final>>
+    <<interface>>
     +SearchFilmsByJanres()
     +SearchFilmByRaiting()
     +SearchFilmByYear()
@@ -101,6 +100,14 @@ classDiagram
     +SearchActorByChar()
     +SearchDirectorByFilm()
     }
+    class View{
+    <<final>>
+    +Film film
+    +User viewer
+    +int Rate
+    +String date
+    
+    }
     
     Actor <|-- Person
     User <|-- Person
@@ -108,16 +115,12 @@ classDiagram
     Director <|-- Person
     Film <|.. Saveable
     Person <|.. Saveable
-    Searcher o-- Film
+    Searcher <|.. Film
+    Searcher <|.. Actor
     
     
-    Terminal --> Searcher
-    Terminal --> Actor
-    Terminal --> User
-    Terminal --> Director
-     Terminal --> Person
-      Terminal --> Film
-    
+    View o-- Film
+    View o-- User
     
 
 ```
