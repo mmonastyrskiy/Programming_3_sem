@@ -45,17 +45,17 @@ classDiagram
     class Person{
     	+String person_id
     	+String name
-    	+Film[] Films
-    	+Getfilms()
         +toString()
-        +Addfilm(Film f)
-        +DelFilm(Film m)
         
 
     }
     class Actor{
     	<<final>>
     	+getCharacters()
+          +Film[] Films
+    	+Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     	+toString()
         +GetStatistics()
 
@@ -63,6 +63,10 @@ classDiagram
     }
     class Director{
     <<final>>
+     +Film[] Films
+    +Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     +GetStatistics()
     }
     
@@ -72,6 +76,10 @@ classDiagram
     +Auth()
     +GetFavoriteActors()
     +GetFavoriteJanres()
+        	+Film[] Films
+    	+Getfilms()
+        +Addfilm(Film f)
+        +DelFilm(Film m)
     
     }
     
