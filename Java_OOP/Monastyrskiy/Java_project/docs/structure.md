@@ -100,6 +100,7 @@ classDiagram
     Film <|.. Saveable
     Person <|.. Saveable
     Searcher o-- Film
+    Searcher o-- Actor
     
     
     Terminal --> Searcher
