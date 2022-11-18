@@ -83,7 +83,7 @@ classDiagram
     }
     
     class Searcher{
-    <<final>>
+    <<interface>>
     +SearchFilmsByJanres()
     +SearchFilmByRaiting()
     +SearchFilmByYear()
@@ -92,6 +92,14 @@ classDiagram
     +SearchActorByChar()
     +SearchDirectorByFilm()
     }
+    class View{
+    <<final>>
+    +Film film
+    +User viewer
+    +int Rate
+    +String date
+    
+    }
     
     Actor <|-- Person
     User <|-- Person
@@ -99,16 +107,10 @@ classDiagram
     Director <|-- Person
     Film <|.. Saveable
     Person <|.. Saveable
-    Searcher o-- Film
-    Searcher o-- Actor
+    Searcher <|.. Film
+    Searcher <|.. Actor
     
     
-    Terminal --> Searcher
-    Terminal --> Actor
-    Terminal --> User
-    Terminal --> Director
-     Terminal --> Person
-      Terminal --> Film
     
     
 
