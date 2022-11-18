@@ -111,7 +111,8 @@ classDiagram
     Searcher <|.. Actor
     
     
-    
+    View o-- Film
+    View o-- User
     
 
 ```
