@@ -1,13 +1,4 @@
 
-##  Легенда:
-"+ — public;"
-
-"- — private;"
-
-"# — protected;"
-
-"~ — package."
-
 
 
 
