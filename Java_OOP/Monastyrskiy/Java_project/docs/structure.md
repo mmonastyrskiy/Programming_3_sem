@@ -89,6 +89,7 @@ classDiagram
     +Save()
     +Load()
     +GetDBInsertPrerapedFMT()
+    +ObjCreator()
     }
     
     class Searcher{
