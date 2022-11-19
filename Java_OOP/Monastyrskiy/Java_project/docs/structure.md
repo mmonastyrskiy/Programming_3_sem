@@ -15,6 +15,7 @@ classDiagram
     +add(query)
     +del(query)
     +quit()
+    +Saveall()
     
     }
     
@@ -87,7 +88,7 @@ classDiagram
     <<interface>>
     +Save()
     +Load()
-    +Parse()
+    +GetDBInsertPrerapedFMT()
     }
     
     class Searcher{
