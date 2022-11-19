@@ -1,10 +1,10 @@
 package org.Person;
 import org.Film.Film;
+import org.Saveable.Saveable;
 
- abstract  public class Person {
+ abstract  public class Person implements Saveable {
   String person_id;
   String name;
-  Film[] films;
 
 
 
@@ -12,15 +12,6 @@ import org.Film.Film;
 
    return new Film[0];
   };
-
-}
-class  User extends  Person {
-    
-}
-class Director extends  Person{
-
-}
-class Actor extends  Person{
 
 }
 

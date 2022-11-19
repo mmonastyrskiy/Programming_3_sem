@@ -1,7 +1,5 @@
 package org.Film;
+import org.Saveable.Saveable;
 
-public class Film {
-}
-class Series extends  Film {
-
+public class Film implements Saveable{
 }
