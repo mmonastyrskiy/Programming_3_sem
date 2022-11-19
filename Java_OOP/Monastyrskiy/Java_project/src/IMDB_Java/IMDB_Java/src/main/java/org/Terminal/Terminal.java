@@ -5,7 +5,9 @@ import org.Person.User;
 import org.Saveable.*;
 
 import java.io.Console;
+import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class Terminal{
 
     }
     private void SaveAll(){
-        
+
     }
     private void quit(){
         SaveAll();
@@ -50,7 +52,7 @@ public class Terminal{
             System.out.println("""
                     Укажите объект сохранения:
                     [1] фильмы
-                    [2] актеры\s
+                    [2] люди\s
                     """);
             int option = scanner.nextInt();
             switch (option) {
@@ -85,7 +87,7 @@ public class Terminal{
             System.out.println("""
                     Укажите объект сохранения:
                     [1] фильмы
-                    [2] актеры\s
+                    [2] люди\s
                     """);
 
             int option = scanner.nextInt();
@@ -131,9 +133,132 @@ public class Terminal{
 
         }
     }
-    private void Load(String[] query){
+
+
+
+
+
+
+
+
+
+
+    private void Load(Saveable[] data, Path path){
+        for(Saveable object: data){
+            object.Load(path);
+        }
+
 
     }
+    private void Load() throws SQLException, FileNotFoundException {
+        System.out.print("Укажите путь к  файлу или введите sql для загрузки из БД: ");
+        Scanner scanner = new Scanner(System.in);
+        String pathS = scanner.nextLine();
+        if (!Objects.equals(pathS, "sql")) {
+            Path path = Paths.get(pathS);
+            if (!(Files.exists(path))) {
+                System.out.println("Указанный файл не найден");
+                throw new FileNotFoundException();
+            }
+            System.out.println("""
+                    Укажите объект загрузки:
+                    [1] фильмы
+                    [2] люди\s
+                    """);
+            int option = scanner.nextInt();
+            System.out.println("Удалить текущие данные?[Д/Н]");
+            String mode = scanner.nextLine();
+
+            if (mode.equalsIgnoreCase("Д") ||
+                    mode.equalsIgnoreCase("Y") || mode.equalsIgnoreCase("Да") || mode.equalsIgnoreCase("Yes")) {
+                switch (option){
+                    case 1:Arrays.fill(Films,null);
+                    case 2:Arrays.fill(persons,null);
+                    default: {
+                        System.out.println("Неизвестеая опция. Отмена загрузки");
+                    }
+                }
+            }
+
+
+            switch (option) {
+                case 1: {
+                    Load(Films,path);
+                }
+                case 2: {
+                    Load(persons,path);
+
+                }
+                default: {
+                    System.out.println("Неизвестеая опция. Отмена загрузки");
+                }
+            }
+        }
+        else{
+            System.out.println("Введите имя пользователя БД");
+            Console c = System.console();
+            String user = c.readLine();
+            System.out.println("Введите пароль: ");
+            String passwd = String.valueOf(c.readPassword());
+
+
+            Properties properties = new Properties();
+            properties.setProperty("user",user);
+            properties.setProperty("password",passwd);
+            properties.setProperty("ssl","false");
+            Connection conn = DriverManager.getConnection(url,properties);
+
+
+
+            System.out.println("""
+                    Укажите объект загрузки:
+                    [1] фильмы
+                    [2] люди\s
+                    """);
+
+            int option = scanner.nextInt();
+            switch (option) {
+                case 1: {
+                    Statement statement = conn.createStatement();
+                    ResultSet rs = statement.executeQuery("SELECT * FROM " + film_table);
+                    ResultSet rs1 = statement.executeQuery("SELECT * FROM " + series_table);
+                    statement.close();
+                    while (rs.next()) {
+                        Saveable.ObjCreator(rs, Films);
+                        }
+                    while(rs1.next()){
+                        Saveable.ObjCreator(rs1, Films);
+                    }
+                    }
+                    conn.close();
+                case 2: {
+                    Statement statement = conn.createStatement();
+                    ResultSet rs = statement.executeQuery("SELECT * FROM " + staff_table);
+                    ResultSet rs1 = statement.executeQuery("SELECT * FROM " + users_table);
+                    statement.close();
+                    while (rs.next()) {
+                        Saveable.ObjCreator(rs, persons);
+                    }
+                    while(rs1.next()){
+                        Saveable.ObjCreator(rs1, persons);
+                    }
+                }
+                conn.close();
+                default: {
+                    System.out.println("Неизвестеая опция. Отмена сохранения");
+                    conn.close();
+                }
+            }
+
+
+        }
+    }
+
+
+
+
+
+
     private void Search(String[] query){
 
 
@@ -147,12 +272,12 @@ public class Terminal{
     private void Del(String[] query){
 
     }
-    public String[] ParceQuery(String query) throws SQLException {
+    public String[] ParseQuery(String query) throws SQLException, FileNotFoundException {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
             case "q":{quit();return cmd;}
             case "save":{Save();return cmd;}
-            case "load":{Load(cmd);return cmd;}
+            case "load":{Load();return cmd;}
             case "search":{Search(cmd);return cmd;}
             case "stat":{Stat(cmd); return  cmd;}
             case "add":{Add(cmd);return cmd;}
