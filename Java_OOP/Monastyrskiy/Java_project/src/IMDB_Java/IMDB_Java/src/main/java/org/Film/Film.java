@@ -21,8 +21,5 @@ public class Film implements Saveable{
 
     }
 
-    @Override
-    public void ObjCreator(String obj_data) {
 
-    }
 }

@@ -16,31 +16,27 @@ import java.nio.file.*;
 import static org.Terminal.StaticVars.*;
 
 public class Terminal{
-    public Terminal(){
-
-    }
-    private void SaveAll(){
+    public Terminal(){   //Конструктор класса терминал
 
     }
     private void quit(){
-        SaveAll();
-        System.exit(0);
+        System.exit(0); // Выход с кодом 0
     }
 
-    private void Save(Saveable[] data, Path path){
+    private void Save(Saveable[] data, Path path){ // перегрузка функции для сохранения массива data по пути path, за счет вызова ф-ии Save интерфейса Saveable.
         for(Saveable object: data){
             object.Save(path);
         }
 
 
     }
-    private void Save() throws SQLException {
+    private void Save() throws SQLException { // перегрузка, для основного запуска сохранения
         System.out.print("Укажите путь для сохранения файла или введите sql для сохранения в БД: ");
         Scanner scanner = new Scanner(System.in);
-        String pathS = scanner.nextLine();
-        if (!Objects.equals(pathS, "sql")) {
+        String pathS = scanner.nextLine(); // считываем строку, адрес файла в который будем писать
+        if (!Objects.equals(pathS, "sql")) { // В случае если вместо пути введено sql, то записываем в БД
             Path path = Paths.get(pathS);
-            if (Files.exists(path)) {
+            if (Files.exists(path)) { // Проверяем, что файл существует, если да предлагаем перезаписать.
                 System.out.println("Файл уже существует, перезаписать?[Д/Н]");
                 String t = scanner.nextLine();
                 if (!(t.equalsIgnoreCase("Д") ||
@@ -55,7 +51,7 @@ public class Terminal{
                     [2] люди\s
                     """);
             int option = scanner.nextInt();
-            switch (option) {
+            switch (option) { //Запускаем сохранение нужных элементов
                 case 1: {
                     Save(Films,path);
                 }
@@ -69,7 +65,7 @@ public class Terminal{
             }
         }
         else{
-            System.out.println("Введите имя пользователя БД");
+            System.out.println("Введите имя пользователя БД"); // В случае если выбран вариант сохранения в БД, устанавливаем настройки
             Console c = System.console();
             String user = c.readLine();
             System.out.println("Введите пароль: ");
@@ -80,7 +76,7 @@ public class Terminal{
             properties.setProperty("user",user);
             properties.setProperty("password",passwd);
             properties.setProperty("ssl","false");
-            Connection conn = DriverManager.getConnection(url,properties);
+            Connection conn = DriverManager.getConnection(url,properties); // подключаемся
 
 
 
@@ -90,13 +86,13 @@ public class Terminal{
                     [2] люди\s
                     """);
 
-            int option = scanner.nextInt();
+            int option = scanner.nextInt(); // Выбираем что сохранять
             switch (option) {
                 case 1: {
                     for(Film film:Films){
                         if(film.getClass().equals( org.Film.Series.class)){
                             PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES " + film.GetDBInsertPrerapedFMT());
-                            statement.executeUpdate();
+                            statement.executeUpdate(); // Выполняем запросы
                             statement.close();
                         }
                         else {
@@ -143,7 +139,7 @@ public class Terminal{
 
 
 
-    private void Load(Saveable[] data, Path path){
+    private void Load(Saveable[] data, Path path){ // Функция загрузки данных из файла path в массив data
         for(Saveable object: data){
             object.Load(path);
         }
@@ -260,6 +256,7 @@ public class Terminal{
 
 
     private void Search(String[] query){
+
 
 
     }

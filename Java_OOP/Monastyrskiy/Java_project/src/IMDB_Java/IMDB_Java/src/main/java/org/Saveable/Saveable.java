@@ -8,7 +8,6 @@ public interface Saveable {
     void Save(Path path);
 
     void Load(Path path);
-    static void ObjCreator( ResultSet obj_data, Saveable[] data_array){
-        return (Saveable) new Object(); // TODO ObjCreator должен извлекать данные из ResultSet, вызывать конструкторы сохраняемых объектов, создавая экземпляры
+    static void ObjCreator( ResultSet obj_data, Saveable[] data_array){    // TODO ObjCreator должен извлекать данные из ResultSet, вызывать конструкторы сохраняемых объектов, создавая экземпляры
     }
 }
