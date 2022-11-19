@@ -2,7 +2,7 @@ package org.Terminal;
 import org.Film.Film;
 import org.Person.Person;
 import org.Person.User;
-import org.Saveable.Saveable;
+import org.Saveable.*;
 
 import java.io.Console;
 import java.sql.*;
@@ -17,13 +17,18 @@ public class Terminal{
     public Terminal(){
 
     }
-    private void SaveAll(){}
+    private void SaveAll(){
+        
+    }
     private void quit(){
         SaveAll();
         System.exit(0);
     }
 
     private void Save(Saveable[] data, Path path){
+        for(Saveable object: data){
+            object.Save(path);
+        }
 
 
     }
