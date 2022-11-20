@@ -47,12 +47,38 @@ INTO bd_employees VALUES
 
 
 -- 2
---SELECT * FROM bd_employees e join bd_departments deps on(deps.id = e.department_id) where (street ~*'[^A-Z\s]')
+SELECT * FROM bd_employees e join bd_departments deps on(deps.id = e.department_id) where (street ~*'[^A-Z\s]')
 --1
---SELECT * FROM bd_employees where phone_number::TEXT ~* '^\d+$'
+SELECT * FROM bd_employees where phone_number::TEXT ~* '^\d+$'
 
 --3
---SELECT (last_name,REGEXP_REPLACE(phone_number,'^\+7','8')) FROM bd_employees
+SELECT (last_name,REGEXP_REPLACE(phone_number,'^\+7','8')) FROM bd_employees
 
 --5
---SELECT * FROM bd_employees having REGEXP_COUNT(last_name,'[^aeouiy]',1,'i') = 2* REGEXP_COUNT(last_name,'[aeouiy]',1,'i')
+--5
+SELECT * FROM bd_employees where (REGEXP_COUNT(last_name,'[^AEOUIYaeouiy\-]',1,'i')
+= 2 * REGEXP_COUNT(last_name,'[AEOUIYaeouiy]',1,'i'));
+--4a
+
+SET ROLE POSTGRES;
+REVOKE ALL ON bd_departments from my_colleague;
+REVOKE ALL ON bd_employees from my_colleague;
+DROP ROLE my_colleague;
+CREATE ROLE my_colleague;
+GRANT ALL ON bd_departments to my_colleague;
+
+--4b
+SET ROLE POSTGRES;
+REVOKE ALL ON bd_employees from my_colleague;
+REVOKE ALL ON bd_departments from my_colleague;
+DROP ROLE my_colleague;
+CREATE ROLE my_colleague;
+GRANT SELECT ON bd_employees to my_colleague;
+
+--4c
+SET ROLE POSTGRES;
+REVOKE ALL ON bd_employees from my_colleague;
+REVOKE ALL ON bd_departments from my_colleague;
+DROP ROLE my_colleague;
+CREATE ROLE my_colleague;
+GRANT UPDATE, DELETE ON bd_departments to my_colleague
