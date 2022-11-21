@@ -3,6 +3,7 @@ import org.Film.Film;
 import org.Person.Person;
 import org.Person.User;
 import org.Saveable.*;
+import org.Searcher.Searcher;
 
 import java.io.Console;
 import java.io.FileNotFoundException;
@@ -258,16 +259,43 @@ public class Terminal{
     private void Search(String[] query){
 
 
-
     }
     private void Stat(String[] query){
 
     }
     private void Add(String[] query){
 
+
     }
     private void Del(String[] query){
+        if(query[1].equalsIgnoreCase("person")){
+            PrintAll(persons);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите индекс удаляемого объекта:");
+            int idx = scanner.nextInt();
+            persons[idx] = null;
 
+        } else if (query[1].equalsIgnoreCase("film")) {
+            PrintAll(Films);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите индекс удаляемого объекта:");
+            int idx = scanner.nextInt();
+            Films[idx] = null;
+        }
+        else {
+            System.out.println("Неизвестная опция");
+        }
+        
+
+
+    }
+    private void PrintAll(Saveable[] s){
+        int id = 0;
+        for (Saveable tmp:s){
+            System.out.println("[" + id + "]" +tmp.toString());
+            id++;
+
+        }
     }
     public String[] ParseQuery(String query) throws SQLException, FileNotFoundException {
         String[] cmd = query.toLowerCase().split(" ");
