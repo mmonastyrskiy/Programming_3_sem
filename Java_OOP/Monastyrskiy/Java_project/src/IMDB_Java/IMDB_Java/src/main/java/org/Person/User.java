@@ -8,8 +8,8 @@ public class User extends Person {
     Film[] films;
 
     @Override
-    public String GetDBInsertPrerapedFMT() {
-        return null;
+    public String getDBInsertPrerapedFMT() {
+        return null; // TODO
     }
 
     @Override
@@ -20,5 +20,11 @@ public class User extends Person {
     @Override
     public void Load(Path path) {
 
+    }
+    public User(){
+        super();
+    }
+    public static User Constructor(){
+        return new User(); // TODO
     }
 }

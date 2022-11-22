@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.sql.ResultSet;
 
 public interface Saveable {
-    String GetDBInsertPrerapedFMT();
+    String getDBInsertPrerapedFMT();
     void Save(Path path);
 
     void Load(Path path);

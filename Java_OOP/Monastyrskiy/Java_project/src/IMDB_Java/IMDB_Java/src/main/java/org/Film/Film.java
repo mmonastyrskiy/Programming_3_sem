@@ -7,7 +7,7 @@ public class Film implements Saveable{
  public Film(String film_data){}
 
     @Override
-    public String GetDBInsertPrerapedFMT() {
+    public String getDBInsertPrerapedFMT() {
         return null;
     }
 
@@ -18,6 +18,10 @@ public class Film implements Saveable{
 
     @Override
     public void Load(Path path) {
+
+    }
+    public static Film Constructor(){ // TODO: Расписать логику создания строки
+    return new Film();
 
     }
 

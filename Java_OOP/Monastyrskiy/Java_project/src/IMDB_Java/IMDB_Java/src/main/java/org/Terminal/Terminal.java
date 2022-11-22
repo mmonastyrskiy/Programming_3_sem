@@ -1,9 +1,9 @@
 package org.Terminal;
 import org.Film.Film;
+import org.Person.Actor;
 import org.Person.Person;
 import org.Person.User;
 import org.Saveable.*;
-import org.Searcher.Searcher;
 
 import java.io.Console;
 import java.io.FileNotFoundException;
@@ -92,12 +92,12 @@ public class Terminal{
                 case 1: {
                     for(Film film:Films){
                         if(film.getClass().equals( org.Film.Series.class)){
-                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES " + film.GetDBInsertPrerapedFMT());
+                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES " + film.getDBInsertPrerapedFMT());
                             statement.executeUpdate(); // Выполняем запросы
                             statement.close();
                         }
                         else {
-                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + film_table + " VALUES " + film.GetDBInsertPrerapedFMT());
+                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + film_table + " VALUES " + film.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
                         }
@@ -108,12 +108,12 @@ public class Terminal{
                     for (Person person: persons){
                         if(person.getClass().equals(User.class)){
 
-                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + users_table + " VALUES " + person.GetDBInsertPrerapedFMT());
+                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + users_table + " VALUES " + person.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
                         }
                         else {
-                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + staff_table + " VALUES " + person.GetDBInsertPrerapedFMT());
+                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + staff_table + " VALUES " + person.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
                         }
@@ -264,7 +264,52 @@ public class Terminal{
 
     }
     private void Add(String[] query){
+        if(query[1].equalsIgnoreCase("film")){
+            if(Arrays.asList(Films).contains(null)){
+                Films[Arrays.asList(Films).indexOf(null)] = Film.Constructor();
+            }
+            else{
+                Films = Arrays.copyOf(Films,Films.length + 1000);
+                try {
+                    ParseQuery(Arrays.toString(query));
+                } catch (SQLException | FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        else if (query[1].equalsIgnoreCase("person")) {
+            System.out.println(
+                    """
+                            Кого создать
+                            [1] Пользователь
+                            [2] Актер
+                            [3] Режиссер\s
+                            """
+            );
+            Scanner scanner = new Scanner(System.in);
+            int sw = scanner.nextInt();
+            switch (sw){
+                case 1:{
+                    if(Arrays.asList(persons).contains(null)){
+                        persons[Arrays.asList(persons).indexOf(null)] = User.Constructor();
+                    }
 
+                }
+                case 2:{
+                    if(Arrays.asList(persons).contains(null)){
+                        persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
+                    }
+
+                }
+                case 3:{
+                    if(Arrays.asList(persons).contains(null)){
+                        persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
+                    }
+
+                }
+            }
+
+        }
 
     }
     private void Del(String[] query){
@@ -285,7 +330,7 @@ public class Terminal{
         else {
             System.out.println("Неизвестная опция");
         }
-        
+
 
 
     }
