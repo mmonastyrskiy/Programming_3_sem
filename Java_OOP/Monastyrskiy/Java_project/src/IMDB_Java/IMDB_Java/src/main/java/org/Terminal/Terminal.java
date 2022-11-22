@@ -263,6 +263,8 @@ public class Terminal{
     private void Stat(String[] query){
 
     }
+
+
     private void Add(String[] query){
         if(query[1].equalsIgnoreCase("film")){
             if(Arrays.asList(Films).contains(null)){
@@ -293,17 +295,41 @@ public class Terminal{
                     if(Arrays.asList(persons).contains(null)){
                         persons[Arrays.asList(persons).indexOf(null)] = User.Constructor();
                     }
+                    else {
+                        persons = Arrays.copyOf(persons,persons.length+1000);
+                        try {
+                            ParseQuery(Arrays.toString(query));
+                        } catch (SQLException | FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
 
                 }
                 case 2:{
                     if(Arrays.asList(persons).contains(null)){
                         persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
                     }
+                    else {
+                        persons = Arrays.copyOf(persons,persons.length+1000);
+                        try {
+                            ParseQuery(Arrays.toString(query));
+                        } catch (SQLException | FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
 
                 }
                 case 3:{
                     if(Arrays.asList(persons).contains(null)){
                         persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
+                    }
+                    else {
+                        persons = Arrays.copyOf(persons,persons.length+1000);
+                        try {
+                            ParseQuery(Arrays.toString(query));
+                        } catch (SQLException | FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
 
                 }
