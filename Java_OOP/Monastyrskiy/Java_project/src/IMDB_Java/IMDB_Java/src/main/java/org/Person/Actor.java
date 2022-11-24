@@ -33,4 +33,15 @@ public static Actor Constructor(){ // TODO: Расписать логику со
     public void GetStatistics(){
 
     }
+    public String[] getCharacters(){
+        return null;
+
+    }
+    public void AddFilm(Film f){
+
+    }
+    public void DelFilm(Film f){
+
+    }
+
 }
