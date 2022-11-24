@@ -26,4 +26,7 @@ public static Actor Constructor(){ // TODO: Расписать логику со
     public void Load(Path path) {
 
     }
+    public void GetStatistics(){
+
+    }
 }

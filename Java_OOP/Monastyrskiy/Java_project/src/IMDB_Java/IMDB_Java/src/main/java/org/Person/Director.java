@@ -28,4 +28,7 @@ public class Director extends Person {
     public void Load(Path path) {
 
     }
+    public void GetStatistics(){
+
+    }
 }

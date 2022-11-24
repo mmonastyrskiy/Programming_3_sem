@@ -1,6 +1,7 @@
 package org.Terminal;
 import org.Film.Film;
 import org.Person.Actor;
+import org.Person.Director;
 import org.Person.Person;
 import org.Person.User;
 import org.Saveable.*;
@@ -257,10 +258,28 @@ public class Terminal{
 
 
     private void Search(String[] query){
-
+        
 
     }
-    private void Stat(String[] query){
+    private void Stat(){
+        for(Person p : persons){
+            if(p.getClass().equals( Actor.class) || p.getClass().equals(Director.class)){
+                System.out.println("[" + Arrays.asList(persons).indexOf(p) + "] " + p);
+            }
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите идентификатор для расчета статистики: ");
+            int idx = scanner.nextInt();
+            if(persons[idx].getClass().equals(Actor.class)){
+                ((Actor)persons[idx]).GetStatistics();
+            }
+            else if (persons[idx].getClass().equals(Director.class)) {
+                ((Director)persons[idx]).GetStatistics();
+
+            }
+            else {
+                System.out.println("Для данного индекса нельзя посчитать статистику");
+            }
+        }
 
     }
 
@@ -375,7 +394,7 @@ public class Terminal{
             case "save":{Save();return cmd;}
             case "load":{Load();return cmd;}
             case "search":{Search(cmd);return cmd;}
-            case "stat":{Stat(cmd); return  cmd;}
+            case "stat":{Stat(); return  cmd;}
             case "add":{Add(cmd);return cmd;}
             case "del":{Del(cmd);return cmd;}
             default: return cmd;
