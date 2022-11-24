@@ -1,65 +1,23 @@
-DROP TABLE IF EXISTS bd_employees;
-DROP TABLE IF EXISTS bd_departments;
+--lab4
 
-CREATE TABLE bd_departments(
-  id integer PRIMARY KEY,
-  name varchar(64),
-  postal_code varchar(6),
-  street varchar(64),
-  building varchar(16),
-  city varchar(32)
-);
-CREATE TABLE bd_employees(
-  last_name varchar(64),
-  first_name varchar(64),
-  phone_number varchar(18),
-  email varchar(32),
-  department_id integer REFERENCES bd_departments(id),
-  PRIMARY KEY(last_name, first_name, department_id)
-);
+--7
+CREATE VIEW dep_staff_counts AS
+SELECT department,count(distinct e.employee_id)ecount
+FROM staff s, employees e, departments d WHERE (e.department_id = d.department_id
+and d.department_name=s.department) GROUP BY department;
 
-INSERT
-INTO bd_departments VALUES
-(10, 'Administration', '109658', 'Leningradskoe shosse', '1', 'Moscow'),
-(20, 'Marketing', '107701', 'Lenina', '22a', 'Volgograd'),
-(30, 'Purchasing', '109901', 'Mikluho-Maklaya', '8', 'Bryansk'),
-(40, 'Human Resources', '10967', '5-ya parkovaya', '16', 'Moscow'),
-(50, 'Shipping', '109659', '38 Bakinskih komissarov', '77', 'Moscow'),
-(60, 'IT', '109902', 'Pervomajskaya', '33', 'Kirov');
---SELECT * FROM bd_departments;
-
-INSERT
-INTO bd_employees VALUES
-('Radygin', 'Victor', '+7-(916)-111-45-34', 'vr@e.mail.mephi.ru', 10),
-('Kuprijanov', 'Dmitrij', '8-(495)-567-6-7788', 'kd@e.mail.mephi.ru', 20),
-('Ivanov-Skladovskij', 'Ivan', '89167748923', 'ii1@mail.mephi.ru', 30),
-('Petrov', 'Petr', '+79167778998', 'petrovpetr@m.gmail.ru', 40),
-('kozlov', 'Konstantin', '8-(495)-567-67-78', 'kkozlov@mephi.ru', 50),
-('Abramov', 'Abram', '+7-(96)-111-45-35', 'abramova@k75.mephi.ru', 60),
-('Ivanovà-Skladovskàya-Petrova', 'Ivanka', '89167748924', 'ii2@mail.mephi.ru', 60);
---SELECT * FROM bd_employees;
-
-
-
-
-
-
-
-
--- 2
-SELECT * FROM bd_employees e join bd_departments deps on(deps.id = e.department_id) where (street ~*'[^A-Z\s]')
+--lab5
 --1
-SELECT * FROM bd_employees where phone_number::TEXT ~* '^\d+$'
+SELECT * FROM bd_employees where phone_number::TEXT ~* '^\d+$';
+
+--2
+SELECT * FROM bd_employees e join bd_departments deps
+on(deps.id = e.department_id) where (street ~*'[^A-Z\s]');
 
 --3
-SELECT (last_name,REGEXP_REPLACE(phone_number,'^\+7','8')) FROM bd_employees
+SELECT (last_name,REGEXP_REPLACE(phone_number,'^\+7','8')) FROM bd_employees;
 
---5
---5
-SELECT * FROM bd_employees where (REGEXP_COUNT(last_name,'[^AEOUIYaeouiy\-]',1,'i')
-= 2 * REGEXP_COUNT(last_name,'[AEOUIYaeouiy]',1,'i'));
 --4a
-
 SET ROLE POSTGRES;
 REVOKE ALL ON bd_departments from my_colleague;
 REVOKE ALL ON bd_employees from my_colleague;
@@ -81,4 +39,35 @@ REVOKE ALL ON bd_employees from my_colleague;
 REVOKE ALL ON bd_departments from my_colleague;
 DROP ROLE my_colleague;
 CREATE ROLE my_colleague;
-GRANT UPDATE, DELETE ON bd_departments to my_colleague
+GRANT UPDATE, DELETE ON bd_departments to my_colleague;
+
+--5
+SELECT * FROM bd_employees where (REGEXP_COUNT(last_name,'[qwrtpsdfghjklzxcvbnm\-]',1,'i')
+= 2 * REGEXP_COUNT(last_name,'[aeouiy]',1,'i'));
+
+
+
+ 
+SELECT last_name,
+	REGEXP_REPLACE(
+		REGEXP_REPLACE(
+			REGEXP_REPLACE(
+				REGEXP_REPLACE(
+					REGEXP_REPLACE(
+						REGEXP_REPLACE(
+							REGEXP_REPLACE(last_name,'y',to_char(ASCII('y'),'RN'),'gi'),
+							'i',to_char(ASCII('i'),'RN'),'gi'),
+						'i',to_char(ASCII('i'),'RN'),'gi'),
+					'u',to_char(ASCII('u'),'RN'),'gi'),
+				'o',to_char(ASCII('o'),'RN'),'gi'),
+			'e',to_char(ASCII('e'),'RN'),'gi'),'a',to_char(ASCII('a'),'RN'),'gi')
+	
+FROM bd_employees 
+
+
+--6
+SELECT phone_number,(REGEXP_COUNT(phone_number,'9')*9 + REGEXP_COUNT(phone_number,'8')*8 +
+REGEXP_COUNT(phone_number,'7')*7 + REGEXP_COUNT(phone_number,'6')*6 +
+REGEXP_COUNT(phone_number,'5')*5 + REGEXP_COUNT(phone_number,'4')*4 +
+REGEXP_COUNT(phone_number,'3')*3 + REGEXP_COUNT(phone_number,'2')*2 +
+REGEXP_COUNT(phone_number,'1')*1) summ FROM bd_employees;
