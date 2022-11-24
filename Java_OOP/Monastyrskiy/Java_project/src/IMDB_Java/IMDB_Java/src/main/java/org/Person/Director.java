@@ -8,6 +8,11 @@ public class Director extends Person {
     Film[] films;
 
 
+    @Override
+    public Film[] getFilms() {
+        return films;
+    }
+
     public Director(){
         super();
     }

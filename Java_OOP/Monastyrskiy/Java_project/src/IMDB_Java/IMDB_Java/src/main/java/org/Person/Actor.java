@@ -8,6 +8,10 @@ public class Actor extends Person {
     Film[] films;
 
     @Override
+    public Film[] getFilms(){
+        return  films;
+    }
+    @Override
     public String getDBInsertPrerapedFMT() {
         return null;
     }

@@ -7,9 +7,14 @@ import org.Saveable.Saveable;
   String name;
 
 
-  public Film[] getFilms(){
-
-   return new Film[0];
+  abstract public Film[] getFilms();
+  @Override
+  public String toString(){
+   StringBuilder s = new StringBuilder(" Person id: " + person_id + "\n" + "name: " + name + "\n" + "Films: ");
+   for (Film f : this.getFilms()){
+    s.append(f.toString());
+   }
+   return s.toString();
   }
 
  }

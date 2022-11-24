@@ -12,6 +12,11 @@ public class User extends Person {
         return null; // TODO
     }
 
+
+    @Override
+    public Film[] getFilms() {
+        return films;
+    }
     @Override
     public void Save(Path path) {
 
