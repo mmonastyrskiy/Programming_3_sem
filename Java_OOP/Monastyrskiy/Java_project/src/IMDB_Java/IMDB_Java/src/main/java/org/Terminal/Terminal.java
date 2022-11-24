@@ -5,6 +5,7 @@ import org.Person.Director;
 import org.Person.Person;
 import org.Person.User;
 import org.Saveable.*;
+import org.Searcher.Searcher;
 
 import java.io.Console;
 import java.io.FileNotFoundException;
@@ -258,7 +259,7 @@ public class Terminal{
 
 
     private void Search(String[] query){
-        
+        Searcher.Search(query);
 
     }
     private void Stat(){
@@ -387,17 +388,17 @@ public class Terminal{
 
         }
     }
-    public String[] ParseQuery(String query) throws SQLException, FileNotFoundException {
+    public void ParseQuery(String query) throws SQLException, FileNotFoundException {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
-            case "q":{quit();return cmd;}
-            case "save":{Save();return cmd;}
-            case "load":{Load();return cmd;}
-            case "search":{Search(cmd);return cmd;}
-            case "stat":{Stat(); return  cmd;}
-            case "add":{Add(cmd);return cmd;}
-            case "del":{Del(cmd);return cmd;}
-            default: return cmd;
+            case "q":{quit();}
+            case "save":{Save();}
+            case "load":{Load();}
+            case "search":{Search(cmd);}
+            case "stat":{Stat();}
+            case "add":{Add(cmd);}
+            case "del":{Del(cmd);}
+            default:
 
 
         }
