@@ -1,10 +1,11 @@
 package org.Person;
 
 import org.Film.Film;
+import org.Saveable.Saveable;
 
 import java.nio.file.Path;
 
-public class Actor extends Person {
+public class Actor extends Person implements Saveable {
     Film[] films;
 
     @Override
@@ -12,9 +13,6 @@ public class Actor extends Person {
         return  films;
     }
 
-    public void Delfilm(Film f){
-
-    }
     @Override
     public String getDBInsertPrerapedFMT() {
         return null;

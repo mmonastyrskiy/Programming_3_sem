@@ -6,7 +6,11 @@ import java.nio.file.Path;
 public class Film implements Saveable{
  public Film(String film_data){}
 
-    @Override
+   public Film() {
+      
+   }
+
+   @Override
     public String getDBInsertPrerapedFMT() {
         return null;
     }
