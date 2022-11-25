@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <wait.h>
+
 
 int main(int argc, char *argv[]) {
    int sock, length;
@@ -68,7 +70,8 @@ int main(int argc, char *argv[]) {
           exit(3);
        }
        printf("child pid %d on socket %d\n",pid,msgsock);
-       close(msgsock); 
+       close(msgsock);
+       waitpid(-1,NULL,WNOHANG); 
      }
    }
    exit(0);
