@@ -2,7 +2,7 @@ package org.Person;
 import org.Film.Film;
 import org.Saveable.Saveable;
 
- abstract  public class Person implements Saveable {
+ abstract  public class Person {
   String person_id;
   String name;
 
