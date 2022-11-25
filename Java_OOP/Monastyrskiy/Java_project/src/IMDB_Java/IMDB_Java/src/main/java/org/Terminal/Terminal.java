@@ -388,6 +388,46 @@ public class Terminal{
 
         }
     }
+    private void PrintAll(String[] query){
+        switch (query[1]){
+            case "films":PrintAll(Films);
+            case  "people":PrintAll(persons);
+        }
+
+    }
+    public void  AddFilm(String[] query){
+        int person = Integer.parseInt(query[1]);
+        int film = Integer.parseInt(query[2]);
+        if(persons[person].getClass().equals(Actor.class)){
+            ((Actor)persons[person]).AddFilm(Arrays.asList(Films).get(film));
+        } else if (persons[person].getClass().equals(Director.class)) {
+            ((Director)persons[person]).AddFilm(Arrays.asList(Films).get(film));
+        } else if (persons[person].getClass().equals(User.class)) {
+
+            ((User)persons[person]).AddFilm(Arrays.asList(Films).get(film));
+        }
+        else {
+            System.out.print("Error");
+        }
+
+    }
+    public void DelFilm(String[] query){
+        int person = Integer.parseInt(query[1]);
+        int film = Integer.parseInt(query[2]);
+
+        if(persons[person].getClass().equals(Actor.class)){
+            ((Actor)persons[person]).DelFilm(Arrays.asList(Films).get(film));
+        } else if (persons[person].getClass().equals(Director.class)) {
+            ((Director)persons[person]).Delfilm(Arrays.asList(Films).get(film));
+        } else if (persons[person].getClass().equals(User.class)) {
+
+            ((User)persons[person]).Delfilm(Arrays.asList(Films).get(film));
+        }
+        else {
+            System.out.print("Error");
+        }
+    }
+ 
     public void ParseQuery(String query) throws SQLException, FileNotFoundException {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
@@ -398,6 +438,9 @@ public class Terminal{
             case "stat":{Stat();}
             case "add":{Add(cmd);}
             case "del":{Del(cmd);}
+            case "show":{PrintAll(cmd);}
+            case  "addfilm":{AddFilm(cmd);}
+            case "delfilm":{DelFilm(cmd);}
             default:
 
 

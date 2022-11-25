@@ -12,6 +12,13 @@ public class User extends Person {
         return null; // TODO
     }
 
+    public void AddFilm(Film f){
+
+    }
+    public void Delfilm(Film f){
+
+    }
+
 
     @Override
     public Film[] getFilms() {

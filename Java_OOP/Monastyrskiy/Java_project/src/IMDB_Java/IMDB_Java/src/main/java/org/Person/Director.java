@@ -7,7 +7,12 @@ import java.nio.file.Path;
 public class Director extends Person {
     Film[] films;
 
+    public void AddFilm(Film f){
 
+    }
+    public void Delfilm(Film f){
+
+    }
     @Override
     public Film[] getFilms() {
         return films;
