@@ -72,6 +72,8 @@ public class Director extends Person {
 
     @Override
     public void Load(Path path) {
+
+
     }
     public void GetStatistics(){
         Map<Integer, Integer> ans = new HashMap<>();
