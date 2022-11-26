@@ -3,14 +3,24 @@ package org.Person;
 import org.Film.Film;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class Director extends Person {
     Film[] films;
 
     public void AddFilm(Film f){
+        if(Arrays.asList(this.films).contains(null)){
+            this.films[Arrays.asList(this.films).indexOf(null)] = f;
+        }
+        else{
+            films = Arrays.copyOf(films,films.length + 10);
+            AddFilm(f);
+
+        }
 
     }
     public void Delfilm(Film f){
+        this.films[Arrays.asList(films).indexOf(f)] = null;
 
     }
     @Override

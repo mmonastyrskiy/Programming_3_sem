@@ -4,6 +4,7 @@ import org.Film.Film;
 import org.Saveable.Saveable;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class Actor extends Person implements Saveable {
     Film[] films;
@@ -37,9 +38,18 @@ public static Actor Constructor(){ // TODO: Расписать логику со
     }
 
     public void AddFilm(Film f){
+        if(Arrays.asList(this.films).contains(null)){
+            this.films[Arrays.asList(this.films).indexOf(null)] = f;
+        }
+        else{
+            films = Arrays.copyOf(films,films.length + 10);
+            AddFilm(f);
+
+        }
 
     }
     public void DelFilm(Film f){
+        this.films[Arrays.asList(films).indexOf(f)] = null;
 
     }
 
