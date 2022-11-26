@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Actor extends Person implements Saveable {
     Film[] films;
@@ -49,7 +51,22 @@ public static Actor Constructor(){ // TODO: Расписать логику со
 
     }
     public void GetStatistics(){
+        Map<Integer, Integer> ans = new HashMap<>();
+        for (Film f : films){
+            if(!(ans.containsKey(f.year))){
+                ans.put(f.year,1);
+            }
+            else {
+                ans.put(f.year,ans.get(f.year)+1);
+            }
 
+        }
+        for(Integer tmp: ans.keySet()){
+            String key = tmp.toString();
+            String val = ans.get(tmp).toString();
+            System.out.println(key + " : " + val);
+
+        }
     }
 
     public void AddFilm(Film f){

@@ -1,6 +1,10 @@
 package org.Terminal;
 import org.Film.*;
 import org.Person.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class StaticVars {
     public static Film[] Films;
     public static Person[] persons;
