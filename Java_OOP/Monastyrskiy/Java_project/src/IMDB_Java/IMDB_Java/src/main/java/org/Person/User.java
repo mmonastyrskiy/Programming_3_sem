@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Scanner;
+
+import static org.Terminal.StaticVars.last_person;
+import static org.Terminal.StaticVars.person_prefix;
 
 public class User extends Person {
     Film[] films;
@@ -58,7 +62,12 @@ public class User extends Person {
 
     }
     public User(){
-        super();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя нового Режиссера");
+        this.name = scanner.next();
+        this.films = new Film[0];
+        this.person_id =person_prefix + Integer.toString(last_person);
+        last_person++;
     }
     public static User Constructor(){
         return new User(); // TODO

@@ -9,7 +9,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
+
+import static org.Terminal.StaticVars.*;
 public class Director extends Person {
     Film[] films;
 
@@ -34,7 +37,13 @@ public class Director extends Person {
     }
 
     public Director(){
-        super();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя нового Режиссера");
+        this.name = scanner.next();
+        this.films = new Film[0];
+        this.person_id =person_prefix + Integer.toString(last_person);
+        last_person++;
+
     }
     @Override
     public String getDBInsertPrerapedFMT() {

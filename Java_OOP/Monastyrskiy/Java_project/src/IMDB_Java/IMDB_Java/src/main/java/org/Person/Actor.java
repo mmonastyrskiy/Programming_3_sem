@@ -10,6 +10,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+
+import static org.Terminal.StaticVars.last_person;
+import static org.Terminal.StaticVars.person_prefix;
 
 public class Actor extends Person implements Saveable {
     Film[] films;
@@ -32,7 +36,12 @@ public class Actor extends Person implements Saveable {
         return s;
     }
     public Actor(){
-        super();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя нового Режиссера");
+        this.name = scanner.next();
+        this.films = new Film[0];
+        this.person_id =person_prefix + Integer.toString(last_person);
+        last_person++;
     }
 public static Actor Constructor(){ // TODO: Расписать логику создания строки
         return new Actor();
