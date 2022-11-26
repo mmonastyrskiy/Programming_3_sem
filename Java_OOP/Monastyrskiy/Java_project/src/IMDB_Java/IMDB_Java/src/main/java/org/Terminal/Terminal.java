@@ -5,7 +5,8 @@ import org.Person.Director;
 import org.Person.Person;
 import org.Person.User;
 import org.Saveable.*;
-import org.Searcher.Searcher;
+import org.Search.Search;
+
 
 import java.io.Console;
 import java.io.FileNotFoundException;
@@ -259,8 +260,8 @@ public class Terminal{
 
 
     private void Search(String[] query){
-        Searcher.Search(query);
-
+        Search search = new Search();
+        search.Search(query);
     }
     private void Stat(){
         for(Person p : persons){
@@ -341,7 +342,7 @@ public class Terminal{
                 }
                 case 3:{
                     if(Arrays.asList(persons).contains(null)){
-                        persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
+                        persons[Arrays.asList(persons).indexOf(null)] = Director.Constructor();
                     }
                     else {
                         persons = Arrays.copyOf(persons,persons.length+1000);
