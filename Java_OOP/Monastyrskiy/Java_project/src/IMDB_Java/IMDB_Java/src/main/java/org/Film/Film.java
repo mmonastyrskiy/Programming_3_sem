@@ -2,8 +2,8 @@ package org.Film;
 import org.Saveable.Saveable;
 
 import java.nio.file.Path;
-
 public class Film implements Saveable{
+    public String film_id;
  public Film(String film_data){}
 
    public Film() {

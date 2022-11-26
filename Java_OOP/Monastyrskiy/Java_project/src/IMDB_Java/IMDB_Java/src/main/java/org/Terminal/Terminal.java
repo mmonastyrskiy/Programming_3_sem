@@ -100,7 +100,7 @@ public class Terminal{
                 case 1: {
                     for(Film film:Films){
                         if(film.getClass().equals( org.Film.Series.class)){
-                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES " + film.getDBInsertPrerapedFMT());
+                            PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES" + film.getDBInsertPrerapedFMT());
                             statement.executeUpdate(); // Выполняем запросы
                             statement.close();
                         }

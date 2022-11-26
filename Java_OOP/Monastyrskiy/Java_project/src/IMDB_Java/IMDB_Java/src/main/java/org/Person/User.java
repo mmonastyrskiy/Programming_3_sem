@@ -13,7 +13,15 @@ public class User extends Person {
 
     @Override
     public String getDBInsertPrerapedFMT() {
-        return null; // TODO
+        String s;
+        StringBuilder info;
+        info = new StringBuilder(person_id + ',' + name + ',');
+        for(Film f: films){
+            info.append(f.film_id).append(':');
+        }
+        info.substring(0,info.length()-1);
+        s = "( " + info+ ")";
+        return s;
     }
 
     public void AddFilm(Film f){

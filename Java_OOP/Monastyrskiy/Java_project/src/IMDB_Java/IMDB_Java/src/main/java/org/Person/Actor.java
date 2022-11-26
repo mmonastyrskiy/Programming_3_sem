@@ -19,7 +19,15 @@ public class Actor extends Person implements Saveable {
 
     @Override
     public String getDBInsertPrerapedFMT() {
-        return null;
+        String s;
+        StringBuilder info;
+        info = new StringBuilder(person_id + ',' + name + ',');
+        for(Film f: films){
+            info.append(f.film_id).append(':');
+        }
+        info.substring(0,info.length()-1);
+        s = "( " + info+ ")";
+        return s;
     }
     public Actor(){
         super();
@@ -37,7 +45,7 @@ public static Actor Constructor(){ // TODO: Расписать логику со
 
 
     @Override
-    public void Load(Path path) {
+    public void Load(Path path) { // TODO зачем мне это?
 
     }
     public void GetStatistics(){
