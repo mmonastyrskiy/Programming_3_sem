@@ -55,10 +55,7 @@ public static Actor Constructor(){ // TODO: Расписать логику со
     }
 
 
-    @Override
-    public void Load(Path path) { // TODO зачем мне это?
 
-    }
     public void GetStatistics(){
         Map<Integer, Integer> ans = new HashMap<>();
         for (Film f : films){

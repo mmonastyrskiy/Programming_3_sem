@@ -8,9 +8,7 @@ import org.Saveable.*;
 import org.Search.Search;
 
 
-import java.io.Console;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -148,14 +146,16 @@ public class Terminal{
 
 
 
-    private void Load(Saveable[] data, Path path){ // Функция загрузки данных из файла path в массив data
+    private void Load(Saveable[] data, Path path) throws IOException, ClassNotFoundException { // Функция загрузки данных из файла path в массив data
         for(Saveable object: data){
-            object.Load(path);
+            FileInputStream fis = new FileInputStream(path.toFile());
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            data[Arrays.asList(data).indexOf(object)] = (Saveable) ois.readObject();
         }
 
 
     }
-    private void Load() throws SQLException, FileNotFoundException {
+    private void Load() throws SQLException, IOException, ClassNotFoundException {
         System.out.print("Укажите путь к  файлу или введите sql для загрузки из БД: ");
         Scanner scanner = new Scanner(System.in);
         String pathS = scanner.nextLine();
@@ -300,7 +300,7 @@ public class Terminal{
                 Films = Arrays.copyOf(Films,Films.length + 1000);
                 try {
                     ParseQuery(Arrays.toString(query));
-                } catch (SQLException | FileNotFoundException e) {
+                } catch (SQLException | IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -325,7 +325,7 @@ public class Terminal{
                         persons = Arrays.copyOf(persons,persons.length+1000);
                         try {
                             ParseQuery(Arrays.toString(query));
-                        } catch (SQLException | FileNotFoundException e) {
+                        } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -339,7 +339,7 @@ public class Terminal{
                         persons = Arrays.copyOf(persons,persons.length+1000);
                         try {
                             ParseQuery(Arrays.toString(query));
-                        } catch (SQLException | FileNotFoundException e) {
+                        } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -353,7 +353,7 @@ public class Terminal{
                         persons = Arrays.copyOf(persons,persons.length+1000);
                         try {
                             ParseQuery(Arrays.toString(query));
-                        } catch (SQLException | FileNotFoundException e) {
+                        } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -434,7 +434,7 @@ public class Terminal{
         }
     }
  
-    public void ParseQuery(String query) throws SQLException, FileNotFoundException {
+    public void ParseQuery(String query) throws SQLException, IOException, ClassNotFoundException {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
             case "q":{quit();}

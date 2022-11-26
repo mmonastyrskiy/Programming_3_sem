@@ -70,11 +70,7 @@ public class Director extends Person {
         return new Director();
     }
 
-    @Override
-    public void Load(Path path) {
 
-
-    }
     public void GetStatistics(){
         Map<Integer, Integer> ans = new HashMap<>();
         for (Film f : films){

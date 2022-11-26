@@ -57,10 +57,7 @@ public class User extends Person {
         obj.close();
     }
 
-    @Override
-    public void Load(Path path) {
 
-    }
     public User(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя нового Режиссера");
