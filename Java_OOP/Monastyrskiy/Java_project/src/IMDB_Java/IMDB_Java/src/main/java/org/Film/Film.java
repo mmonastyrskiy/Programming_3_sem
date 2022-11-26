@@ -20,11 +20,6 @@ public class Film implements Saveable{
     public void Save(Path path) {
 
     }
-
-    @Override
-    public void Load(Path path) {
-
-    }
     public static Film Constructor(){ // TODO: Расписать логику создания строки
     return new Film();
 
