@@ -3,6 +3,9 @@ package org.Person;
 import org.Film.Film;
 import org.Saveable.Saveable;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
 
@@ -25,9 +28,13 @@ public static Actor Constructor(){ // TODO: Расписать логику со
         return new Actor();
 }
     @Override
-    public void Save(Path path) {
-
+    public void Save(Path path) throws IOException {
+        FileOutputStream fo = new FileOutputStream(path.toFile());
+        ObjectOutputStream obj = new ObjectOutputStream(fo);
+        obj.writeObject(this);
+        obj.close();
     }
+
 
     @Override
     public void Load(Path path) {

@@ -10,6 +10,7 @@ import org.Search.Search;
 
 import java.io.Console;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -29,7 +30,11 @@ public class Terminal{
 
     private void Save(Saveable[] data, Path path){ // перегрузка функции для сохранения массива data по пути path, за счет вызова ф-ии Save интерфейса Saveable.
         for(Saveable object: data){
-            object.Save(path);
+            try {
+                object.Save(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 
