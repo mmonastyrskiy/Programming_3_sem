@@ -147,9 +147,9 @@ public class Terminal{
 
 
     private void Load(Saveable[] data, Path path) throws IOException, ClassNotFoundException { // Функция загрузки данных из файла path в массив data
+        FileInputStream fis = new FileInputStream(path.toFile());
+        ObjectInputStream ois = new ObjectInputStream(fis);
         for(Saveable object: data){
-            FileInputStream fis = new FileInputStream(path.toFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
             data[Arrays.asList(data).indexOf(object)] = (Saveable) ois.readObject();
         }
 
