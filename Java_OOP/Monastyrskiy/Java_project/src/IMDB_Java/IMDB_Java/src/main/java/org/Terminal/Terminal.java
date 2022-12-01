@@ -26,18 +26,20 @@ public class Terminal{
         System.exit(0); // Выход с кодом 0
     }
 
-    private void Save(Saveable[] data, Path path){ // перегрузка функции для сохранения массива data по пути path, за счет вызова ф-ии Save интерфейса Saveable.
+    private void Save(Saveable[] data, Path path) throws IOException {// перегрузка функции для сохранения массива data по пути path, за счет вызова ф-ии Save интерфейса Saveable.
+        FileOutputStream fos = new FileOutputStream(path.toFile());
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+
         for(Saveable object: data){
-            try {
-                object.Save(path);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            oos.writeObject(object);
         }
+        oos.close();
+        fos.close();
 
 
     }
-    private void Save() throws SQLException { // перегрузка, для основного запуска сохранения
+    private void Save() throws SQLException, IOException { // перегрузка, для основного запуска сохранения
         System.out.print("Укажите путь для сохранения файла или введите sql для сохранения в БД: ");
         Scanner scanner = new Scanner(System.in);
         String pathS = scanner.nextLine(); // считываем строку, адрес файла в который будем писать
@@ -149,8 +151,15 @@ public class Terminal{
     private void Load(Saveable[] data, Path path) throws IOException, ClassNotFoundException { // Функция загрузки данных из файла path в массив data
         FileInputStream fis = new FileInputStream(path.toFile());
         ObjectInputStream ois = new ObjectInputStream(fis);
-        for(Saveable object: data){
-            data[Arrays.asList(data).indexOf(object)] = (Saveable) ois.readObject();
+        Scanner reader = new Scanner(ois);
+        while(reader.hasNext()){
+            if(Arrays.asList(data).contains(null)){
+                data[Arrays.asList(data).indexOf(null)] = (Saveable) ois.readObject();
+
+            }
+            else {
+                data = Arrays.copyOf(data,data.length+1000);
+            }
         }
 
 

@@ -2,10 +2,6 @@ package org.Person;
 
 import org.Film.Film;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -48,13 +44,6 @@ public class User extends Person {
     @Override
     public Film[] getFilms() {
         return films;
-    }
-    @Override
-    public void Save(Path path) throws IOException {
-        FileOutputStream fo = new FileOutputStream(path.toFile());
-        ObjectOutputStream obj = new ObjectOutputStream(fo);
-        obj.writeObject(this);
-        obj.close();
     }
 
 

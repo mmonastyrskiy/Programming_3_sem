@@ -16,10 +16,7 @@ public class Film implements Saveable{
         return null;
     }
 
-    @Override
-    public void Save(Path path) {
 
-    }
     public static Film Constructor(){ // TODO: Расписать логику создания строки
     return new Film();
 
