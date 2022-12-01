@@ -1,13 +1,16 @@
 package org.Film;
 import org.Saveable.Saveable;
+import org.Film.Series;
 
-import java.nio.file.Path;
 public class Film implements Saveable{
     public String film_id;
     public int year;
- public Film(String film_data){}
+ public Film(String film_data){
+
+ }
 
    public Film() {
+
       
    }
 
@@ -17,8 +20,8 @@ public class Film implements Saveable{
     }
 
 
-    public static Film Constructor(){ // TODO: Расписать логику создания строки
-    return new Film();
+    public static Film Constructor(){
+    return new Film("");
 
     }
 
