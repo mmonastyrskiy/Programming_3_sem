@@ -12,7 +12,9 @@ import static org.Terminal.StaticVars.last_person;
 import static org.Terminal.StaticVars.person_prefix;
 
 public class Actor extends Person implements Saveable {
-    Film[] films;
+    public Film[] films;
+    public String[] chars;
+
 
     @Override
     public Film[] getFilms(){
