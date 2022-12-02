@@ -101,8 +101,7 @@ public class Film implements Saveable{
        }
        info.substring(0,info.length()-1);
 
-       String s = "(" + info + ")";
-       return s;
+       return "(" + info + ")";
 
 
 
