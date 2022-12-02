@@ -17,8 +17,16 @@ public class Search implements Searcher {
 
     }
 
-    public void Search(String[] query) {
+    public Set<Saveable> Search(String[] query) {
         this.query = query;
+        SearchActorByChar();
+        SearchDirectorByFilm();
+        SearchFilmsByJanres();
+        SearchFilmByYear();
+        SearchFilmByRaiting();
+        SearchFilmByActor();
+        SearchActorByFilm();
+        return results;
 
 
         }
