@@ -2,6 +2,7 @@ package org.IMDB_Main;
 import org.Terminal.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -19,8 +20,11 @@ public class Main {
 
             try {
                 terminal.ParseQuery(query);
-            } catch (SQLException | FileNotFoundException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                ExHandler(e);
+            }
+            finally {
+                System.out.println("Done!");
             }
 
         }
