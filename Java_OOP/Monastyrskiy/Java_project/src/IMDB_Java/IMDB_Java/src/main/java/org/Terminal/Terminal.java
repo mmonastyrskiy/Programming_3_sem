@@ -61,16 +61,16 @@ public class Terminal{
                     """);
             int option = scanner.nextInt();
             switch (option) { //Запускаем сохранение нужных элементов
-                case 1: {
-                    Save(Films,path);
+                case 1 -> {
+                    Save(Films, path);
+                    return;
                 }
-                case 2: {
-                    Save(persons,path);
+                case 2 -> {
+                    Save(persons, path);
+                    return;
 
                 }
-                default: {
-                    System.out.println("Неизвестеая опция. Отмена сохранения");
-                }
+                default -> System.out.println("Неизвестеая опция. Отмена сохранения");
             }
         }
         else{
@@ -97,39 +97,39 @@ public class Terminal{
 
             int option = scanner.nextInt(); // Выбираем что сохранять
             switch (option) {
-                case 1: {
-                    for(Film film:Films){
-                        if(film.getClass().equals( org.Film.Series.class)){
+                case 1 -> {
+                    for (Film film : Films) {
+                        if (film.getClass().equals(org.Film.Series.class)) {
                             PreparedStatement statement = conn.prepareStatement("INERT INTO " + series_table + " VALUES" + film.getDBInsertPrerapedFMT());
                             statement.executeUpdate(); // Выполняем запросы
                             statement.close();
-                        }
-                        else {
+                        } else {
                             PreparedStatement statement = conn.prepareStatement("INERT INTO " + film_table + " VALUES " + film.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
                         }
                     }
                     conn.close();
+                    return;
                 }
-                case 2: {
-                    for (Person person: persons){
-                        if(person.getClass().equals(User.class)){
+                case 2 -> {
+                    for (Person person : persons) {
+                        if (person.getClass().equals(User.class)) {
 
                             PreparedStatement statement = conn.prepareStatement("INERT INTO " + users_table + " VALUES " + person.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
-                        }
-                        else {
+                        } else {
                             PreparedStatement statement = conn.prepareStatement("INERT INTO " + staff_table + " VALUES " + person.getDBInsertPrerapedFMT());
                             statement.executeUpdate();
                             statement.close();
                         }
                     }
                     conn.close();
+                    return;
 
                 }
-                default: {
+                default -> {
                     System.out.println("Неизвестеая опция. Отмена сохранения");
                     conn.close();
                 }
@@ -185,27 +185,31 @@ public class Terminal{
 
             if (mode.equalsIgnoreCase("Д") ||
                     mode.equalsIgnoreCase("Y") || mode.equalsIgnoreCase("Да") || mode.equalsIgnoreCase("Yes")) {
-                switch (option){
-                    case 1:Arrays.fill(Films,null);
-                    case 2:Arrays.fill(persons,null);
-                    default: {
-                        System.out.println("Неизвестеая опция. Отмена загрузки");
+                switch (option) {
+                    case 1 -> {
+                        Arrays.fill(Films, null);
+                        return;
                     }
+                    case 2 -> {
+                        Arrays.fill(persons, null);
+                        return;
+                    }
+                    default -> System.out.println("Неизвестеая опция. Отмена загрузки");
                 }
             }
 
 
             switch (option) {
-                case 1: {
-                    Load(Films,path);
+                case 1 -> {
+                    Load(Films, path);
+                    return;
                 }
-                case 2: {
-                    Load(persons,path);
+                case 2 -> {
+                    Load(persons, path);
+                    return;
 
                 }
-                default: {
-                    System.out.println("Неизвестеая опция. Отмена загрузки");
-                }
+                default -> System.out.println("Неизвестеая опция. Отмена загрузки");
             }
         }
         else{
@@ -232,20 +236,21 @@ public class Terminal{
 
             int option = scanner.nextInt();
             switch (option) {
-                case 1: {
+                case 1 -> {
                     Statement statement = conn.createStatement();
                     ResultSet rs = statement.executeQuery("SELECT * FROM " + film_table);
                     ResultSet rs1 = statement.executeQuery("SELECT * FROM " + series_table);
                     statement.close();
                     while (rs.next()) {
                         Saveable.ObjCreator(rs, Films);
-                        }
-                    while(rs1.next()){
+                    }
+                    while (rs1.next()) {
                         Saveable.ObjCreator(rs1, Films);
                     }
-                    }
                     conn.close();
-                case 2: {
+                    return;
+                }
+                case 2 -> {
                     Statement statement = conn.createStatement();
                     ResultSet rs = statement.executeQuery("SELECT * FROM " + staff_table);
                     ResultSet rs1 = statement.executeQuery("SELECT * FROM " + users_table);
@@ -253,12 +258,13 @@ public class Terminal{
                     while (rs.next()) {
                         Saveable.ObjCreator(rs, persons);
                     }
-                    while(rs1.next()){
+                    while (rs1.next()) {
                         Saveable.ObjCreator(rs1, persons);
                     }
+                    conn.close();
+                    return;
                 }
-                conn.close();
-                default: {
+                default -> {
                     System.out.println("Неизвестеая опция. Отмена сохранения");
                     conn.close();
                 }
@@ -300,7 +306,7 @@ public class Terminal{
     }
 
 
-    private void Add(String[] query){
+    private void Add(String[] query) throws Exception{
         if(query[1].equalsIgnoreCase("film")){
             if(Arrays.asList(Films).contains(null)){
                 Films[Arrays.asList(Films).indexOf(null)] = Film.Constructor();
@@ -325,48 +331,45 @@ public class Terminal{
             );
             Scanner scanner = new Scanner(System.in);
             int sw = scanner.nextInt();
-            switch (sw){
-                case 1:{
-                    if(Arrays.asList(persons).contains(null)){
+            switch (sw) {
+                case 1 -> {
+                    if (Arrays.asList(persons).contains(null)) {
                         persons[Arrays.asList(persons).indexOf(null)] = User.Constructor();
-                    }
-                    else {
-                        persons = Arrays.copyOf(persons,persons.length+1000);
+                    } else {
+                        persons = Arrays.copyOf(persons, persons.length + 1000);
                         try {
                             ParseQuery(Arrays.toString(query));
                         } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
-
+                    return;
                 }
-                case 2:{
-                    if(Arrays.asList(persons).contains(null)){
+                case 2 -> {
+                    if (Arrays.asList(persons).contains(null)) {
                         persons[Arrays.asList(persons).indexOf(null)] = Actor.Constructor();
-                    }
-                    else {
-                        persons = Arrays.copyOf(persons,persons.length+1000);
+                    } else {
+                        persons = Arrays.copyOf(persons, persons.length + 1000);
                         try {
                             ParseQuery(Arrays.toString(query));
                         } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
-
+                    return;
                 }
-                case 3:{
-                    if(Arrays.asList(persons).contains(null)){
+                case 3 -> {
+                    if (Arrays.asList(persons).contains(null)) {
                         persons[Arrays.asList(persons).indexOf(null)] = Director.Constructor();
-                    }
-                    else {
-                        persons = Arrays.copyOf(persons,persons.length+1000);
+                    } else {
+                        persons = Arrays.copyOf(persons, persons.length + 1000);
                         try {
                             ParseQuery(Arrays.toString(query));
                         } catch (SQLException | IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
-
+                    return;
                 }
             }
 
@@ -443,19 +446,19 @@ public class Terminal{
         }
     }
  
-    public void ParseQuery(String query) throws SQLException, IOException, ClassNotFoundException {
+    public void ParseQuery(String query) throws Exception {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
-            case "q":{quit();}
-            case "save":{Save();}
+            case "q":{quit();return;}
+            case "save":{Save();return;}
             case "load":{Load();}
-            case "search":{Search(cmd);}
-            case "stat":{Stat();}
-            case "add":{Add(cmd);}
-            case "del":{Del(cmd);}
-            case "show":{PrintAll(cmd);}
-            case  "addfilm":{AddFilm(cmd);}
-            case "delfilm":{DelFilm(cmd);}
+            case "search":{Search(cmd);return;}
+            case "stat":{Stat();return;}
+            case "add":{Add(cmd);return;}
+            case "del":{Del(cmd);return;}
+            case "show":{PrintAll(cmd);return;}
+            case  "addfilm":{AddFilm(cmd);return;}
+            case "delfilm":{DelFilm(cmd);return;}
             default:
 
 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void ExHandler(Exception e){
-
+        System.out.println(e);
     }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class Main {
 
             try {
                 terminal.ParseQuery(query);
-            } catch (SQLException | IOException | ClassNotFoundException e) {
+            } catch (Exception e) {
                ExHandler(e);
             }
             finally {
