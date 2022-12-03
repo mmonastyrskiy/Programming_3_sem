@@ -22,6 +22,9 @@ public class Film implements Saveable{
 
 
    public Film() {
+       actors = new Actor[10];
+       janres = new String[3];
+       directors = new Director[10];
        Scanner scanner = new Scanner(System.in);
        System.out.println("Введите индентификатор фильма: ");
        this.film_id = scanner.next();
@@ -35,7 +38,7 @@ public class Film implements Saveable{
        System.out.println("Введите айди актеров: ");
        for(String a: scanner.next().split(" ")){
            for (Person actor:persons){
-               if(actor.person_id.equalsIgnoreCase(a)){
+               if(actor != null && actor.person_id.equalsIgnoreCase(a)){
                    if(Arrays.asList(actors).contains(null)){
                        actors[Arrays.asList(actors).indexOf(null)] = (Actor) actor;
                    }
@@ -52,7 +55,7 @@ public class Film implements Saveable{
        System.out.println("Введите айди режиссеров: ");
        for(String a: scanner.next().split(" ")){
            for (Person director:persons){
-               if(director.person_id.equalsIgnoreCase(a)){
+               if(director!= null&& director.person_id.equalsIgnoreCase(a)){
                    if(Arrays.asList(directors).contains(null)){
                        directors[Arrays.asList(directors).indexOf(null)] = (Director) director;
                    }
@@ -108,6 +111,10 @@ public class Film implements Saveable{
 
     }
 
+    @Override
+    public String toString() {
+       return this.film_name;
+    }
 
     public static Film Constructor(){
     return new Film();

@@ -75,10 +75,9 @@ public class Terminal{
         }
         else{
             System.out.println("Введите имя пользователя БД"); // В случае если выбран вариант сохранения в БД, устанавливаем настройки
-            Console c = System.console();
-            String user = c.readLine();
+            String user = scanner.nextLine();
             System.out.println("Введите пароль: ");
-            String passwd = String.valueOf(c.readPassword());
+            String passwd =scanner.nextLine();
 
 
             Properties properties = new Properties();
@@ -214,10 +213,9 @@ public class Terminal{
         }
         else{
             System.out.println("Введите имя пользователя БД");
-            Console c = System.console();
-            String user = c.readLine();
+            String user = scanner.nextLine();
             System.out.println("Введите пароль: ");
-            String passwd = String.valueOf(c.readPassword());
+            String passwd =scanner.nextLine();
 
 
             Properties properties = new Properties();
