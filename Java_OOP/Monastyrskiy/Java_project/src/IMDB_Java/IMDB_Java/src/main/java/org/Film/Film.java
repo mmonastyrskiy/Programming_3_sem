@@ -27,16 +27,16 @@ public class Film implements Saveable{
        directors = new Director[10];
        Scanner scanner = new Scanner(System.in);
        System.out.println("Введите индентификатор фильма: ");
-       this.film_id = scanner.next();
+       this.film_id = scanner.nextLine();
        System.out.println("Введите название фильма: ");
-       this.film_name = scanner.next();
+       this.film_name = scanner.nextLine();
        System.out.println("Введите год создания фильма: ");
        this.year = scanner.nextInt();
        this.Rating = 0;
        System.out.println("Введите жанры фильма: ");
-       janres = scanner.next().split(" ");
+       janres = scanner.nextLine().split(" ");
        System.out.println("Введите айди актеров: ");
-       for(String a: scanner.next().split(" ")){
+       for(String a: scanner.nextLine().split(" ")){
            for (Person actor:persons){
                if(actor != null && actor.person_id.equalsIgnoreCase(a)){
                    if(Arrays.asList(actors).contains(null)){
@@ -53,7 +53,7 @@ public class Film implements Saveable{
 
 
        System.out.println("Введите айди режиссеров: ");
-       for(String a: scanner.next().split(" ")){
+       for(String a: scanner.nextLine().split(" ")){
            for (Person director:persons){
                if(director!= null&& director.person_id.equalsIgnoreCase(a)){
                    if(Arrays.asList(directors).contains(null)){

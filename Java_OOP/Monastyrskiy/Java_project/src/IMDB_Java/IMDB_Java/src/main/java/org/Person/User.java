@@ -50,7 +50,7 @@ public class User extends Person {
     public User(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя нового Пользователя");
-        this.name = scanner.next();
+        this.name = scanner.nextLine();
         this.films = new Film[0];
         this.person_id =person_prefix + Integer.toString(last_person);
         last_person++;

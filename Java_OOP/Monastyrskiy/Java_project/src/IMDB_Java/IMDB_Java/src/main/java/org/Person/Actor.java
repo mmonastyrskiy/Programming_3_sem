@@ -36,7 +36,7 @@ public class Actor extends Person implements Saveable {
     public Actor(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя нового Режиссера");
-        this.name = scanner.next();
+        this.name = scanner.nextLine();
         this.films = new Film[0];
         this.person_id =person_prefix + last_person;
         last_person++;
