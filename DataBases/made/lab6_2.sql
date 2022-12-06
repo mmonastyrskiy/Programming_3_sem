@@ -27,3 +27,65 @@ END
 	$$
 LANGUAGE plpgsql;
 CALL manager_printer();
+
+
+
+
+--4
+CREATE OR REPLACE FUNCTION spiral() RETURNS table(f1 integer, f2 integer, f3 integer, f4 integer, f5 integer)  as $$
+DECLARE
+i1 INTEGER;
+i2 INTEGER;
+i3 INTEGER;
+i4 INTEGER;
+i5 INTEGER;
+BEGIN
+CREATE SEQUENCE indexer INCREMENT 1 MAXVALUE 5 START WITH 1 CYCLE CACHE 1;
+CREATE SEQUENCE filler INCREMENT 1 MAXVALUE 5000 NO CYCLE CACHE 10 START WITH 1 ;
+PERFORM nextval('filler');
+PERFORM nextval('indexer');
+
+WHILE currval('filler') <> 5000 LOOP
+WHILE currval('indexer') <= 5 LOOP
+
+IF currval('indexer') = 1 THEN
+i1 = currval('filler');
+PERFORM nextval('indexer');
+PERFORM nextval('filler');
+
+ELSIF currval('indexer') = 2 THEN
+i2 = currval('filler');
+PERFORM nextval('indexer');
+PERFORM nextval('filler');
+
+ELSIF currval('indexer') = 3 THEN
+i3 = currval('filler');
+PERFORM nextval('indexer');
+PERFORM nextval('filler');
+
+ELSIF currval('indexer') = 4 THEN
+i4 = currval('filler');
+PERFORM nextval('indexer');
+PERFORM nextval('filler');
+
+
+ELSIF currval('indexer') = 5 THEN
+i5 = currval('filler');
+PERFORM nextval('indexer');
+PERFORM nextval('filler');
+
+
+
+END IF;
+END LOOP;
+$1 = i1;
+$2 = i2;
+$3 = i3;
+$4 = i4;
+$5 = i5;
+
+END LOOP;
+END
+$$
+LANGUAGE plpgsql;
+SELECT spiral();
