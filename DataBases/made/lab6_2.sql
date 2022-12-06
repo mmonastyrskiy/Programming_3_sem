@@ -29,7 +29,23 @@ LANGUAGE plpgsql;
 CALL manager_printer();
 
 
-
+--3
+CREATE OR REPLACE PROCEDURE update_managers() AS $$
+DECLARE
+  e_attrs record;
+BEGIN
+  FOR e_attrs IN
+    (SELECT b6.id, b.manager_id as manager2
+      from bd6_employees b6 join (select b1.id, b2.manager_id from bd6_employees b1 join bd6_employees b2 on b1.manager_id = b2.id) b
+       on b6.id = b.id where b6.manager_id != 1 order by b6.manager_id, b6.salary_in_euro offset 3)
+  LOOP
+    --raise info '% %', e_attrs.id, e_attrs.manager2;
+    update bd6_employees 
+    set manager_id = e_attrs.manager2 where id = e_attrs.id;
+  END LOOP;
+END
+$$ LANGUAGE plpgsql;
+call update_managers();
 
 --4
 CREATE OR REPLACE FUNCTION spiral() RETURNS table(f1 integer, f2 integer, f3 integer, f4 integer, f5 integer)  as $$
