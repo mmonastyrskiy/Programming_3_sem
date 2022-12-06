@@ -27,6 +27,22 @@ END
 	$$
 LANGUAGE plpgsql;
 CALL manager_printer();
+-- ИЛИ --- Если спросит рекурсивно сделать
+
+
+CREATE OR REPLACE PROCEDURE remployees(e_id integer) AS $$
+DECLARE 
+  manager integer := (select manager_id from bd6_employees where id = e_id);
+  e_last_name varchar := (select last_name from bd6_employees where id = e_id);
+BEGIN
+  raise info '% % %', e_id, e_last_name, manager;
+  if manager is not null then
+    call remployees(manager);
+  end if;
+END
+$$ LANGUAGE plpgsql;
+call remployees(6);
+
 
 
 --3
