@@ -41,7 +41,7 @@ public class Actor extends Person implements Saveable {
         this.person_id =person_prefix + last_person;
         last_person++;
     }
-public static Actor Constructor(){ // TODO: Расписать логику создания строки
+public static Actor Constructor(){
         return new Actor();
 }
 
@@ -67,6 +67,9 @@ public static Actor Constructor(){ // TODO: Расписать логику со
     }
 
     public void AddFilm(Film f){
+        if(Arrays.asList(this.films).contains(f)){
+            System.out.printf("Already Exists");
+        }
         if(Arrays.asList(this.films).contains(null)){
             this.films[Arrays.asList(this.films).indexOf(null)] = f;
         }
@@ -78,7 +81,9 @@ public static Actor Constructor(){ // TODO: Расписать логику со
 
     }
     public void DelFilm(Film f){
-        this.films[Arrays.asList(films).indexOf(f)] = null;
+        if(Arrays.asList(this.films).contains(f)) {
+            this.films[Arrays.asList(films).indexOf(f)] = null;
+        }
 
     }
 

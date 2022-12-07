@@ -9,6 +9,7 @@ import org.Search.Search;
 
 
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -443,7 +444,21 @@ public class Terminal{
             System.out.print("Error");
         }
     }
- 
+    public User LogAs(Person p) throws NoSuchAlgorithmException,UnsupportedEncodingException {
+        if(((User)p).Auth()){
+            return (User)p;
+        }
+    }// TODO
+    public void LogAs(){
+        Scanner scanner = new Scanner(System.in);
+        String iname = scanner.nextLine();
+        for(Person p: persons){
+            if(p.getClass().equals(User.class) && p.name.equals(iname)){
+                LogAs(p);
+            }
+        }
+    };
+
     public void ParseQuery(String query) throws Exception {
         String[] cmd = query.toLowerCase().split(" ");
         switch (cmd[0]){
@@ -457,6 +472,7 @@ public class Terminal{
             case "show":{PrintAll(cmd);return;}
             case  "addfilm":{AddFilm(cmd);return;}
             case "delfilm":{DelFilm(cmd);return;}
+            case "rate"{LogAs();return;}
             default:
 
 

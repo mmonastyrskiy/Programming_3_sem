@@ -17,6 +17,7 @@ public class Film implements Saveable{
     public int year;
     public String[] janres;
     public float Rating;
+    public int ammount_of_votes;
     public Actor[] actors;
     public Director[] directors;
 
@@ -33,6 +34,7 @@ public class Film implements Saveable{
        System.out.println("Введите год создания фильма: ");
        this.year = scanner.nextInt();
        this.Rating = 0;
+       this.ammount_of_votes = 0;
        System.out.println("Введите жанры фильма: ");
        janres = scanner.nextLine().split(" ");
        System.out.println("Введите айди актеров: ");

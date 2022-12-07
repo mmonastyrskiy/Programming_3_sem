@@ -4,7 +4,7 @@ import org.Saveable.Saveable;
 
  abstract  public class Person implements Saveable {
   public String person_id;
-  String name;
+  public String name;
 
 
   abstract public Film[] getFilms();

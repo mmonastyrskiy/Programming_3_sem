@@ -13,6 +13,9 @@ public class Director extends Person {
     Film[] films;
 
     public void AddFilm(Film f){
+        if(Arrays.asList(this.films).contains(f)){
+            System.out.printf("Already Exists");
+        }
         if(Arrays.asList(this.films).contains(null)){
             this.films[Arrays.asList(this.films).indexOf(null)] = f;
         }
@@ -24,7 +27,9 @@ public class Director extends Person {
 
     }
     public void Delfilm(Film f){
-        this.films[Arrays.asList(films).indexOf(f)] = null;
+        if(Arrays.asList(this.films).contains(f)) {
+            this.films[Arrays.asList(films).indexOf(f)] = null;
+        }
 
     }
     @Override
@@ -55,7 +60,7 @@ public class Director extends Person {
     }
 
 
-    public static Director Constructor(){ // TODO: Расписать логику создания строки
+    public static Director Constructor(){
         return new Director();
     }
 
