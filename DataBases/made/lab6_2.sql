@@ -43,6 +43,34 @@ END
 $$ LANGUAGE plpgsql;
 call remployees(6);
 
+--2
+CREATE OR REPLACE FUNCTION t2() RETURNS integer AS $$
+DECLARE
+curs_em CURSOR FOR select * from bd6_employees order by department_id, salary_in_euro;
+person bd6_employees%ROWTYPE;
+a integer;
+dep numeric(38);
+BEGIN
+OPEN curs_em;
+FETCH curs_em INTO person;
+dep:=0;
+while found
+loop
+if dep != person.department_id then dep:=person.department_id;
+a:=1;
+else
+a:=a+1;
+end if;
+RAISE INFO '% % % Доб.%', person.last_name,person.first_name,
+person.phone_number,a;
+fetch curs_em into person;
+end loop;
+return 1;
+END;
+$$
+LANGUAGE plpgsql;
+SELECT t2();
+
 
 
 --3
@@ -64,60 +92,28 @@ $$ LANGUAGE plpgsql;
 call update_managers();
 
 --4
-CREATE OR REPLACE FUNCTION spiral() RETURNS table(f1 integer, f2 integer, f3 integer, f4 integer, f5 integer)  as $$
+DROP TABLE IF EXISTS spiral;
+CREATE TABLE spiral( f1 integer, f2 integer, f3 integer, f4 integer, f5 integer );
+CREATE OR REPLACE FUNCTION fspiral() RETURNS integer AS $$
 DECLARE
-i1 INTEGER;
-i2 INTEGER;
-i3 INTEGER;
-i4 INTEGER;
-i5 INTEGER;
+i integer := 1;
+n integer := 0;
 BEGIN
-CREATE SEQUENCE indexer INCREMENT 1 MAXVALUE 5 START WITH 1 CYCLE CACHE 1;
-CREATE SEQUENCE filler INCREMENT 1 MAXVALUE 5000 NO CYCLE CACHE 10 START WITH 1 ;
-PERFORM nextval('filler');
-PERFORM nextval('indexer');
-
-WHILE currval('filler') <> 5000 LOOP
-WHILE currval('indexer') <= 5 LOOP
-
-IF currval('indexer') = 1 THEN
-i1 = currval('filler');
-PERFORM nextval('indexer');
-PERFORM nextval('filler');
-
-ELSIF currval('indexer') = 2 THEN
-i2 = currval('filler');
-PERFORM nextval('indexer');
-PERFORM nextval('filler');
-
-ELSIF currval('indexer') = 3 THEN
-i3 = currval('filler');
-PERFORM nextval('indexer');
-PERFORM nextval('filler');
-
-ELSIF currval('indexer') = 4 THEN
-i4 = currval('filler');
-PERFORM nextval('indexer');
-PERFORM nextval('filler');
-
-
-ELSIF currval('indexer') = 5 THEN
-i5 = currval('filler');
-PERFORM nextval('indexer');
-PERFORM nextval('filler');
-
-
-
-END IF;
+WHILE n < 1000
+LOOP
+CASE mod(i,4)
+WHEN 1 THEN INSERT INTO spiral VALUES (n + 1, n + 3, n + 5, n + 7, n + 9);
+WHEN 2 THEN INSERT INTO spiral VALUES (n + 2, n + 4, n + 6, n + 8, n + 10);
+n := n + 10;
+WHEN 3 THEN INSERT INTO spiral VALUES (n + 10, n + 8, n + 6, n + 4, n + 2);
+WHEN 0 THEN INSERT INTO spiral VALUES (n + 9, n + 7, n + 5, n + 3, n + 1);
+n := n + 10;
+END CASE;
+i := i + 1;
 END LOOP;
-$1 = i1;
-$2 = i2;
-$3 = i3;
-$4 = i4;
-$5 = i5;
-
-END LOOP;
-END
+return 1;
+END;
 $$
 LANGUAGE plpgsql;
-SELECT spiral();
+select spiral();
+SELECT * from spiral;
