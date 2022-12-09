@@ -3,20 +3,23 @@
 #include <error.h>
 #include <unistd.h>
 #include <math.h>
- #include <errno.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #define N 4
+
+
+
 float f(float x ){
     return sin(x);
 }
 float intrgral(float a, float b){
-  int i; 
-  double Integral; 
+  int i;
+  double Integral;
   double h = 0.001;
- 
-  double n; 
- 
+
+  double n;
+
   n = (b - a) / h;
   Integral = 0.0;
   for(i = 1; i <= n; i++)
@@ -35,7 +38,7 @@ int main(int argc, const char* argv[]){
     if (argc != 3 )
     {
         printf("Bad args");
-        perror("1");
+        exit(1);
 
     }
     global_a = atof(argv[1]);
@@ -44,14 +47,14 @@ int main(int argc, const char* argv[]){
     for(i=0;i<N;i++){
         if(pipe(pipefd[i])==-1){
             printf("pipe");
-            perror("2");
+            exit(2);
         }
 
         a = global_a + step * i;
         b = global_b - step*(N-1-i);
         pid[i] = fork();
         if(pid[i]==-1){
-            perror("3");
+            exit(3);
         }
         if(pid[i]==0){
             close(pipefd[i][0]);
