@@ -41,6 +41,9 @@ public class Actor extends Person implements Saveable {
         this.person_id =person_prefix + last_person;
         last_person++;
     }
+    public Actor(String[] arr){
+
+    }
 public static Actor Constructor(){
         return new Actor();
 }

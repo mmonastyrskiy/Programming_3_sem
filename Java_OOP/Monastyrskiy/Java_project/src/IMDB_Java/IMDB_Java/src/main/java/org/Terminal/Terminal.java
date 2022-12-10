@@ -225,10 +225,10 @@ public class Terminal{
                     ResultSet rs1 = statement.executeQuery("SELECT * FROM " + series_table);
                     statement.close();
                     while (rs.next()) {
-                        Saveable.ObjCreator(rs, Films);
+                        Saveable.ObjCreator(rs, Films,0);
                     }
                     while (rs1.next()) {
-                        Saveable.ObjCreator(rs1, Films);
+                        Saveable.ObjCreator(rs1, Films,0);
                     }
                     conn.close();
                 }
@@ -238,10 +238,10 @@ public class Terminal{
                     ResultSet rs1 = statement.executeQuery("SELECT * FROM " + users_table);
                     statement.close();
                     while (rs.next()) {
-                        Saveable.ObjCreator(rs, persons);
+                        Saveable.ObjCreator(rs, persons,1);
                     }
                     while (rs1.next()) {
-                        Saveable.ObjCreator(rs1, persons);
+                        Saveable.ObjCreator(rs1, persons,1);
                     }
                     conn.close();
                 }

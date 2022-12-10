@@ -12,6 +12,9 @@ import static org.Terminal.StaticVars.person_prefix;
 public class Director extends Person {
     Film[] films;
 
+    public Director(String[] arr){
+
+    }
     public void AddFilm(Film f){
         if(Arrays.asList(this.films).contains(f)){
             System.out.printf("Already Exists");

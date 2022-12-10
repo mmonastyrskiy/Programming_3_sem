@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import static org.Terminal.StaticVars.persons;
-
+/* Код был написан Дрюковой Анастасией Ивановной С21-703*/
 public class Film implements Saveable{
     public String film_id;
     public String film_name;
@@ -75,6 +75,10 @@ public class Film implements Saveable{
 
 
    }
+
+    public Film(String[] arr){
+
+    }
 
    @Override
     public String getDBInsertPrerapedFMT() {

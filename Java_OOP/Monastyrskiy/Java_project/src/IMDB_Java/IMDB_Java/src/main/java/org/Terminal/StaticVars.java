@@ -16,4 +16,6 @@ public class StaticVars {
     public  static final String users_table = "";
     public static final  String person_prefix = "ucp";
     public static int last_person = 0;
+
+
 }
