@@ -62,15 +62,8 @@ public class Terminal{
                     """);
             int option = scanner.nextInt();
             switch (option) { //Запускаем сохранение нужных элементов
-                case 1 -> {
-                    Save(Films, path);
-                    return;
-                }
-                case 2 -> {
-                    Save(persons, path);
-                    return;
-
-                }
+                case 1 -> Save(Films, path);
+                case 2 -> Save(persons, path);
                 default -> System.out.println("Неизвестеая опция. Отмена сохранения");
             }
         }
@@ -110,7 +103,6 @@ public class Terminal{
                         }
                     }
                     conn.close();
-                    return;
                 }
                 case 2 -> {
                     for (Person person : persons) {
@@ -126,7 +118,6 @@ public class Terminal{
                         }
                     }
                     conn.close();
-                    return;
 
                 }
                 default -> {
@@ -200,15 +191,8 @@ public class Terminal{
 
 
             switch (option) {
-                case 1 -> {
-                    Load(Films, path);
-                    return;
-                }
-                case 2 -> {
-                    Load(persons, path);
-                    return;
-
-                }
+                case 1 -> Load(Films, path);
+                case 2 -> Load(persons, path);
                 default -> System.out.println("Неизвестеая опция. Отмена загрузки");
             }
         }
@@ -247,7 +231,6 @@ public class Terminal{
                         Saveable.ObjCreator(rs1, Films);
                     }
                     conn.close();
-                    return;
                 }
                 case 2 -> {
                     Statement statement = conn.createStatement();
@@ -261,7 +244,6 @@ public class Terminal{
                         Saveable.ObjCreator(rs1, persons);
                     }
                     conn.close();
-                    return;
                 }
                 default -> {
                     System.out.println("Неизвестеая опция. Отмена сохранения");
@@ -342,7 +324,6 @@ public class Terminal{
                             throw new RuntimeException(e);
                         }
                     }
-                    return;
                 }
                 case 2 -> {
                     if (Arrays.asList(persons).contains(null)) {
@@ -355,7 +336,6 @@ public class Terminal{
                             throw new RuntimeException(e);
                         }
                     }
-                    return;
                 }
                 case 3 -> {
                     if (Arrays.asList(persons).contains(null)) {
@@ -368,7 +348,6 @@ public class Terminal{
                             throw new RuntimeException(e);
                         }
                     }
-                    return;
                 }
             }
 
@@ -449,7 +428,7 @@ public class Terminal{
             return (User)p;
         }
         return null;
-    }// TODO
+    }
     public User LogAs() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Scanner scanner = new Scanner(System.in);
         String iname = scanner.nextLine();
@@ -460,11 +439,10 @@ public class Terminal{
                 if(!(user).equals(null)) {
                     return user;
                 }
-                else {return null;}
             }
         }
         return null;
-    };
+    }
 
     public void ParseQuery(String query) throws Exception {
         String[] cmd = query.toLowerCase().split(" ");

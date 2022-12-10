@@ -28,7 +28,6 @@ public class User extends Person {
         s = "( " + info+ ")";
         return s;
     }
-    //TODO
     public boolean Auth() throws NoSuchAlgorithmException,UnsupportedEncodingException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         Scanner scanner = new Scanner(System.in);
