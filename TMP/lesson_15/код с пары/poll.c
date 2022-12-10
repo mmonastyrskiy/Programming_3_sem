@@ -7,7 +7,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h>
-#include <signal.h>
+
 #include <poll.h>
 #define NUM 4
 #define errExit(msg)    do { perror(msg); _exit(EXIT_FAILURE); } while (0)
@@ -19,10 +19,6 @@ void child_handler(int sig) {
 
 int main(int argc, char *argv[]) {
 
-  struct sigaction new_act, old_act;
-  sigemptyset (&new_act.sa_mask);
-  new_act.sa_flags = 0;
-  new_act.sa_handler = child_handler;
 
   int pipefd[NUM][2];
   pid_t cpid[NUM];
