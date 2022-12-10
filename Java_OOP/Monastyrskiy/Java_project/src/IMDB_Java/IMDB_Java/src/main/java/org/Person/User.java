@@ -36,8 +36,8 @@ public class User extends Person {
         String inp = scanner.nextLine();
             if (md.digest(inp.getBytes("UTF-8")).equals((this.passwd))){
                 return  true;
-            return false;
         }
+        return false;
     }
 
     public void RateFilm(){

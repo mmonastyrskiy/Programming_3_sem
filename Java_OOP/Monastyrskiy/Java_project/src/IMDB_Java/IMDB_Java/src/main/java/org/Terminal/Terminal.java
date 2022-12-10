@@ -448,15 +448,22 @@ public class Terminal{
         if(((User)p).Auth()){
             return (User)p;
         }
+        return null;
     }// TODO
-    public void LogAs(){
+    public User LogAs() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Scanner scanner = new Scanner(System.in);
         String iname = scanner.nextLine();
         for(Person p: persons){
             if(p.getClass().equals(User.class) && p.name.equals(iname)){
-                LogAs(p);
+                User user;
+                user = LogAs(p);
+                if(!(user).equals(null)) {
+                    return user;
+                }
+                else {return null;}
             }
         }
+        return null;
     };
 
     public void ParseQuery(String query) throws Exception {
@@ -472,7 +479,7 @@ public class Terminal{
             case "show":{PrintAll(cmd);return;}
             case  "addfilm":{AddFilm(cmd);return;}
             case "delfilm":{DelFilm(cmd);return;}
-            case "rate"{LogAs();return;}
+            case "rate":{LogAs().RateFilm();return;}
             default:
 
 
