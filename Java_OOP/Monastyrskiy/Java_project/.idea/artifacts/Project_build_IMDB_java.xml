@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Project_build_IMDB_java">
+    <output-path>$PROJECT_DIR$/out/artifacts/Project_build_IMDB_java</output-path>
+    <root id="archive" name="Project_build_IMDB_java.jar">
+      <element id="module-output" name="IMDB_Main" />
+      <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.5.0" />
+      <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.5.0" />
+    </root>
+  </artifact>
+</component>

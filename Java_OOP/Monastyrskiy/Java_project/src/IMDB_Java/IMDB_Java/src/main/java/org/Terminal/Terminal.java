@@ -431,6 +431,7 @@ public class Terminal{
     }
     public User LogAs() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя пользователя:");
         String iname = scanner.nextLine();
         for(Person p: persons){
             if(p.getClass().equals(User.class) && p.name.equals(iname)){
