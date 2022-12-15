@@ -12,6 +12,9 @@
 #define N 10
 
 
+
+
+
 float f(float x ){
     return sin(x);
 }
@@ -45,7 +48,6 @@ int main(int argc, const char* argv[]){
     sum =0;
     stat=0;
     parentpid = getpid();
-    /*printf("Parent: %d",parentpid);*/
     if (argc != 3 )
     {
         printf("Bad args");
@@ -75,8 +77,8 @@ if(pfds == NULL){
             printf("pipe");
             exit(2);
         }
-        pfds[i].fd = pipefd[i][0];
-        pfds[i].events = POLLIN;
+            pfds[i].fd = pipefd[i][0];
+            pfds[i].events = POLLIN;
 
         a = global_a + step * i;
         b = global_b - step*(N-1-i);
@@ -86,8 +88,7 @@ if(pfds == NULL){
         if(pid[i]==-1){
             exit(3);
         }
-        if(pid[i] > 0){
-          close(pipefd[i][1]);
+        if(pid[i] != 0){
         dprintf(STDOUT_FILENO,"BORN %f %f [PID %d]\n",a,b,pid[i]);
     }
         if(pid[i]==0){
@@ -102,29 +103,35 @@ if(pfds == NULL){
 
         for (i = 0; i < N; i++) pfds[i].revents=0;
          if ((ready = poll(pfds, nfds, -1)) == -1) {
-              printf("poll error");
-              exit(10);
+            printf("poll error");
+            exit(10);
          }
 
             printf("try poll\n");
             while(num_open_fds > 0){
-              for(i=0;i<N;i++){
-                if(pid[i] > 0){
-                  if(pfds[i].revents & POLLIN){
-                  read(pipefd[i][0],buff,20);
-                  sum += atof(buff);
-                  dprintf(STDOUT_FILENO,"Transmitted %f [PID: %d]\n",atof(buff),pid[i]);
-                  if(pfds[i].revents & POLLHUP){
-                  close(pipefd[i][1]);
-                  num_open_fds--;
+        for(i=0;i<N;i++){
+            if(pid[i] != 0){
+            if(pfds[i].revents & POLLIN){
+            read(pipefd[i][0],buff,20);
+            sum += atof(buff);
+            dprintf(STDOUT_FILENO,"Transmitted %f [PID: %d]\n",atof(buff),pid[i]);
+            pfds[i].revents & POLLHUP ? dprintf(STDOUT_FILENO,"POLLHUP\n") : dprintf(STDOUT_FILENO,"NO POLLHUP");
+            if(pfds[i].revents & POLLHUP){
+                dprintf(STDOUT_FILENO,"POLLHUP\n");
+            close(pfds[i].fd);
+            pfds[i].fd = -1;
+           pfds[i].events=0;        
+            num_open_fds--;
         }
         }
-                  else if(pfds[i].revents & POLLHUP){
-                      close(pipefd[i][1]);
-                      num_open_fds--;
+        else if(pfds[i].revents & POLLHUP){
+            dprintf(STDOUT_FILENO,"POLLHUP\n");
+            close(pfds[i].fd);
+            pfds[i].fd = -1;
+           pfds[i].events=0;
+            num_open_fds--;
         }
         else{
-            printf("error");
         }
     }
         }
