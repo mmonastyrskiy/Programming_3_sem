@@ -109,13 +109,23 @@ if(pfds == NULL){
 
             printf("try poll\n");
             while(num_open_fds > 0){
+                dprintf(STDOUT_FILENO,"%d",num_open_fds);
+
+
+
+        for (i = 0; i < N; i++) pfds[i].revents=0;
+         if ((ready = poll(pfds, nfds, -1)) == -1) {
+            printf("poll error");
+            exit(10);
+         }
+
+
         for(i=0;i<N;i++){
             if(pid[i] != 0){
             if(pfds[i].revents & POLLIN){
             read(pipefd[i][0],buff,20);
             sum += atof(buff);
             dprintf(STDOUT_FILENO,"Transmitted %f [PID: %d]\n",atof(buff),pid[i]);
-            pfds[i].revents & POLLHUP ? dprintf(STDOUT_FILENO,"POLLHUP\n") : dprintf(STDOUT_FILENO,"NO POLLHUP");
             if(pfds[i].revents & POLLHUP){
                 dprintf(STDOUT_FILENO,"POLLHUP\n");
             close(pfds[i].fd);
@@ -123,7 +133,7 @@ if(pfds == NULL){
            pfds[i].events=0;        
             num_open_fds--;
         }
-        }
+    }
         else if(pfds[i].revents & POLLHUP){
             dprintf(STDOUT_FILENO,"POLLHUP\n");
             close(pfds[i].fd);
