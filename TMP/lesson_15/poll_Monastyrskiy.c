@@ -9,10 +9,40 @@
 #include <time.h>
 #include <math.h>
 #include <poll.h>
+#include <ctype.h>
 #define N 10
 
 
+int validation(const char* arg){
+    int sep;
+    int digits;
+    int neg;
+    int i;
+    sep=digits=neg=0;
+    if(isdigit(arg[0])!=0|| arg[0] == '-' || arg[0]=='.' || arg[0] == ',')  {
+        if(isdigit(arg[0])!= 0){digits++;}
+        if(arg[0] == '-') { neg++;}
+        if((arg[0] == '.') || (arg[0] == ',')){sep++;}
 
+    }
+     else{
+            return -1;
+        }
+        for(i=1;i<strlen(arg);i++){
+            if((isdigit(arg[i]) !=0) || (arg[i]=='.') || (arg[i]==',')){
+                if((arg[i] == '.') || (arg[i] == ',')) {sep++;}
+                if(isdigit(arg[i])!= 0) {digits++;}
+
+            }
+            else{return -1;}
+        }
+        if((digits != 0) && ((neg ==1)||(neg==0)) && ((sep ==1)||(sep==0))){
+            return 0;
+        }
+        return -1;
+
+
+}
 
 
 float f(float x ){
@@ -52,6 +82,11 @@ int main(int argc, const char* argv[]){
     {
         printf("Bad args");
         exit(1);
+
+    }
+    if((validation(argv[1])==-1) || (validation(argv[2])==-1)){
+        printf("Bad args");
+        exit(11);
 
     }
     srand(time(NULL));
