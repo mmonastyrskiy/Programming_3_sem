@@ -172,7 +172,16 @@ call statement_of_acount('2011-09-01 00:00:0.0', '2013-05-10 00:00:0.0');
 ```
 ### Задание 3
 ```sql
-
+CREATE OR REPLACE PROCEDURE account_operation(account_number int,id,int,operation_sum double precision) AS $$
+BEGIN
+IF operation_sum > 0 THEN
+INSERT INTO operations VALUES(id,account_number,'внесение денег на счет',operation_sum)
+END IF;
+IF operation_sum < 0 THEN
+INSERT INTO operations VALUES(id,account_number,'снятие денег со счета',operation_sum)
+END IF;
+END
+$$ LANGUAGE plpgsql;
 ```
 
 ## Вариант 4
