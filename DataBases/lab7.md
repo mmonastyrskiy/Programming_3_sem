@@ -25,16 +25,16 @@ CREATE OR REPLACE PROCEDURE statement_of_acount(begin_date timestamp, end_date t
 DECLARE
   e_attrs record;
 BEGIN
-  FOR e_attrs IN (SELECT operation_date, sum from people_log where operation_date <= end_date and operation_date >= begin_date and sum > 0 order by sum desc limit 3)
+  FOR e_attrs IN (SELECT operation_date, sum from operations_log where operation_date <= end_date and operation_date >= begin_date and sum > 0 order by sum desc limit 3)
   LOOP
      raise info '% %', e_attrs.operation_date, e_attrs.sum;
   END LOOP;
-  FOR e_attrs IN (SELECT operation_date, sum from people_log where operation_date <= end_date and operation_date >= begin_date and sum < 0 order by sum limit 3)
+  FOR e_attrs IN (SELECT operation_date, sum from operations_log where operation_date <= end_date and operation_date >= begin_date and sum < 0 order by sum limit 3)
   LOOP
      raise info '% %', e_attrs.operation_date, e_attrs.sum;
   END LOOP;
-  raise info '%', (SELECT count(*) from people_log where operation_date <= end_date and operation_date >= begin_date);
-  raise info '%', (SELECT to_char(avg(sum),'FM999999999999999.99') from people_log where operation_date <= end_date and operation_date >= begin_date);
+  raise info '%', (SELECT count(*) from operations_log where operation_date <= end_date and operation_date >= begin_date);
+  raise info '%', (SELECT to_char(avg(sum),'FM999999999999999.99') from operations_log where operation_date <= end_date and operation_date >= begin_date);
 END
 $$ LANGUAGE plpgsql;
 call statement_of_acount('2011-09-01 00:00:0.0', '2013-05-10 00:00:0.0'); 
@@ -46,7 +46,6 @@ CREATE OR REPLACE PROCEDURE account_operation(account_number int,id,int,operatio
 BEGIN
 IF operation_sum > 0 THEN
 INSERT INTO operations VALUES(id,account_number,'внесение денег на счет',operation_sum);
-END IF;
 END
 $$ LANGUAGE plpgsql;
 ```
@@ -132,7 +131,21 @@ select * from people;
 
 ### Задание 1
 ```sql
+CREATE TABLE operations(
+id int PRIMARY KEY,
+account_number int,
+operation_name text,
+operation_sum double precision;
 
+);
+
+CREATE TABLE operations_log(
+operation_id int,
+account_number int,
+operation_date timestamp,
+operation_type char,
+CHECK(operation_type in ('-','+'));
+);
 ```
 ### Задание 2
 ```sql
