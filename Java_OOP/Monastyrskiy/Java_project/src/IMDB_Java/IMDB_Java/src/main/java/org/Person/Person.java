@@ -2,7 +2,9 @@ package org.Person;
 import org.Film.Film;
 import org.Saveable.Saveable;
 
- abstract  public class Person implements Saveable {
+import java.io.Serializable;
+
+abstract  public class Person implements Saveable, Serializable {
   public String person_id;
   public String name;
 
